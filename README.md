@@ -1,4 +1,4 @@
-# **Repercusion**
+# **Percussive Arts Society Video Game**
 
 ## _Game Design Document_
 
