@@ -77,13 +77,9 @@ Es un juego retador donde el usuario debera esforzarse para mejorar y llegar a l
 
 _(example)_
 
-### **Controls**
+### **Controles**
 
-How will the player interact with the game? Will they be able to choose the controls? What kind of in-game events are they going to be able to trigger, and how? (e.g. pressing buttons, opening doors, etc.)
-
-### **Mechanics**
-
-Are there any interesting mechanics? If so, how are you going to accomplish them? Physics, algorithms, etc.
+El jugador presiona las notas con las teclas asignadas al ritmo del nivel.
 
 ## _Level Design_
 
