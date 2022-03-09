@@ -102,7 +102,6 @@ para que sean iguales para todos los jugadores.
 2. BaseObstacle
 3. BaseInteractable
 
-_(example)_
 
 ### **Derived Classes / Component Compositions**
 
