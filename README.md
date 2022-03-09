@@ -1,12 +1,12 @@
-# **Repercusion**
+# **Tempo Artist**
 
-## _Game Design Document_
+## Documento del diseño de juego
 
 ---
 
 
 ##
-## _Index_
+## Indice
 
 ---
 
@@ -39,21 +39,26 @@
     3. [Music Needed](#music-needed)
 8. [Schedule](#schedule)
 
-## _Game Design_
+## Diseño del juego
 
 ---
 
-### **Summary**
+### **Resumen**
 
-Sum up your game idea in 2 sentences. A kind of elevator pitch. Keep it simple!
+Un videojuego simple y retador, el cual ayude a los usuarios a mejorar su ritmo asi como su sincronización, con fin de aprender a identificar los elementos básicos de una partitura a través de distintos niveles y temporizadores.
+
+El cliente accedera al juego mediante un sitio web, donde tambien podra consultar sus estadisticas.
+
 
 ### **Gameplay**
 
-What should the gameplay be like? What is the goal of the game, and what kind of obstacles are in the way? What tactics should the player use to overcome them?
+El usuario debera de presionar las teclas correspondientes, al mismo tiempo que van apareciendo notas musicales en la pantalla. Mientras mas preciso sean los clicks, mejor score tendra el jugador. En caso de que el usuario falle en presionar las teclas en el momento correcto, se iran restando puntos.
+ 
 
-### **Mindset**
+### **Mentalidad**
 
-What kind of mindset do you want to provoke in the player? Do you want them to feel powerful, or weak? Adventurous, or nervous? Hurried, or calm? How do you intend to provoke those emotions?
+El juego tiene como objetivo hacer sentir al jugador motivado para aprender hacerca de ritmos musicales, asi como mejorar su cordinacion y habilidades cognitivas.
+Es un juego retador donde el usuario debera esforzarse para mejorar y llegar a los siguientes niveles.
 
 ## _Technical_
 
