@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # **Tempo Artist**
+=======
+# **Percussive Arts Society Video Game**
+>>>>>>> e45c6538c3af5d195760716873eb1c3541241640
 
 ## Documento del diseño de juego
 
