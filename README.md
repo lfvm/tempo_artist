@@ -86,48 +86,8 @@ El jugador presiona las notas con las teclas asignadas al ritmo del nivel.
 
 ---
 
-_(Note : These sections can safely be skipped if they&#39;re not relevant, or you&#39;d rather go about it another way. For most games, at least one of them should be useful. But I&#39;ll understand if you don&#39;t want to use them. It&#39;ll only hurt my feelings a little bit.)_
-
-### **Themes**
-
-1. Forest
-    1. Mood
-        1. Dark, calm, foreboding
-  2. Objects
-        1. _Ambient_
-            1. Fireflies
-            2. Beams of moonlight
-            3. Tall grass
-        2. _Interactive_
-            1. Wolves
-            2. Goblins
-            3. Rocks
-2. Castle
-    1. Mood
-        1. Dangerous, tense, active
-    2. Objects
-        1. _Ambient_
-            1. Rodents
-            2. Torches
-            3. Suits of armor
-        2. _Interactive_
-            1. Guards
-            2. Giant rats
-            3. Chests
-
-_(example)_
-
-### **Game Flow**
-
-1. Player starts in forest
-2. Pond to the left, must move right
-3. To the right is a hill, player jumps to traverse it (&quot;jump&quot; taught)
-4. Player encounters castle - door&#39;s shut and locked
-5. There&#39;s a window within jump height, and a rock on the ground
-6. Player picks up rock and throws at glass (&quot;throw&quot; taught)
-7. … etc.
-
-_(example)_
+Los niveles seran generados con un algoritmo que genere patrones de notas "Aleatorios". Estos niveles despues de ser generados con almacenados en el juego
+para que sean iguales para todos los jugadores.
 
 ## _Development_
 
