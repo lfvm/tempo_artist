@@ -63,14 +63,14 @@ El usuario debera de presionar las teclas correspondientes, al mismo tiempo que 
 El juego tiene como objetivo hacer sentir al jugador motivado para aprender hacerca de ritmos musicales, asi como mejorar su cordinacion y habilidades cognitivas.
 Es un juego retador donde el usuario debera esforzarse para mejorar y llegar a los siguientes niveles.
 
-## _Technical_
+## Aspectos tecnicos
 
 ---
 
-### **Screens**
+### **Pantallas**
 
-1. Title Screen
-    1. Options
+1. Pantalla principal
+    1. Opciones
 2. Level Select
 3. Game
     1. Inventory
