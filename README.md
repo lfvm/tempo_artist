@@ -1,5 +1,5 @@
 # **Tempo Artist**
-# **Video juego para Percussive Arts Society*
+# *Video juego para Percussive Arts Society*
 
 ## Documento del diseño de juego
 
