@@ -54,7 +54,9 @@ El cliente accedera al juego mediante un sitio web, donde tambien podra consulta
 ### **Gameplay**
 
 El usuario debera de presionar las teclas correspondientes, al mismo tiempo que van apareciendo notas musicales en la pantalla. Mientras mas preciso sean los clicks, mejor score tendra el jugador. En caso de que el usuario falle en presionar las teclas en el momento correcto, se iran restando puntos.
- 
+
+ <img width="607" alt="Captura de Pantalla 2022-03-09 a la(s) 13 47 10" src="https://user-images.githubusercontent.com/57450093/157521932-d8ed2dcd-26c9-42d0-961c-06e978c9db43.png">
+
 
 ### **Mentalidad**
 
