@@ -82,7 +82,7 @@ _(example)_
 
 El jugador presiona las notas con las teclas asignadas al ritmo del nivel.
 
-## _Level Design_
+## Diseño de nivel
 
 ---
 
