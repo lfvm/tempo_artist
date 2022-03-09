@@ -69,13 +69,11 @@ Es un juego retador donde el usuario debera esforzarse para mejorar y llegar a l
 
 ### **Screens**
 
-1. Title Screen
-    1. Options
-2. Level Select
-3. Game
-    1. Inventory
-    2. Assessment / Next Level
-4. End Credits
+1. Menu Principal
+    1. Jugar
+    2. Opciones de juego
+2. Seleccion de dificultad
+3. Juego
 
 _(example)_
 
