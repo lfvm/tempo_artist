@@ -69,10 +69,19 @@ This is supposed to be a challenging game where the player must make the effort 
 
 
 1. Main Menu
-    1. Play
-    2. Options
-2. Difficulty selection
-3. Game/Level
+    * Play
+    * Options
+2. Select Level
+    * Back
+    * Level Info (hover)
+3. Game Screen
+    * Pause (Esc key)
+4. Pause Sceen
+    * Resume
+    * Re-try
+    * Exit
+5 Options
+    * Back
 
 ### **Controls**
 
