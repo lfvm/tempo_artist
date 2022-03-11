@@ -101,8 +101,6 @@ get the same levels.
 ### **Abstract Classes / Components**
 
 1. Note
-2. Lane
-
 
 ### **Derived Classes / Component Compositions**
 
@@ -112,6 +110,10 @@ get the same levels.
 	1. SingleNote
 	2. DoubleNote
 	3. TripleNote
+4. UIControler
+5. Button
+6. Life Bar
+7. Music Sheet
 
 ## _Graphics_
 
