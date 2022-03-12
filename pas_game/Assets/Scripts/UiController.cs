@@ -6,8 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class UiController : MonoBehaviour
 {
-    public Button playButton;
-    public Button optionsButton;
+    private Button playButton;
+    private Button optionsButton;
+    public Text score;
+    public Text combo;
 
     public void ChangeScene(string sceneName)
     {
