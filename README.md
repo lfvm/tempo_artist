@@ -1,13 +1,13 @@
 # **Tempo Artist**
-# *Video juego para Percussive Arts Society*
+# *Videogame for Percussive Arts Society*
 
-## Documento del diseño de juego
+## Game design document
 
 ---
 
 
 ##
-## Indice
+## Index
 
 ---
 
@@ -40,20 +40,19 @@
     3. [Music Needed](#music-needed)
 8. [Schedule](#schedule)
 
-## Diseño del juego
+## Game design
 
 ---
 
-### **Resumen**
+### **Summary**
 
-Un videojuego simple y retador, el cual ayude a los usuarios a mejorar su ritmo asi como su sincronización, con fin de aprender a identificar los elementos básicos de una partitura a través de distintos niveles y temporizadores.
+A simple yet challenging game whose objective is to help players to learn percusion tab reading and practice rhythm sense.
 
-El cliente accedera al juego mediante un sitio web, donde tambien podra consultar sus estadisticas.
-
+The player will be able to play the game through our webpage. The player statisctics will also be available on our webpage.
 
 ### **Gameplay**
 
-El usuario debera de presionar las teclas correspondientes, al mismo tiempo que van apareciendo notas musicales en la pantalla. Mientras mas preciso sean los clicks, mejor score tendra el jugador. En caso de que el usuario falle en presionar las teclas en el momento correcto, se iran restando puntos.
+The player must press the corresponding keys to the rythm of the notes that will be apearing on screen. The more accurate the clicks are the more points the player gets. If the player misses a note the combo is reset, and if the player misses several notes in rapid succession the level ends.
 
  <img width="607" alt="Captura de Pantalla 2022-03-09 a la(s) 13 47 10" src="https://user-images.githubusercontent.com/57450093/157521932-d8ed2dcd-26c9-42d0-961c-06e978c9db43.png">
 
@@ -63,30 +62,40 @@ El usuario debera de presionar las teclas correspondientes, al mismo tiempo que 
 The game aims to feel the player motivated to learn about musical rhythms, as well as improve their coordination and cognitive skills.
 It is a challenging game where the user must strive to improve and reach the next levels.
 
+
 ## Aspectos tecnicos
 
 ---
 
-### **Screems**
+
+### **Screens**
 
 
 1. Main Menu
-    1. Play
-    2. Game Options
-2. Difficutlty selection
-3. Game
-
+    * Play
+    * Options
+2. Select Level
+    * Back
+    * Level Info (hover)
+3. Game Screen
+    * Pause (Esc key)
+4. Pause Sceen
+    * Resume
+    * Re-try
+    * Exit
+5 Options
+    * Back
 
 ### **Controls**
 
-The player presses the notes with the keys assigned to the rhythm of the level.
+The player must click the notes to the rhytm.
 
 ## Game design 
 
 ---
-
 The levels will be generated with an algorithm that generates "Random" note patterns. These levels after being generated with stored in the game
 so that they are the same for all players.
+
 
 ## _Development_
 
@@ -106,18 +115,20 @@ so that they are the same for all players.
 	1. SingleNote
 	2. DoubleNote
 	3. TripleNote
+4. UIControler
+5. Button
+6. Life Bar
+7. Music Sheet
 
 ## _Graphics_
 
-Neon style graphics.
+Most game elements graphics will be made with neon colors, using sprites for the notes, music sheet, life bar.
 
 ### **Style Attributes**
 
-What kinds of colors will you be using? Do you have a limited palette to work with? A post-processed HSV map/image? Consistency is key for immersion.
+Neon colors
 
-What kind of graphic style are you going for? Cartoony? Pixel-y? Cute? How, specifically? Solid, thick outlines with flat hues? Non-black outlines with limited tints/shades? Emphasize smooth curvatures over sharp angles? Describe a set of general rules depicting your style here.
-
-Well-designed feedback, both good (e.g. leveling up) and bad (e.g. being hit), are great for teaching the player how to play through trial and error, instead of scripting a lengthy tutorial. What kind of visual feedback are you going to use to let the player know they&#39;re interacting with something? That they \*can\* interact with something?
+For graphic styling, we plan to make our sprites and objects simple and minimalist to reduce distractions. Sprites and objects should maintain a consistent style.
 
 ### **Graphics Needed**
 
@@ -128,15 +139,16 @@ Well-designed feedback, both good (e.g. leveling up) and bad (e.g. being hit), a
 	3. Triple Note
 3. Lanes
 4. HitArea 
+5. Life bar
 
 ## _Sounds/Music_
 
-1. Nota Correcta
-2. Nota fallo
-3. Musica de menu?
-4. Nivel terminado
-5. Nivel Perdido
-6. Click botones menu
+1. Correct note hit
+2. Fail note hit
+3. Menu bgm?
+4. Level Complete
+5. Level failed
+6. Menu button click
 
 ### **Style Attributes**
 
@@ -149,31 +161,20 @@ Stylistically, what kind of sound effects are you looking for? Do you want to ex
 ### **Sounds Needed**
 
 1. Effects
-    1. Soft Footsteps (dirt floor)
-    2. Sharper Footsteps (stone floor)
-    3. Soft Landing (low vertical velocity)
-    4. Hard Landing (high vertical velocity)
-    5. Glass Breaking
-    6. Chest Opening
-    7. Door Opening
-2. Feedback
-    1. Relieved &quot;Ahhhh!&quot; (health)
-    2. Shocked &quot;Ooomph!&quot; (attacked)
-    3. Happy chime (extra life)
-    4. Sad chime (died)
-
-_(example)_
+    1. Note hit
+    2. Note miss
+    3. Menu button click
+2. Music
+    1. Menu bgm
+    2. Level failed
+    3. Level Comlete
+    3. Pause Screen
 
 ### **Music Needed**
 
-1. Slow-paced, nerve-racking &quot;forest&quot; track
-2. Exciting &quot;castle&quot; track
-3. Creepy, slow &quot;dungeon&quot; track
-4. Happy ending credits track
-5. Rick Astley&#39;s hit #1 single &quot;Never Gonna Give You Up&quot;
-
-_(example)_
-
+1. Slow-paced, nerve-racking track
+2. Exciting &quot;castle&quoe track
+3. Happy ending credits track
 
 ## _Schedule_
 
