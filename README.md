@@ -103,7 +103,6 @@ get the same levels.
 1. Note
 2. Lane
 
-
 ### **Derived Classes / Component Compositions**
 
 1. GameController
@@ -123,9 +122,11 @@ Most game elements graphics will be made with neon colors, using sprites for the
 
 ### **Style Attributes**
 
-Neon colors
+The sound effects for simple actions will be minimalist sounds, emulating real life sounds (such as pressing a button) in each event that happens in the game. The more elaborate sounds will be in the notes of the main screen of the game.
 
-For graphic styling, we plan to make our sprites and objects simple and minimalist to reduce distractions. Sprites and objects should maintain a consistent style.
+It is not planned to use any specific instrument, because the game will focus on teaching rhythms, sheet music reading and coordination in general.
+
+Moving on to the visual style, we plan to use simple and minimal sprites, in the aforementioned neon style, to reduce distractions. The sprites will be used in the notes, scores, life bar, etc.
 
 ### **Graphics Needed**
 
@@ -146,14 +147,6 @@ For graphic styling, we plan to make our sprites and objects simple and minimali
 4. Level Complete
 5. Level failed
 6. Menu button click
-
-### **Style Attributes**
-
-Again, consistency is key. Define that consistency here. What kind of instruments do you want to use in your music? Any particular tempo, key? Influences, genre? Mood?
-
-Stylistically, what kind of sound effects are you looking for? Do you want to exaggerate actions with lengthy, cartoony sounds (e.g. mario&#39;s jump), or use just enough to let the player know something happened (e.g. mega man&#39;s landing)? Going for realism? You can use the music style as a bit of a reference too.
-
- Remember, auditory feedback should stand out from the music and other sound effects so the player hears it well. Volume, panning, and frequency/pitch are all important aspects to consider in both music _and_ sounds - so plan accordingly!
 
 ### **Sounds Needed**
 
