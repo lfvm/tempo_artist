@@ -112,10 +112,14 @@ get the same levels.
 	1. SingleNote
 	2. DoubleNote
 	3. TripleNote
+4. UIControler
+5. Button
+6. Life Bar
+7. Music Sheet
 
 ## _Graphics_
 
-Most game elements graphics will be made with neon colors
+Most game elements graphics will be made with neon colors, using sprites for the notes, music sheet, life bar.
 
 ### **Style Attributes**
 
@@ -132,6 +136,7 @@ For graphic styling, we plan to make our sprites and objects simple and minimali
 	3. Triple Note
 3. Lanes
 4. HitArea 
+5. Life bar
 
 ## _Sounds/Music_
 
