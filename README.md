@@ -63,11 +63,6 @@ The game aims to feel the player motivated to learn about musical rhythms, as we
 It is a challenging game where the user must strive to improve and reach the next levels.
 
 
-## Aspectos tecnicos
-
----
-
-
 ### **Screens**
 
 
