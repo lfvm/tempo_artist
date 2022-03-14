@@ -58,36 +58,35 @@ El usuario debera de presionar las teclas correspondientes, al mismo tiempo que 
  <img width="607" alt="Captura de Pantalla 2022-03-09 a la(s) 13 47 10" src="https://user-images.githubusercontent.com/57450093/157521932-d8ed2dcd-26c9-42d0-961c-06e978c9db43.png">
 
 
-### **Mentalidad**
+### **Mentality**
 
-El juego tiene como objetivo hacer sentir al jugador motivado para aprender hacerca de ritmos musicales, asi como mejorar su cordinacion y habilidades cognitivas.
-Es un juego retador donde el usuario debera esforzarse para mejorar y llegar a los siguientes niveles.
+The game aims to feel the player motivated to learn about musical rhythms, as well as improve their coordination and cognitive skills.
+It is a challenging game where the user must strive to improve and reach the next levels.
 
 ## Aspectos tecnicos
 
 ---
 
-### **Pantallas**
+### **Screems**
 
 
-1. Menu Principal
-    1. Jugar
-    2. Opciones de juego
-2. Seleccion de dificultad
-3. Juego
+1. Main Menu
+    1. Play
+    2. Game Options
+2. Difficutlty selection
+3. Game
 
-_(example)_
 
-### **Controles**
+### **Controls**
 
-El jugador presiona las notas con las teclas asignadas al ritmo del nivel.
+The player presses the notes with the keys assigned to the rhythm of the level.
 
-## Diseño de nivel
+## Game design 
 
 ---
 
-Los niveles seran generados con un algoritmo que genere patrones de notas "Aleatorios". Estos niveles despues de ser generados con almacenados en el juego
-para que sean iguales para todos los jugadores.
+The levels will be generated with an algorithm that generates "Random" note patterns. These levels after being generated with stored in the game
+so that they are the same for all players.
 
 ## _Development_
 
@@ -110,7 +109,7 @@ para que sean iguales para todos los jugadores.
 
 ## _Graphics_
 
-Las graficas seran con un estilo neon.
+Neon style graphics.
 
 ### **Style Attributes**
 
