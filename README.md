@@ -26,7 +26,7 @@
     1. [Style Attributes](#style-attributes)
     2. [Graphics Needed](#graphics-needed)
 6. [Sounds/Music](#soundsmusic)
-    1. [Style Attributes](#style-attributes-1)
+    1. [Style Attributes](#style-attributes)
     2. [Sounds Needed](#sounds-needed)
     3. [Music Needed](#music-needed)
 7. [Schedule](#schedule)
