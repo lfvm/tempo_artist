@@ -158,7 +158,6 @@ Moving on to the visual style, we plan to use simple and minimal sprites, in the
 ---
 
 1. develop main user interface:
-
 	1. Main Menu.
 	2. Game options Menu.
 	3. Game Over Menu.
