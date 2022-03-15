@@ -158,7 +158,6 @@ Moving on to the visual style, we plan to use simple and minimal sprites, in the
 ---
 
 1. develop main user interface
-	
 	1. Main Menu
 	2. Game options Menu
 	3. Game Over Menu 
@@ -166,7 +165,6 @@ Moving on to the visual style, we plan to use simple and minimal sprites, in the
     	Expected finish date: April 8
   	
 2. Develop player and notes behavior
-
         1. Add event listeners for key presses 
         2. Move notes throught the screen
         3. Add colliders to know if a note was pressed on the correct place and time 
@@ -174,18 +172,17 @@ Moving on to the visual style, we plan to use simple and minimal sprites, in the
  
     	Expected finish date: April 8
         
-
 5. design levels
-    1. Create Game Manager class in charge of managing the state of the game.
-    2. Create random-level generator function.
-    3. Add all the graphics needed.
+	1. Create Game Manager class in charge of managing the state of the game.
+    	2. Create random-level generator function.
+    	3. Add all the graphics needed.
     
-    Expected finish date: April 15
-    
+    	Expected finish date: April 15
+ 
 7. Web and DB integration.
-    1. Link the game with the database
-    2. Create web application that will host the game
-    3. Deploy web App.
+	1. Link the game with the database
+    	2. Create web application that will host the game
+    	3. Deploy web App.
    
-    Expected finish date: April 22
+    	Expected finish date: April 22
     
