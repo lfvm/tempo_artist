@@ -11,8 +11,7 @@
 
 ---
 
-1. [Index](#index)
-2. [Game Design](#game-design)
+1. [Game Design](#game-design)
     1. [Summary](#summary)
     2. [Gameplay](#gameplay)
     3. [Mindset](#mindset)
@@ -20,25 +19,17 @@
     1. [Screens](#screens)
     2. [Controls](#controls)
     3. [Mechanics](#mechanics)
-4. [Level Design](#level-design)
-    1. [Themes](#themes)
-        1. Ambience
-        2. Objects
-            1. Ambient
-            2. Interactive
-        3. Challenges
-    2. [Game Flow](#game-flow)
-5. [Development](#development)
+4. [Development](#development)
     1. [Abstract Classes](#abstract-classes--components)
     2. [Derived Classes](#derived-classes--component-compositions)
-6. [Graphics](#graphics)
+5. [Graphics](#graphics)
     1. [Style Attributes](#style-attributes)
     2. [Graphics Needed](#graphics-needed)
-7. [Sounds/Music](#soundsmusic)
+6. [Sounds/Music](#soundsmusic)
     1. [Style Attributes](#style-attributes-1)
     2. [Sounds Needed](#sounds-needed)
     3. [Music Needed](#music-needed)
-8. [Schedule](#schedule)
+7. [Schedule](#schedule)
 
 ## Game design
 
@@ -57,11 +48,14 @@ The player must press the corresponding keys to the rythm of the notes that will
  <img width="607" alt="Captura de Pantalla 2022-03-09 a la(s) 13 47 10" src="https://user-images.githubusercontent.com/57450093/157521932-d8ed2dcd-26c9-42d0-961c-06e978c9db43.png">
 
 
-### **Mentality**
+### **Mindset**
 
 The game aims to feel the player motivated to learn about musical rhythms, as well as improve their coordination and cognitive skills.
 It is a challenging game where the user must strive to improve and reach the next levels.
 
+## Technical
+
+---
 
 ### **Screens**
 
@@ -85,11 +79,6 @@ It is a challenging game where the user must strive to improve and reach the nex
 
 The player must click the notes to the rhytm.
 
-## Game design 
-
----
-The levels will be generated with an algorithm that generates "Random" note patterns. These levels after being generated with stored in the game
-so that they are the same for all players.
 
 
 ## _Development_
@@ -115,7 +104,7 @@ so that they are the same for all players.
 7. Music Sheet
 
 ## _Graphics_
-
+--
 Most game elements graphics will be made with neon colors, using sprites for the notes, music sheet, life bar.
 
 ### **Style Attributes**
