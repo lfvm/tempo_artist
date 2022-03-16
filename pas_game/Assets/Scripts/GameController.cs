@@ -19,6 +19,11 @@ public class GameController : MonoBehaviour
     public float dspSongTime;
     public AudioSource musicSource;
 
+    //Ref al objeto de notas 
+    public GameObject blueNote;
+    //Lista de Notas
+    public List<GameObject> notes;
+
     void Start()
     {
 
@@ -31,8 +36,19 @@ public class GameController : MonoBehaviour
         secPerBeat = 60f / songBpm;
         
         dspSongTime = (float)AudioSettings.dspTime;
-        
         // musicSource.play();
+
+
+        // Crear Noytas
+        for(int i = 0; i<21; i++)
+        {
+            //Crear una nueva nota con la funcion instantiate
+            //Junto con las coordenadas donde vamos a colocar ese objeto
+            //y la rotacion del objeto que se define con Quaternion
+            //Y agregar la columna a la lista de columnas
+            notes.Add( Instantiate( blueNote, new Vector2( -2.428089f, 5 + (i * 2) ), Quaternion.identity ) );
+            
+        }
     }
 
     void Update()
@@ -42,5 +58,16 @@ public class GameController : MonoBehaviour
 
         // Cuantos beats han pasado desde que comenzo la cancion;
         songPositionInBeats = songPosition / secPerBeat;
+
+
+        //Mover las notas en y
+        for(int i = 0; i < notes.Count; i++)
+        {
+
+
+        
+            //Mueve cada nota hacia la abajo en una unidad cada update
+            notes[i].transform.position = notes[i].transform.position + new Vector3(0,-1,0)  * Time.deltaTime * 2;   
+        }
     }
 }
