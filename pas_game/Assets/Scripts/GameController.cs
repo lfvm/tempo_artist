@@ -5,11 +5,17 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
-    private UiController uiController;
+    public UiController uiController;
+
+    //Referencia a las cajas donde las notas deben de hacer score
+    public GameObject leftBox;
+    public GameObject rightBox;
+
     void Start()
     {
-        // uiController = GameObject.Find("UiController");
-        uiController.score.text = "0";
+
+        //Establecer el texto del score como 0
+        uiController.score.text = "Score: 0";
         uiController.combo.text = "0";
     }
 
