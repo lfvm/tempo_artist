@@ -161,7 +161,7 @@ Moving on to the visual style, we plan to use simple and minimal sprites, in the
 	* Main Menu.
 	* Game Options Menu
 	* Game Over Menu
-	Expected finish date: April 8.
+- Expected finish date: April 8.
   	
 2. Develop player and notes behavior:
 
