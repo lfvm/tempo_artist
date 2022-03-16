@@ -170,7 +170,7 @@ Moving on to the visual style, we plan to use simple and minimal sprites, in the
         3. Add colliders to know if a note was pressed on the correct place and time.
         4. Add sound elements to game.
  
-    	- Expected finish date: April 8.
+- Expected finish date: April 8.
         
 5. design levels:
 
