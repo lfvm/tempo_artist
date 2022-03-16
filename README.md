@@ -161,16 +161,14 @@ Moving on to the visual style, we plan to use simple and minimal sprites, in the
 	* Main Menu.
 	* Game Options Menu
 	* Game Over Menu
-- Expected finish date: April 8.
+	- Expected finish date: April 8.
   	
 2. Develop player and notes behavior:
-
-        1. Add event listeners for key presses .
-        2. Move notes throught the screen.
-        3. Add colliders to know if a note was pressed on the correct place and time.
-        4. Add sound elements to game.
- 
-- Expected finish date: April 8.
+	* Add event listeners for key press.
+	* Move notes throuoguht the screen
+	* Add colliders to know if a note was pressed at the correct place and time
+	* Add sound elements to the game
+	- Expected finish date: April 8.
         
 5. design levels:
 
