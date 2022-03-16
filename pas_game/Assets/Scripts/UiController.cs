@@ -17,7 +17,7 @@ public class UiController : MonoBehaviour
     }
     void Start()
     {
-        
+        //Establecer los valores del texto "Score"
     }
 
     void Update()
