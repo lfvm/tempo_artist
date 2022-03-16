@@ -158,11 +158,10 @@ Moving on to the visual style, we plan to use simple and minimal sprites, in the
 ---
 
 1. develop main user interface:
-	1. Main Menu.
-	2. Game options Menu.
-	3. Game Over Menu.
-    
-    	Expected finish date: April 8.
+	* Main Menu.
+	* Game Options Menu
+	* Game Over Menu
+	Expected finish date: April 8.
   	
 2. Develop player and notes behavior:
 
