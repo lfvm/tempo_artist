@@ -178,8 +178,8 @@ Moving on to the visual style, we plan to use simple and minimal sprites, in the
 
 7. Web and DB integration:
 
-* Link the game with the database.
-* Create web application that will host the game.
-* Deploy web App.
+	* Link the game with the database.
+	* Create web application that will host the game.
+	* Deploy web App.
 - Expected finish date: April 22.
     
