@@ -172,15 +172,14 @@ Moving on to the visual style, we plan to use simple and minimal sprites, in the
         
 5. design levels:
 	* Create Game Manager class in charge of managing the state of the game.
-    	* Create random-level generator function.
-    	* Add all the graphics needed.
+	* Create random-level generator function
+	* Add all the graphics and visual elemenents
 - Expected finish date: April 15.
- 
+
 7. Web and DB integration:
 
-	1. Link the game with the database.
-    	2. Create web application that will host the game.
-    	3. Deploy web App.
-   
-    	Expected finish date: April 22.
+* Link the game with the database.
+* Create web application that will host the game.
+* Deploy web App.
+- Expected finish date: April 22.
     
