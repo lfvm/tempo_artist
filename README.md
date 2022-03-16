@@ -161,22 +161,20 @@ Moving on to the visual style, we plan to use simple and minimal sprites, in the
 	* Main Menu.
 	* Game Options Menu
 	* Game Over Menu
-	- Expected finish date: April 8.
+- Expected finish date: April 8.
   	
 2. Develop player and notes behavior:
 	* Add event listeners for key press.
 	* Move notes throuoguht the screen
 	* Add colliders to know if a note was pressed at the correct place and time
 	* Add sound elements to the game
-	- Expected finish date: April 8.
+- Expected finish date: April 8.
         
 5. design levels:
-
-	1. Create Game Manager class in charge of managing the state of the game.
-    	2. Create random-level generator function.
-    	3. Add all the graphics needed.
-    
-    	Expected finish date: April 15.
+	* Create Game Manager class in charge of managing the state of the game.
+    	* Create random-level generator function.
+    	* Add all the graphics needed.
+- Expected finish date: April 15.
  
 7. Web and DB integration:
 
