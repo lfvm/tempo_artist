@@ -7,9 +7,17 @@ public class GameController : MonoBehaviour
 {
     public UiController uiController;
 
+    public enum Rank
+    {
+        PERFECT,
+        GOOD,
+        BAD,
+        MISS
+    };
+
     //Referencia a las cajas donde las notas deben de hacer score
-    public GameObject leftBox;
-    public GameObject rightBox;
+    public GameObject leftHitBox;
+    public GameObject rightHitBox;
 
     public float songBpm;
     public float secPerBeat;
@@ -18,17 +26,15 @@ public class GameController : MonoBehaviour
     // Cuantos segundos han pasado desde que comenzo la cancion.
     public float dspSongTime;
     public AudioSource musicSource;
-
-<<<<<<< Updated upstream
-    void Start()
-=======
+    
     //Ref al objeto de notas 
     public GameObject blueNote;
     //Lista de Notas
     public List<GameObject> notes;
 
+    private bool paused;
+
     private void Start()
->>>>>>> Stashed changes
     {
         //Establecer el texto del score como 0
         uiController.score.text = "Score: 0";
@@ -41,9 +47,7 @@ public class GameController : MonoBehaviour
         dspSongTime = (float)AudioSettings.dspTime;
         
         // musicSource.play();
-<<<<<<< Updated upstream
-=======
-        
+
         // Crear Noytas
         for(var i = 0; i<21; i++)
         {
@@ -53,7 +57,6 @@ public class GameController : MonoBehaviour
             //Y agregar la columna a la lista de columnas
             notes.Add( Instantiate( blueNote, new Vector2( -2.428089f, 5 + (i * 2) ), Quaternion.identity ) );
         }
->>>>>>> Stashed changes
     }
 
     private void Update()
@@ -63,15 +66,12 @@ public class GameController : MonoBehaviour
 
         // Cuantos beats han pasado desde que comenzo la cancion;
         songPositionInBeats = songPosition / secPerBeat;
-<<<<<<< Updated upstream
-=======
-        
+
         //Mover las notas en y
         foreach (var note in notes)
         {
             //Mueve cada nota hacia la abajo en una unidad cada update
             note.transform.position = note.transform.position + new Vector3(0,-1,0)  * Time.deltaTime * 2;   
         }
->>>>>>> Stashed changes
     }
 }
