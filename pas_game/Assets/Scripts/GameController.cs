@@ -35,6 +35,7 @@ public class GameController : MonoBehaviour
     private float timer = 0f;
 
     private bool paused;
+    private bool hasStarted;
 
     private void Start()
     {
@@ -51,47 +52,40 @@ public class GameController : MonoBehaviour
         lanes.Add(rightLane);
         lanes.Add(leftLane);
         
-        // musicSource.play();
-
-        // Crear Noytas
-        // for(var i = 0; i<21; i++)
-        // {
-        //     //Crear una nueva nota con la funcion instantiate
-        //     //Junto con las coordenadas donde vamos a colocar ese objeto
-        //     //y la rotacion del objeto que se define con Quaternion
-        //     //Y agregar la columna a la lista de columnas
-        //     notes.Add( Instantiate( blueNote, new Vector2( -2.428089f, 5 + (i * 2) ), Quaternion.identity ) );
-        // }
     }
 
     private void Update()
     {
         // Cuantos segundos han pasado desde que comenzo la cancion
-        songPosition = (float)(AudioSettings.dspTime - dspSongTime);
+        songPosition = (float) (AudioSettings.dspTime - dspSongTime);
 
         // Cuantos beats han pasado desde que comenzo la cancion;
         songPositionInBeats = songPosition / secPerBeat;
 
-        int rand = Random.Range(0, 2);
+        var rand = Random.Range(0, 2);
         deltaTime = musicSource.time - lastTime;
         timer += deltaTime;
 
-        if (timer >= secPerBeat)
+        if (!hasStarted)
         {
-            // Creacion de las notas
-            GameObject note = Instantiate(NoteObject, new Vector2(lanes[rand].transform.position.x, 7f), Quaternion.identity);
-            notes.Add(note);
-            note.transform.parent = noteHolder.transform;
-            timer -= secPerBeat;
+            if (Input.anyKeyDown)
+            {
+                hasStarted = true;
+            }
         }
-
+        else
+        {
+            musicSource.Play();
+            if (timer >= secPerBeat)
+            {
+                // Creacion de las notas
+                var note = Instantiate(NoteObject, new Vector2(lanes[rand].transform.position.x, 7f),
+                    Quaternion.identity);
+                notes.Add(note);
+                note.transform.parent = noteHolder.transform;
+                timer -= secPerBeat;
+            }
+        }
         lastTime = musicSource.time;
-
-        // //Mover las notas en y
-        // foreach (var note in notes)
-        // {
-        //     //Mueve cada nota hacia la abajo en una unidad cada update
-        //     note.transform.position = note.transform.position + new Vector3(0,-1,0)  * Time.deltaTime * 2;   
-        // }
     }
 }
