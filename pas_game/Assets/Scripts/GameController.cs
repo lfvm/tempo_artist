@@ -9,11 +9,17 @@ public class GameController : MonoBehaviour
     public UiController uiController;
 
     //Referencia a las cajas donde las notas deben de hacer score
-    public GameObject leftHitBox;
-    public GameObject rightHitBox;
+    public GameObject hitBox1;
+    public GameObject hitBox2;
+    public GameObject hitBox3;
+    public GameObject hitBox4;
 
-    public GameObject leftLane;
-    public GameObject rightLane;
+
+    public GameObject lane1;
+    public GameObject lane2;
+    public GameObject lane3;
+    public GameObject lane4;
+
     
     public GameObject noteHolder;
 
@@ -49,9 +55,10 @@ public class GameController : MonoBehaviour
         
         dspSongTime = (float)AudioSettings.dspTime;
         
-        lanes.Add(rightLane);
-        lanes.Add(leftLane);
-        
+        lanes.Add(lane1);
+        lanes.Add(lane2);
+        lanes.Add(lane3);
+        lanes.Add(lane4);
     }
 
     private void Update()
@@ -62,7 +69,7 @@ public class GameController : MonoBehaviour
         // Cuantos beats han pasado desde que comenzo la cancion;
         songPositionInBeats = songPosition / secPerBeat;
 
-        var rand = Random.Range(0, 2);
+        var rand = Random.Range(0, 4);
         deltaTime = musicSource.time - lastTime;
         timer += deltaTime;
 
