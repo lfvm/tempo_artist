@@ -14,13 +14,11 @@ public class GameController : MonoBehaviour
     public GameObject hitBox3;
     public GameObject hitBox4;
 
-
     public GameObject lane1;
     public GameObject lane2;
     public GameObject lane3;
     public GameObject lane4;
 
-    
     public GameObject noteHolder;
 
     public List<GameObject> lanes;
@@ -35,7 +33,7 @@ public class GameController : MonoBehaviour
     // Cuantos segundos han pasado desde que comenzo la cancion.
     public float dspSongTime;
     public AudioSource musicSource;
-
+    
     private float lastTime = 0f;
     private float deltaTime = 0f;
     private float timer = 0f;

@@ -5,6 +5,7 @@ using UnityEngine;
 public class BeatScroller : MonoBehaviour
 {
     public float beatTempo;
+    public int noteSpeed;
     public bool hasStarted;
     void Start()
     {
@@ -22,7 +23,7 @@ public class BeatScroller : MonoBehaviour
         }
         else
         {
-            transform.position -= new Vector3(0f, beatTempo * Time.deltaTime, 0f);
+            transform.position -= new Vector3(0f, noteSpeed * Time.deltaTime, 0f);
         }
     }
 }
