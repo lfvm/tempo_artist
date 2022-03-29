@@ -7,9 +7,10 @@ using UnityEngine.UI;
 public class GameController : MonoBehaviour
 {
     public UiController uiController;
-    public BeatScroller noteHolder;
+    public BeatScroller beatScroller;
 
-    //Referencia a las cajas donde las notas deben de hacer score
+    public static GameController instance;
+    
     public GameObject hitBox1;
     public GameObject hitBox2;
     public GameObject hitBox3;
@@ -42,8 +43,9 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
-        //Establecer el texto del score como 0
-        uiController.score.text = "Score: 0";
+        instance = this;
+        
+        uiController.score.text = "0";
         uiController.combo.text = "0";
 
         //musicSource = GetComponent<AudioSource>();
@@ -60,37 +62,46 @@ public class GameController : MonoBehaviour
 
     private void Update()
     {
-        // Cuantos segundos han pasado desde que comenzo la cancion
-        songPosition = (float) (AudioSettings.dspTime - dspSongTime);
-
-        // Cuantos beats han pasado desde que comenzo la cancion;
-        songPositionInBeats = songPosition / secPerBeat;
-
-        var rand = Random.Range(0, 4);
-        deltaTime = musicSource.time - lastTime;
-        timer += deltaTime;
-
         if (!hasStarted)
         {
             if (Input.anyKeyDown)
             {
                 hasStarted = true;
+                beatScroller.hasStarted = true;
+                musicSource.Play();
             }
         }
         else
         {
-            noteHolder.StartBeatScroller();
-            musicSource.Play();
+            // Cuantos segundos han pasado desde que comenzo la cancion
+            songPosition = (float) (AudioSettings.dspTime - dspSongTime);
+
+            // Cuantos beats han pasado desde que comenzo la cancion;
+            songPositionInBeats = songPosition / secPerBeat;
+        
+            deltaTime = musicSource.time - lastTime;
+            timer += deltaTime;
+
             if (timer >= secPerBeat)
             {
+                var rand = Random.Range(0, 4);
                 // Creacion de las notas
-                var note = Instantiate(NoteObject, new Vector3(lanes[rand].transform.position.x, 7, 0),
-                    Quaternion.identity);
+                var note = Instantiate(NoteObject, new Vector3(lanes[rand].transform.position.x, 7, 0), Quaternion.identity);
                 notes.Add(note);
-                note.transform.parent = noteHolder.transform;
+                note.transform.parent = beatScroller.transform;
                 timer -= secPerBeat;
             }
         }
         lastTime = musicSource.time;
+    }
+
+    public void NoteHit()
+    {
+        Debug.Log("Hit on time");
+    }
+
+    public void NoteMiss()
+    {
+        Debug.Log("Miss");
     }
 }

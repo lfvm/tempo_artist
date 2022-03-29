@@ -7,14 +7,11 @@ public class BeatScroller : MonoBehaviour
     public int noteSpeed;
     public bool hasStarted;
 
-    public void StartBeatScroller()
+    private void Update()
     {
         if (!hasStarted)
         {
-            if (Input.anyKeyDown)
-            {
-                hasStarted = true;
-            }
+
         }
         else
         {

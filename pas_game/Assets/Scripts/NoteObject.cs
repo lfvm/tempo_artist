@@ -7,6 +7,7 @@ public class NoteObject : MonoBehaviour
 {
     public bool canBePressed;
     public KeyCode keyToPress;
+    private bool hit = false;
     
     void Start()
     {
@@ -27,6 +28,8 @@ public class NoteObject : MonoBehaviour
         {
             if (canBePressed)
             {
+                GameController.instance.NoteHit();
+                hit = true;
                 gameObject.SetActive(false);
             }
         }
@@ -45,6 +48,8 @@ public class NoteObject : MonoBehaviour
         if (other.CompareTag("Activator"))
         {
             canBePressed = false;
+            if (!hit)
+                GameController.instance.NoteMiss();
         }
     }
 }
