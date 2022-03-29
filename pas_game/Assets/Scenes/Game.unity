@@ -457,7 +457,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 823108f869761478da9980db9a768d0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiController: {fileID: 542614927}
   beatScroller: {fileID: 1840016127}
   hitBox1: {fileID: 3892260364798635665}
   hitBox2: {fileID: 1530295254}
@@ -476,6 +475,8 @@ MonoBehaviour:
   songPositionInBeats: 0
   dspSongTime: 0
   musicSource: {fileID: 537407671}
+  scoreText: {fileID: 1070867189}
+  comboText: {fileID: 1745913304}
 --- !u!1001 &268209740
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -978,8 +979,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc509dd8110844a29b76f86ff31c84de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreText: {fileID: 0}
-  comboText: {fileID: 0}
 --- !u!1001 &809372098
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1349,7 +1348,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1866184441
 GameObject:
@@ -1578,7 +1577,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7831060835819608765, guid: a5800d72312e9f54aa43c186343b24d6, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7831060835819608765, guid: a5800d72312e9f54aa43c186343b24d6, type: 3}
       propertyPath: m_LocalPosition.x
