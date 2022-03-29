@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class GameController : MonoBehaviour
 {
     public UiController uiController;
+    public BeatScroller noteHolder;
 
     //Referencia a las cajas donde las notas deben de hacer score
     public GameObject hitBox1;
@@ -18,8 +19,6 @@ public class GameController : MonoBehaviour
     public GameObject lane2;
     public GameObject lane3;
     public GameObject lane4;
-
-    public GameObject noteHolder;
 
     public List<GameObject> lanes;
     public List<GameObject> notes;
@@ -80,11 +79,12 @@ public class GameController : MonoBehaviour
         }
         else
         {
+            noteHolder.StartBeatScroller();
             musicSource.Play();
             if (timer >= secPerBeat)
             {
                 // Creacion de las notas
-                var note = Instantiate(NoteObject, new Vector2(lanes[rand].transform.position.x, 7f),
+                var note = Instantiate(NoteObject, new Vector3(lanes[rand].transform.position.x, 7, 0),
                     Quaternion.identity);
                 notes.Add(note);
                 note.transform.parent = noteHolder.transform;

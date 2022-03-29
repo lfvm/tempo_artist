@@ -5,13 +5,20 @@ using UnityEngine;
 
 public class NoteObject : MonoBehaviour
 {
-    private bool canBePressed;
-
+    public bool canBePressed;
     public KeyCode keyToPress;
     
     void Start()
     {
-        
+        var posX = gameObject.transform.position.x;
+        keyToPress = posX switch
+        {
+            -1.5f => KeyCode.A,
+            -0.5f => KeyCode.S,
+            0.5f => KeyCode.K,
+            1.5f => KeyCode.L,
+            _ => keyToPress
+        };
     }
     
     void Update()
@@ -27,7 +34,7 @@ public class NoteObject : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Activator")
+        if (other.CompareTag("Activator"))
         {
             canBePressed = true;
         }
@@ -35,7 +42,7 @@ public class NoteObject : MonoBehaviour
     
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.tag == "Activator")
+        if (other.CompareTag("Activator"))
         {
             canBePressed = false;
         }
