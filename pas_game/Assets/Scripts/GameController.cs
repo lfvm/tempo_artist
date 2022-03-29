@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
-    public UiController uiController;
+    // public UiController uiController;
     public BeatScroller beatScroller;
 
     public static GameController instance;
@@ -33,6 +33,9 @@ public class GameController : MonoBehaviour
     // Cuantos segundos han pasado desde que comenzo la cancion.
     public float dspSongTime;
     public AudioSource musicSource;
+
+    public Text scoreText;
+    public Text comboText;
     
     private float lastTime = 0f;
     private float deltaTime = 0f;
@@ -41,12 +44,20 @@ public class GameController : MonoBehaviour
     private bool paused;
     private bool hasStarted;
 
+    private int currentScore;
+    
+    private const int scorePerOkNote = 50;
+    private const int scorePerGoodNote = 100;
+    private const int socrePerPerfectNote = 300;
+
+    private int currentCombo;
+
     private void Start()
     {
         instance = this;
         
-        uiController.score.text = "0";
-        uiController.combo.text = "0";
+        scoreText.text = "0";
+        comboText.text = "0";
 
         //musicSource = GetComponent<AudioSource>();
 
@@ -97,11 +108,32 @@ public class GameController : MonoBehaviour
 
     public void NoteHit()
     {
-        Debug.Log("Hit on time");
+        currentCombo++;
+        scoreText.text = currentScore.ToString();
+        comboText.text = currentCombo.ToString();
+    }
+
+    public void Okhit()
+    {
+        currentScore += scorePerOkNote * currentCombo;
+        NoteHit();
+    }
+
+    public void GoodHit()
+    {
+        NoteHit(); 
+        currentScore += scorePerGoodNote * currentCombo;
+    }
+
+    public void PerfectHit()
+    {
+        NoteHit();
+        currentScore += socrePerPerfectNote * currentCombo;
     }
 
     public void NoteMiss()
     {
-        Debug.Log("Miss");
+        currentCombo = 0;
+        comboText.text = currentCombo.ToString();
     }
 }

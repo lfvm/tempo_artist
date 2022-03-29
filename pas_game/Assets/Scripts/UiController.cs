@@ -8,20 +8,9 @@ public class UiController : MonoBehaviour
 {
     private Button playButton;
     private Button optionsButton;
-    public Text score;
-    public Text combo;
 
     public void ChangeScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
-    }
-    void Start()
-    {
-        //Establecer los valores del texto "Score"
-    }
-
-    void Update()
-    {
-        
     }
 }
