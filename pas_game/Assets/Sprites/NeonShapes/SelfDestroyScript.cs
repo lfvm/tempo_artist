@@ -1,11 +1,9 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class SelfDestroyScript : MonoBehaviour 
+public class SelfDestroyScript : MonoBehaviour
 {
-	
-	void Start () 
-	{
-		Destroy (gameObject, 3.0f);
-	}
+    private void Start()
+    {
+        Destroy(gameObject, 3.0f);
+    }
 }

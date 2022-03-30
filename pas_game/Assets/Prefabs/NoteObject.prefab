@@ -98,6 +98,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canBePressed: 0
   keyToPress: 0
+  xPos: 0
+  yPos: 0
+  noteSpeed: 10
   OkHitEffect: {fileID: 5519818027030782101, guid: 59f1d66e401e01544860ef0ec46a5753, type: 3}
   goodHitEffect: {fileID: 2853807391465890775, guid: ec6f9fc049e55e048be18e10cee5d7ea, type: 3}
   perfectHitEffect: {fileID: 3280384965051186281, guid: f18afb26de4d47f40bc62f7c88c85512, type: 3}

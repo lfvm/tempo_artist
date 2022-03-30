@@ -1,13 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class UiController : MonoBehaviour
 {
-    private Button playButton;
     private Button optionsButton;
+    private Button playButton;
 
     public void ChangeScene(string sceneName)
     {

@@ -1,16 +1,15 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
-    // public UiController uiController;
-    public BeatScroller beatScroller;
+    private const int scorePerOkNote = 50;
+    private const int scorePerGoodNote = 100;
+    private const int socrePerPerfectNote = 300;
 
     public static GameController instance;
-    
+
     public GameObject hitBox1;
     public GameObject hitBox2;
     public GameObject hitBox3;
@@ -22,53 +21,55 @@ public class GameController : MonoBehaviour
     public GameObject lane4;
 
     public List<GameObject> lanes;
-    public List<GameObject> notes;
+    public List<NoteObject> notes;
 
-    public GameObject NoteObject;
+    public NoteObject noteObject;
 
     public float songBpm;
     public float secPerBeat;
     public float songPosition;
+
     public float songPositionInBeats;
+
     // Cuantos segundos han pasado desde que comenzo la cancion.
     public float dspSongTime;
     public AudioSource musicSource;
 
     public Text scoreText;
     public Text comboText;
-    
-    private float lastTime = 0f;
-    private float deltaTime = 0f;
-    private float timer = 0f;
-
-    private bool paused;
-    private bool hasStarted;
-
-    private int currentScore;
-    
-    private const int scorePerOkNote = 50;
-    private const int scorePerGoodNote = 100;
-    private const int socrePerPerfectNote = 300;
 
     private int currentCombo;
+
+    private int currentScore;
+    private float deltaTime;
+    private bool hasStarted;
+
+    private float lastTime;
+
+    private int noteListIndex;
+
+    private bool paused;
+    private float timer;
 
     private void Start()
     {
         instance = this;
-        
+
         scoreText.text = "0";
         comboText.text = "0";
 
         //musicSource = GetComponent<AudioSource>();
 
         secPerBeat = 60f / songBpm;
-        
-        dspSongTime = (float)AudioSettings.dspTime;
-        
+
+        dspSongTime = (float) AudioSettings.dspTime;
+
         lanes.Add(lane1);
         lanes.Add(lane2);
         lanes.Add(lane3);
         lanes.Add(lane4);
+
+        for (var i = 0; i < 10; i++) createNote();
     }
 
     private void Update()
@@ -78,7 +79,6 @@ public class GameController : MonoBehaviour
             if (Input.anyKeyDown)
             {
                 hasStarted = true;
-                beatScroller.hasStarted = true;
                 musicSource.Play();
             }
         }
@@ -89,24 +89,23 @@ public class GameController : MonoBehaviour
 
             // Cuantos beats han pasado desde que comenzo la cancion;
             songPositionInBeats = songPosition / secPerBeat;
-        
+
             deltaTime = musicSource.time - lastTime;
+
             timer += deltaTime;
 
             if (timer >= secPerBeat)
             {
-                var rand = Random.Range(0, 4);
-                // Creacion de las notas
-                var note = Instantiate(NoteObject, new Vector3(lanes[rand].transform.position.x, 7, 0), Quaternion.identity);
-                notes.Add(note);
-                note.transform.parent = beatScroller.transform;
+                notes[noteListIndex].SetActive();
+                noteListIndex++;
                 timer -= secPerBeat;
             }
         }
+
         lastTime = musicSource.time;
     }
 
-    public void NoteHit()
+    private void NoteHit()
     {
         currentCombo++;
         scoreText.text = currentScore.ToString();
@@ -121,7 +120,7 @@ public class GameController : MonoBehaviour
 
     public void GoodHit()
     {
-        NoteHit(); 
+        NoteHit();
         currentScore += scorePerGoodNote * currentCombo;
     }
 
@@ -135,5 +134,13 @@ public class GameController : MonoBehaviour
     {
         currentCombo = 0;
         comboText.text = currentCombo.ToString();
+    }
+
+    private void createNote()
+    {
+        var rand = Random.Range(0, 4);
+        var note = Instantiate(noteObject, new Vector3(lanes[rand].transform.position.x, 7, 0), Quaternion.identity);
+        note.SetInactive();
+        notes.Add(note);
     }
 }

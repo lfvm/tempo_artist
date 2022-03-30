@@ -231,7 +231,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5241084254246733838, guid: 3f48c7bc17651c9458795490f082f62d, type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 5241084254246733838, guid: 3f48c7bc17651c9458795490f082f62d, type: 3}
       propertyPath: m_AnchorMax.x
@@ -370,7 +370,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7831060835819608765, guid: a5800d72312e9f54aa43c186343b24d6, type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7831060835819608765, guid: a5800d72312e9f54aa43c186343b24d6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -457,7 +457,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 823108f869761478da9980db9a768d0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  beatScroller: {fileID: 1840016127}
   hitBox1: {fileID: 3892260364798635665}
   hitBox2: {fileID: 1530295254}
   hitBox3: {fileID: 92859175}
@@ -468,7 +467,7 @@ MonoBehaviour:
   lane4: {fileID: 25421090}
   lanes: []
   notes: []
-  NoteObject: {fileID: 6076951377677540044, guid: 3f91d6c499c654e1d8d29fa2a334c4d2, type: 3}
+  noteObject: {fileID: 6076951377677540040, guid: 3f91d6c499c654e1d8d29fa2a334c4d2, type: 3}
   songBpm: 180
   secPerBeat: 0
   songPosition: 0
@@ -514,7 +513,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7831060835819608765, guid: a5800d72312e9f54aa43c186343b24d6, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7831060835819608765, guid: a5800d72312e9f54aa43c186343b24d6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -638,7 +637,7 @@ Transform:
   m_LocalScale: {x: 1.03, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &437569822
 PrefabInstance:
@@ -661,7 +660,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5241084254246733838, guid: 3f48c7bc17651c9458795490f082f62d, type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 5241084254246733838, guid: 3f48c7bc17651c9458795490f082f62d, type: 3}
       propertyPath: m_AnchorMax.x
@@ -862,7 +861,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &542614922
 GameObject:
@@ -1016,7 +1015,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7831060835819608765, guid: a5800d72312e9f54aa43c186343b24d6, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 7831060835819608765, guid: a5800d72312e9f54aa43c186343b24d6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1314,7 +1313,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1840016128}
-  - component: {fileID: 1840016127}
   m_Layer: 0
   m_Name: BeatScroller
   m_TagString: Untagged
@@ -1322,20 +1320,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1840016127
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1840016126}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1d5d971351762744ac3a90a8c2faffe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  noteSpeed: 10
-  hasStarted: 0
 --- !u!4 &1840016128
 Transform:
   m_ObjectHideFlags: 0
@@ -1348,7 +1332,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1866184441
 GameObject:
@@ -1464,7 +1448,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5241084254246733838, guid: 3f48c7bc17651c9458795490f082f62d, type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 5241084254246733838, guid: 3f48c7bc17651c9458795490f082f62d, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1577,7 +1561,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7831060835819608765, guid: a5800d72312e9f54aa43c186343b24d6, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7831060835819608765, guid: a5800d72312e9f54aa43c186343b24d6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1668,7 +1652,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5241084254246733838, guid: 3f48c7bc17651c9458795490f082f62d, type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 5241084254246733838, guid: 3f48c7bc17651c9458795490f082f62d, type: 3}
       propertyPath: m_AnchorMax.x
