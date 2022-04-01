@@ -34,7 +34,6 @@ public class GameController : MonoBehaviour
     // Cuantos segundos han pasado desde que comenzo la cancion.
     public float dspSongTime;
     public AudioSource musicSource;
-
     public Text scoreText;
     public Text comboText;
 
