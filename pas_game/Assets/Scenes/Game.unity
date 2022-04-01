@@ -468,7 +468,7 @@ MonoBehaviour:
   lanes: []
   notes: []
   noteObject: {fileID: 6076951377677540040, guid: 3f91d6c499c654e1d8d29fa2a334c4d2, type: 3}
-  songBpm: 180
+  songBpm: 174
   secPerBeat: 0
   songPosition: 0
   songPositionInBeats: 0
@@ -476,6 +476,8 @@ MonoBehaviour:
   musicSource: {fileID: 537407671}
   scoreText: {fileID: 1070867189}
   comboText: {fileID: 1745913304}
+  noteSpeed: 10
+  timer: 0
 --- !u!1001 &268209740
 PrefabInstance:
   m_ObjectHideFlags: 0

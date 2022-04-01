@@ -1,15 +1,20 @@
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
+using BeatmapConverter;
+using BeatmapConverter.Utils;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class GameController : MonoBehaviour
 {
-    private const int scorePerOkNote = 50;
-    private const int scorePerGoodNote = 100;
-    private const int socrePerPerfectNote = 300;
-
     public static GameController instance;
-
+    
+    public AudioSource musicSource;
+    public NoteObject noteObject;
+    
     public GameObject hitBox1;
     public GameObject hitBox2;
     public GameObject hitBox3;
@@ -23,40 +28,45 @@ public class GameController : MonoBehaviour
     public List<GameObject> lanes;
     public List<NoteObject> notes;
 
-    public NoteObject noteObject;
-
     public float songBpm;
     public float secPerBeat;
     public float songPosition;
-
     public float songPositionInBeats;
-
-    // Cuantos segundos han pasado desde que comenzo la cancion.
+    public float songTimeMs;
     public float dspSongTime;
-    public AudioSource musicSource;
+    public float noteSpeed;
+    public float timer;
 
     public Text scoreText;
     public Text comboText;
+    
+    private Stopwatch stopWatch;
+    private Beatmap beatmap;
 
     private int currentCombo;
-
     private int currentScore;
-    private float deltaTime;
-    private bool hasStarted;
-
-    private float lastTime;
-
     private int noteListIndex;
+    
+    private const int scorePerOkNote = 50;
+    private const int scorePerGoodNote = 100;
+    private const int socrePerPerfectNote = 300;
 
+    private float deltaTime;
+    private float lastTime;
+    
+    private bool hasStarted;
     private bool paused;
-    private float timer;
-
+    
     private void Start()
     {
         instance = this;
-
+        stopWatch = new Stopwatch();
+        stopWatch.Start();
+        
         scoreText.text = "0";
         comboText.text = "0";
+        
+        dspSongTime = (float)AudioSettings.dspTime;
 
         //musicSource = GetComponent<AudioSource>();
 
@@ -64,12 +74,17 @@ public class GameController : MonoBehaviour
 
         dspSongTime = (float) AudioSettings.dspTime;
 
+        noteListIndex = 0;
+
         lanes.Add(lane1);
         lanes.Add(lane2);
         lanes.Add(lane3);
         lanes.Add(lane4);
 
-        for (var i = 0; i < 10; i++) createNote();
+        var JsonParser = new JsonParser();
+        beatmap = JsonParser.JsonToBeatmap("Assets/Beatmaps/Holdin' On (Skrillex and Nero Remix) (Cut Ver.).json");
+        
+        for (var i = 0; i < beatmap.hitObjects.Count; i++) createNote();
     }
 
     private void Update()
@@ -84,12 +99,9 @@ public class GameController : MonoBehaviour
         }
         else
         {
-            // Cuantos segundos han pasado desde que comenzo la cancion
             songPosition = (float) (AudioSettings.dspTime - dspSongTime);
-
-            // Cuantos beats han pasado desde que comenzo la cancion;
+            songTimeMs = getElapsedTime();
             songPositionInBeats = songPosition / secPerBeat;
-
             deltaTime = musicSource.time - lastTime;
 
             timer += deltaTime;
@@ -138,9 +150,35 @@ public class GameController : MonoBehaviour
 
     private void createNote()
     {
-        var rand = Random.Range(0, 4);
-        var note = Instantiate(noteObject, new Vector3(lanes[rand].transform.position.x, 7, 0), Quaternion.identity);
-        note.SetInactive();
-        notes.Add(note);
+        foreach (var hitObject in beatmap.hitObjects)
+        {
+            var x = float.Parse(hitObject.x, CultureInfo.InvariantCulture.NumberFormat);
+            float newX = 0;
+            
+            newX = x switch
+            {
+                64 => -1.5f,
+                192 => -0.5f,
+                320 => 0.5f,
+                448 => 1.5f,
+                _ => newX
+            };
+            
+            var time = float.Parse(hitObject.time, CultureInfo.InvariantCulture.NumberFormat);
+            
+            var note = Instantiate(noteObject, new Vector3(newX, 7,0), Quaternion.identity);
+            notes.Add(note);
+            note.SetInactive();
+        }
+    }
+    
+    public float getNoteSpeed()
+    {
+        return noteSpeed;
+    }
+    
+    public float getElapsedTime()
+    {
+        return stopWatch.ElapsedMilliseconds;
     }
 }

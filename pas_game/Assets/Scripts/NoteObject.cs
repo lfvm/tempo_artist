@@ -5,43 +5,33 @@ public class NoteObject : MonoBehaviour
     public bool canBePressed;
     public KeyCode keyToPress;
 
-    public float xPos;
-    public float yPos;
+    public float x;
+    public float y;
 
-    public float noteSpeed;
+    private float noteSpeed;
 
     public GameObject OkHitEffect, goodHitEffect, perfectHitEffect, missEffect;
 
     private bool hit;
-    private int hitTime;
+    private float hitTime;
 
-    public NoteObject(int xPos, int yPos, int hitTime)
+    public void Init(float xPos, float yPos, float hitTime)
     {
-        switch (xPos)
+        x = xPos switch
         {
-            case 64:
-                this.xPos = -1.5f;
-                break;
-            case 192:
-                this.xPos = -0.5f;
-                break;
-            case 320:
-                this.xPos = 0.5f;
-                break;
-            case 448:
-                this.xPos = 1.5f;
-                break;
-        }
-
-        this.xPos = xPos;
-        this.yPos = yPos;
-
+            64 => -1.5f,
+            192 => -0.5f,
+            320 => 0.5f,
+            448 => 1.5f,
+            _ => x
+        };
         // When the note is supposed to be hit in milliseconds.
         this.hitTime = hitTime;
     }
 
     private void Start()
     {
+        noteSpeed = GameController.instance.noteSpeed;
         var posX = gameObject.transform.position.x;
         keyToPress = posX switch
         {
@@ -56,6 +46,7 @@ public class NoteObject : MonoBehaviour
     private void Update()
     {
         transform.position = new Vector3(transform.position.x, transform.position.y - noteSpeed * Time.deltaTime, 0f);
+        checkLifespan();
         if (Input.GetKeyDown(keyToPress))
             if (canBePressed)
             {
@@ -87,15 +78,23 @@ public class NoteObject : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Activator"))
+        // if (other.CompareTag("Activator"))
+        // {
+        //     canBePressed = false;
+        //     if (!hit)
+        //     {
+        //         GameController.instance.NoteMiss();
+        //         Instantiate(missEffect, new Vector3(0f, -0.7f, 0f), missEffect.transform.rotation);
+        //         Destroy(gameObject);
+        //     }
+        // }
+    }
+
+    private void checkLifespan()
+    {
+        if (hitTime >= GameController.instance.songTimeMs + 500)
         {
-            canBePressed = false;
-            if (!hit)
-            {
-                GameController.instance.NoteMiss();
-                Instantiate(missEffect, new Vector3(0f, -0.7f, 0f), missEffect.transform.rotation);
-                gameObject.SetActive(false);
-            }
+            gameObject.SetActive(false);
         }
     }
 
