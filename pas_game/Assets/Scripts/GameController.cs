@@ -1,73 +1,145 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
-    public UiController uiController;
+    private const int scorePerOkNote = 50;
+    private const int scorePerGoodNote = 100;
+    private const int socrePerPerfectNote = 300;
 
-    //Referencia a las cajas donde las notas deben de hacer score
-    public GameObject leftBox;
-    public GameObject rightBox;
+    public static GameController instance;
+
+    public GameObject hitBox1;
+    public GameObject hitBox2;
+    public GameObject hitBox3;
+    public GameObject hitBox4;
+
+    public GameObject lane1;
+    public GameObject lane2;
+    public GameObject lane3;
+    public GameObject lane4;
+
+    public List<GameObject> lanes;
+    public List<NoteObject> notes;
+
+    public NoteObject noteObject;
 
     public float songBpm;
     public float secPerBeat;
     public float songPosition;
+
     public float songPositionInBeats;
+
     // Cuantos segundos han pasado desde que comenzo la cancion.
     public float dspSongTime;
     public AudioSource musicSource;
+    public Text scoreText;
+    public Text comboText;
 
-    //Ref al objeto de notas 
-    public GameObject blueNote;
-    //Lista de Notas
-    public List<GameObject> notes;
+    private int currentCombo;
 
-    void Start()
+    private int currentScore;
+    private float deltaTime;
+    private bool hasStarted;
+
+    private float lastTime;
+
+    private int noteListIndex;
+
+    private bool paused;
+    private float timer;
+
+    private void Start()
     {
+        instance = this;
 
-        //Establecer el texto del score como 0
-        uiController.score.text = "Score: 0";
-        uiController.combo.text = "0";
+        scoreText.text = "0";
+        comboText.text = "0";
 
-        musicSource = GetComponent<AudioSource>();
+        //musicSource = GetComponent<AudioSource>();
 
         secPerBeat = 60f / songBpm;
-        
-        dspSongTime = (float)AudioSettings.dspTime;
-        // musicSource.play();
 
+        dspSongTime = (float) AudioSettings.dspTime;
 
-        // Crear Noytas
-        for(int i = 0; i<21; i++)
-        {
-            //Crear una nueva nota con la funcion instantiate
-            //Junto con las coordenadas donde vamos a colocar ese objeto
-            //y la rotacion del objeto que se define con Quaternion
-            //Y agregar la columna a la lista de columnas
-            notes.Add( Instantiate( blueNote, new Vector2( -2.428089f, 5 + (i * 2) ), Quaternion.identity ) );
-            
-        }
+        lanes.Add(lane1);
+        lanes.Add(lane2);
+        lanes.Add(lane3);
+        lanes.Add(lane4);
+
+        for (var i = 0; i < 10; i++) createNote();
     }
 
-    void Update()
+    private void Update()
     {
-        // Cuantos segundos han pasado desde que comenzo la cancion
-        songPosition = (float)(AudioSettings.dspTime - dspSongTime);
-
-        // Cuantos beats han pasado desde que comenzo la cancion;
-        songPositionInBeats = songPosition / secPerBeat;
-
-
-        //Mover las notas en y
-        for(int i = 0; i < notes.Count; i++)
+        if (!hasStarted)
         {
-
-
-        
-            //Mueve cada nota hacia la abajo en una unidad cada update
-            notes[i].transform.position = notes[i].transform.position + new Vector3(0,-1,0)  * Time.deltaTime * 2;   
+            if (Input.anyKeyDown)
+            {
+                hasStarted = true;
+                musicSource.Play();
+            }
         }
+        else
+        {
+            // Cuantos segundos han pasado desde que comenzo la cancion
+            songPosition = (float) (AudioSettings.dspTime - dspSongTime);
+
+            // Cuantos beats han pasado desde que comenzo la cancion;
+            songPositionInBeats = songPosition / secPerBeat;
+
+            deltaTime = musicSource.time - lastTime;
+
+            timer += deltaTime;
+
+            if (timer >= secPerBeat)
+            {
+                notes[noteListIndex].SetActive();
+                noteListIndex++;
+                timer -= secPerBeat;
+            }
+        }
+
+        lastTime = musicSource.time;
+    }
+
+    private void NoteHit()
+    {
+        currentCombo++;
+        scoreText.text = currentScore.ToString();
+        comboText.text = currentCombo.ToString();
+    }
+
+    public void Okhit()
+    {
+        currentScore += scorePerOkNote * currentCombo;
+        NoteHit();
+    }
+
+    public void GoodHit()
+    {
+        NoteHit();
+        currentScore += scorePerGoodNote * currentCombo;
+    }
+
+    public void PerfectHit()
+    {
+        NoteHit();
+        currentScore += socrePerPerfectNote * currentCombo;
+    }
+
+    public void NoteMiss()
+    {
+        currentCombo = 0;
+        comboText.text = currentCombo.ToString();
+    }
+
+    private void createNote()
+    {
+        var rand = Random.Range(0, 4);
+        var note = Instantiate(noteObject, new Vector3(lanes[rand].transform.position.x, 7, 0), Quaternion.identity);
+        note.SetInactive();
+        notes.Add(note);
     }
 }

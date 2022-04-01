@@ -1,27 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class UiController : MonoBehaviour
 {
-    private Button playButton;
     private Button optionsButton;
-    public Text score;
-    public Text combo;
+    private Button playButton;
 
     public void ChangeScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
-    }
-    void Start()
-    {
-        //Establecer los valores del texto "Score"
-    }
-
-    void Update()
-    {
-        
     }
 }
