@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Collections;
+using diag = System.Diagnostics;
 using System.Globalization;
 using BeatmapConverter;
 using BeatmapConverter.Utils;
@@ -32,20 +33,22 @@ public class GameController : MonoBehaviour
     public float secPerBeat;
     public float songPosition;
     public float songPositionInBeats;
-    public float songTimeMs;
+    public int songTimeMs;
     public float dspSongTime;
     public float noteSpeed;
     public float timer;
+    public int songOffset;
 
     public Text scoreText;
     public Text comboText;
+    public Text msText;
     
-    private Stopwatch stopWatch;
+    private diag.Stopwatch stopWatch;
     private Beatmap beatmap;
 
     private int currentCombo;
     private int currentScore;
-    private int noteListIndex;
+    //private int noteListIndex;
     
     private const int scorePerOkNote = 50;
     private const int scorePerGoodNote = 100;
@@ -55,26 +58,22 @@ public class GameController : MonoBehaviour
     private float lastTime;
     
     private bool hasStarted;
-    private bool paused;
+    //private bool paused;
     
     private void Start()
     {
         instance = this;
-        stopWatch = new Stopwatch();
-        stopWatch.Start();
-        
+        stopWatch = new diag.Stopwatch();
+
         scoreText.text = "0";
         comboText.text = "0";
-        
-        dspSongTime = (float)AudioSettings.dspTime;
+        msText.text = "0";
 
         //musicSource = GetComponent<AudioSource>();
 
         secPerBeat = 60f / songBpm;
 
-        dspSongTime = (float) AudioSettings.dspTime;
-
-        noteListIndex = 0;
+        //noteListIndex = 0;
 
         lanes.Add(lane1);
         lanes.Add(lane2);
@@ -82,9 +81,9 @@ public class GameController : MonoBehaviour
         lanes.Add(lane4);
 
         var JsonParser = new JsonParser();
-        beatmap = JsonParser.JsonToBeatmap("Assets/Beatmaps/Holdin' On (Skrillex and Nero Remix) (Cut Ver.).json");
+        beatmap = JsonParser.JsonToBeatmap("Assets/Beatmaps/BeastBassBomb/BEAST BASS BOMB.json");
         
-        for (var i = 0; i < beatmap.hitObjects.Count; i++) createNote();
+        createNotesFromBeatmap();
     }
 
     private void Update()
@@ -95,12 +94,15 @@ public class GameController : MonoBehaviour
             {
                 hasStarted = true;
                 musicSource.Play();
+                dspSongTime = (float) AudioSettings.dspTime;
+                stopWatch.Start();
             }
         }
         else
         {
             songPosition = (float) (AudioSettings.dspTime - dspSongTime);
-            songTimeMs = getElapsedTime();
+            songTimeMs = (int)getElapsedTime();
+            msText.text = songTimeMs.ToString();
             songPositionInBeats = songPosition / secPerBeat;
             deltaTime = musicSource.time - lastTime;
 
@@ -108,12 +110,11 @@ public class GameController : MonoBehaviour
 
             if (timer >= secPerBeat)
             {
-                notes[noteListIndex].SetActive();
-                noteListIndex++;
+                // notes[noteListIndex].SetActive();
+                // noteListIndex++;
                 timer -= secPerBeat;
             }
         }
-
         lastTime = musicSource.time;
     }
 
@@ -148,7 +149,13 @@ public class GameController : MonoBehaviour
         comboText.text = currentCombo.ToString();
     }
 
-    private void createNote()
+    // private IEnumerator PlaySongAfterOffset()
+    // {
+    //     yield return new WaitForSeconds(songOffset / 1000f);
+    //     musicSource.Play();
+    // }
+
+    private void createNotesFromBeatmap()
     {
         foreach (var hitObject in beatmap.hitObjects)
         {
@@ -163,12 +170,12 @@ public class GameController : MonoBehaviour
                 448 => 1.5f,
                 _ => newX
             };
-            
-            var time = float.Parse(hitObject.time, CultureInfo.InvariantCulture.NumberFormat);
+
+            var time = Int32.Parse(hitObject.time);
             
             var note = Instantiate(noteObject, new Vector3(newX, 7,0), Quaternion.identity);
+            note.hitTime = time;
             notes.Add(note);
-            note.SetInactive();
         }
     }
     
