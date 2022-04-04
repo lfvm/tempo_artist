@@ -1,15 +1,21 @@
+using System;
 using System.Collections.Generic;
+using System.Collections;
+using diag = System.Diagnostics;
+using System.Globalization;
+using BeatmapConverter;
+using BeatmapConverter.Utils;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class GameController : MonoBehaviour
 {
-    private const int scorePerOkNote = 50;
-    private const int scorePerGoodNote = 100;
-    private const int socrePerPerfectNote = 300;
-
     public static GameController instance;
-
+    
+    public AudioSource musicSource;
+    public NoteObject noteObject;
+    
     public GameObject hitBox1;
     public GameObject hitBox2;
     public GameObject hitBox3;
@@ -23,85 +29,103 @@ public class GameController : MonoBehaviour
     public List<GameObject> lanes;
     public List<NoteObject> notes;
 
-    public NoteObject noteObject;
-
     public float songBpm;
     public float secPerBeat;
     public float songPosition;
-
+    public float songPositionMs;
     public float songPositionInBeats;
-
-    // Cuantos segundos han pasado desde que comenzo la cancion.
     public float dspSongTime;
-    public AudioSource musicSource;
-
+    public float gameTimeMS;
+    public float timer;
+    
+    public float AR;
+    public float OD;
+    public float offset;
+    
     public Text scoreText;
     public Text comboText;
+    public Text msText;
+    
+    private diag.Stopwatch SongStopWatch;
+    private diag.Stopwatch gameStopwatch;
+    private Beatmap beatmap;
 
     private int currentCombo;
-
     private int currentScore;
+    //private int noteListIndex;
+    
+    private const int scorePerOkNote = 50;
+    private const int scorePerGoodNote = 100;
+    private const int socrePerPerfectNote = 300;
+
     private float deltaTime;
-    private bool hasStarted;
-
     private float lastTime;
+    
+    private bool hasStarted;
+    private bool songHasStarted;
+    //private bool paused;
 
-    private int noteListIndex;
-
-    private bool paused;
-    private float timer;
-
+    private bool timeChecked;
+    
     private void Start()
     {
         instance = this;
+        SongStopWatch = new diag.Stopwatch();
+        gameStopwatch = new diag.Stopwatch();
 
         scoreText.text = "0";
         comboText.text = "0";
-
-        //musicSource = GetComponent<AudioSource>();
+        msText.text = "0";
 
         secPerBeat = 60f / songBpm;
-
-        dspSongTime = (float) AudioSettings.dspTime;
+ 
+        //noteListIndex = 0;
 
         lanes.Add(lane1);
         lanes.Add(lane2);
         lanes.Add(lane3);
         lanes.Add(lane4);
 
-        for (var i = 0; i < 10; i++) createNote();
+        var JsonParser = new JsonParser();
+        beatmap = JsonParser.JsonToBeatmap("Assets/Beatmaps/BeastBassBomb/BEAST BASS BOMB.json");
+        
+        createNotesFromBeatmap();
     }
 
     private void Update()
     {
         if (!hasStarted)
         {
-            if (Input.anyKeyDown)
+            if(Input.GetKeyDown("="))
+                IncreaseOffset();
+            if(Input.GetKeyDown("-"))
+                DecreaseOffset();
+            
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                hasStarted = true;
                 musicSource.Play();
+                gameStopwatch.Start();
+                SongStopWatch.Start();
+                hasStarted = true;
+                foreach (var hitObject in notes)
+                {
+                    hitObject.SetActive();
+                }
             }
         }
         else
         {
-            // Cuantos segundos han pasado desde que comenzo la cancion
+            gameTimeMS = gameStopwatch.ElapsedMilliseconds;
+            dspSongTime = (float) AudioSettings.dspTime;
+            timeChecked = true;
             songPosition = (float) (AudioSettings.dspTime - dspSongTime);
-
-            // Cuantos beats han pasado desde que comenzo la cancion;
+            songPositionMs = (int)GetElapsedSongTime();
+            msText.text = songPositionMs.ToString();
             songPositionInBeats = songPosition / secPerBeat;
-
             deltaTime = musicSource.time - lastTime;
 
             timer += deltaTime;
-
-            if (timer >= secPerBeat)
-            {
-                notes[noteListIndex].SetActive();
-                noteListIndex++;
-                timer -= secPerBeat;
-            }
         }
-
         lastTime = musicSource.time;
     }
 
@@ -136,11 +160,61 @@ public class GameController : MonoBehaviour
         comboText.text = currentCombo.ToString();
     }
 
-    private void createNote()
+    private void createNotesFromBeatmap()
     {
-        var rand = Random.Range(0, 4);
-        var note = Instantiate(noteObject, new Vector3(lanes[rand].transform.position.x, 7, 0), Quaternion.identity);
-        note.SetInactive();
-        notes.Add(note);
+        foreach (var hitObject in beatmap.hitObjects)
+        {
+            var x = float.Parse(hitObject.x, CultureInfo.InvariantCulture.NumberFormat);
+            var y = (float.Parse(hitObject.time) * AR + offset) / 1000;
+            var hitTime = Int32.Parse(hitObject.time);
+            
+            float newX = 0;
+            
+            newX = x switch
+            {
+                64 => -1.5f,
+                192 => -0.5f,
+                320 => 0.5f,
+                448 => 1.5f,
+                _ => newX
+            };
+            
+            var note = Instantiate(noteObject, new Vector3(newX, y,0), Quaternion.identity);
+            note.x = newX;
+            note.y = y;
+            note.hitTime = hitTime;
+            note.AR = AR;
+            notes.Add(note);
+        }
+    }
+    
+    public float GetAR()
+    {
+        return AR;
+    }
+    
+    private float GetElapsedSongTime()
+    {
+        return SongStopWatch.ElapsedMilliseconds;
+    }
+
+    public float GetOD()
+    {
+        return OD;
+    }
+
+    private void IncreaseOffset()
+    {
+        offset += 5;
+    }
+
+    private void DecreaseOffset()
+    {
+        offset -= 5;
+    }
+
+    public bool gameHasStarted()
+    {
+        return hasStarted;
     }
 }

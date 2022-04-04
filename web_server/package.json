@@ -1,0 +1,17 @@
+{
+  "name": "first_example",
+  "version": "1.0.0",
+  "description": "Primer ejemplo de api usando node y express",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.3",
+    "mysql": "^2.18.1",
+    "mysql2": "^2.3.3"
+  }
+}
