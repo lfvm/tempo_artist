@@ -32,18 +32,22 @@ public class GameController : MonoBehaviour
     public float songBpm;
     public float secPerBeat;
     public float songPosition;
+    public float songPositionMs;
     public float songPositionInBeats;
-    public int songTimeMs;
     public float dspSongTime;
-    public float noteSpeed;
+    public float gameTimeMS;
     public float timer;
-    public int songOffset;
-
+    
+    public float AR;
+    public float OD;
+    public float offset;
+    
     public Text scoreText;
     public Text comboText;
     public Text msText;
     
-    private diag.Stopwatch stopWatch;
+    private diag.Stopwatch SongStopWatch;
+    private diag.Stopwatch gameStopwatch;
     private Beatmap beatmap;
 
     private int currentCombo;
@@ -58,21 +62,23 @@ public class GameController : MonoBehaviour
     private float lastTime;
     
     private bool hasStarted;
+    private bool songHasStarted;
     //private bool paused;
+
+    private bool timeChecked;
     
     private void Start()
     {
         instance = this;
-        stopWatch = new diag.Stopwatch();
+        SongStopWatch = new diag.Stopwatch();
+        gameStopwatch = new diag.Stopwatch();
 
         scoreText.text = "0";
         comboText.text = "0";
         msText.text = "0";
 
-        //musicSource = GetComponent<AudioSource>();
-
         secPerBeat = 60f / songBpm;
-
+ 
         //noteListIndex = 0;
 
         lanes.Add(lane1);
@@ -90,30 +96,35 @@ public class GameController : MonoBehaviour
     {
         if (!hasStarted)
         {
-            if (Input.anyKeyDown)
+            if(Input.GetKeyDown("="))
+                IncreaseOffset();
+            if(Input.GetKeyDown("-"))
+                DecreaseOffset();
+            
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                hasStarted = true;
                 musicSource.Play();
-                dspSongTime = (float) AudioSettings.dspTime;
-                stopWatch.Start();
+                gameStopwatch.Start();
+                SongStopWatch.Start();
+                hasStarted = true;
+                foreach (var hitObject in notes)
+                {
+                    hitObject.SetActive();
+                }
             }
         }
         else
         {
+            gameTimeMS = gameStopwatch.ElapsedMilliseconds;
+            dspSongTime = (float) AudioSettings.dspTime;
+            timeChecked = true;
             songPosition = (float) (AudioSettings.dspTime - dspSongTime);
-            songTimeMs = (int)getElapsedTime();
-            msText.text = songTimeMs.ToString();
+            songPositionMs = (int)GetElapsedSongTime();
+            msText.text = songPositionMs.ToString();
             songPositionInBeats = songPosition / secPerBeat;
             deltaTime = musicSource.time - lastTime;
 
             timer += deltaTime;
-
-            if (timer >= secPerBeat)
-            {
-                // notes[noteListIndex].SetActive();
-                // noteListIndex++;
-                timer -= secPerBeat;
-            }
         }
         lastTime = musicSource.time;
     }
@@ -149,17 +160,14 @@ public class GameController : MonoBehaviour
         comboText.text = currentCombo.ToString();
     }
 
-    // private IEnumerator PlaySongAfterOffset()
-    // {
-    //     yield return new WaitForSeconds(songOffset / 1000f);
-    //     musicSource.Play();
-    // }
-
     private void createNotesFromBeatmap()
     {
         foreach (var hitObject in beatmap.hitObjects)
         {
             var x = float.Parse(hitObject.x, CultureInfo.InvariantCulture.NumberFormat);
+            var y = (float.Parse(hitObject.time) * AR + offset) / 1000;
+            var hitTime = Int32.Parse(hitObject.time);
+            
             float newX = 0;
             
             newX = x switch
@@ -170,22 +178,43 @@ public class GameController : MonoBehaviour
                 448 => 1.5f,
                 _ => newX
             };
-
-            var time = Int32.Parse(hitObject.time);
             
-            var note = Instantiate(noteObject, new Vector3(newX, 7,0), Quaternion.identity);
-            note.hitTime = time;
+            var note = Instantiate(noteObject, new Vector3(newX, y,0), Quaternion.identity);
+            note.x = newX;
+            note.y = y;
+            note.hitTime = hitTime;
+            note.AR = AR;
             notes.Add(note);
         }
     }
     
-    public float getNoteSpeed()
+    public float GetAR()
     {
-        return noteSpeed;
+        return AR;
     }
     
-    public float getElapsedTime()
+    private float GetElapsedSongTime()
     {
-        return stopWatch.ElapsedMilliseconds;
+        return SongStopWatch.ElapsedMilliseconds;
+    }
+
+    public float GetOD()
+    {
+        return OD;
+    }
+
+    private void IncreaseOffset()
+    {
+        offset += 5;
+    }
+
+    private void DecreaseOffset()
+    {
+        offset -= 5;
+    }
+
+    public bool gameHasStarted()
+    {
+        return hasStarted;
     }
 }

@@ -9,10 +9,12 @@ public class NoteObject : MonoBehaviour
     public GameObject OkHitEffect, goodHitEffect, perfectHitEffect, missEffect;
     public KeyCode keyToPress;
     
-    
     public float x;
     public float y;
     public float arTiming;
+    public float pressTime;
+
+    private float songPosMs;
     
     public int hitTime;
     public int startTime;
@@ -22,22 +24,9 @@ public class NoteObject : MonoBehaviour
     public float AR;
     
     private bool hit;
-    private bool isMoving;
-    
-    private Vector3 endPosition;
 
-    public void Init(float xPos, float yPos, int time)
-    {
-        x = xPos switch
-        {
-            64 => -1.5f,
-            192 => -0.5f,
-            320 => 0.5f,
-            448 => 1.5f,
-            _ => x
-        };
-        hitTime = time;
-    }
+    private int offset;
+    
 
     private void Awake()
     {
@@ -46,13 +35,7 @@ public class NoteObject : MonoBehaviour
 
     private void Start()
     {
-        gameObject.SetActive(true);
-        endPosition = new Vector3(transform.position.x, -7, transform.position.y);
-        arTiming = Timing.ARTiming.getArTimingBiggerThanFive(AR);
-        startTime = hitTime - (int)Timing.ARTiming.getArTimingBiggerThanFive(AR);
-        AR = GameController.instance.noteSpeed;
-        var posX = gameObject.transform.position.x;
-        keyToPress = posX switch
+        keyToPress = x switch
         {
             -1.5f => KeyCode.A,
             -0.5f => KeyCode.S,
@@ -60,66 +43,54 @@ public class NoteObject : MonoBehaviour
             1.5f => KeyCode.L,
             _ => keyToPress
         };
+        gameObject.SetActive(true);
+        arTiming = Timing.ARTiming.GetArTimingBiggerThanFive(AR);
+        //startTime = hitTime - (int)Timing.ARTiming.GetArTimingBiggerThanFive(AR);
+        AR = GameController.instance.AR;
     }
 
     private void Update()
     {
-        if (startTime == GameController.instance.songTimeMs + GameController.instance.songOffset)
+        if (GameController.instance.gameHasStarted())
         {
             moveNote();
         }
-
         if (Input.GetKeyDown(keyToPress))
         {
             if (canBePressed)
             {
                 hit = true;
-                gameObject.SetActive(false);
-
-                if (transform.position.y > -3.3f || transform.position.y < -4.5)
+                if (GetSongTimeInMs() > hitTime - Timing.ODTiming.GetODTimingForPerfectHit(GameController.instance.GetOD()) + 360 || GetSongTimeInMs() < hitTime + Timing.ODTiming.GetODTimingForPerfectHit(GameController.instance.GetOD()) + 360)
                 {
-                    GameController.instance.Okhit();
+                    GameController.instance.PerfectHit();
                     Instantiate(OkHitEffect, new Vector3(0f, -0.7f, 0f), OkHitEffect.transform.rotation);
                 }
-                else if (transform.position.y > -3.5f || transform.position.y < -4.3)
+                else if (GetSongTimeInMs() > (hitTime - Timing.ODTiming.GetODTimingForGoodHit(GameController.instance.GetOD())) + 360 || GetSongTimeInMs() < hitTime + Timing.ODTiming.GetODTimingForGoodHit(GameController.instance.GetOD()) + 360 )
                 {
                     GameController.instance.GoodHit();
                     Instantiate(goodHitEffect, new Vector3(0f, -0.7f, 0f), OkHitEffect.transform.rotation);
                 }
                 else
                 {
-                    GameController.instance.PerfectHit();
+                    GameController.instance.Okhit();
                     Instantiate(perfectHitEffect, new Vector3(0f, -0.7f, 0f), OkHitEffect.transform.rotation);
                 }
+                gameObject.SetActive(false);
             }
-        }
-    }
-
-    private void checkForActivationTime()
-    {
-        if (startTime == Timing.ARTiming.getArTimingBiggerThanFive(AR))
-        {
-            transform.position = new Vector3(transform.position.x, transform.position.y - AR * Time.deltaTime, 0f);
         }
     }
 
     private void moveNote()
     {
-        rigidbody.WakeUp();
-        rigidbody.velocity = new Vector2(0, -AR);
-        // if (!isMoving)
-        // {
-        //     transform.position = Vector2.Lerp(
-        //         transform.position,
-        //         endPosition,
-        //         -AR
-        //     );    
-        //     isMoving = true;
-        // }
-        //transform.position = new Vector3(transform.position.x, transform.position.y - noteSpeed * Time.deltaTime, 0f);
-        
+        //rigidbody.velocity = new Vector2(0, -AR);
+        transform.position = new Vector3(transform.position.x, transform.position.y - AR * Time.deltaTime, 0f);
     }
-    
+
+    private float GetSongTimeInMs()
+    {
+        return GameController.instance.songPositionMs;
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Activator")) canBePressed = true;
@@ -132,6 +103,11 @@ public class NoteObject : MonoBehaviour
         if (hit) return;
         GameController.instance.NoteMiss();
         Instantiate(missEffect, new Vector3(0f, -0.7f, 0f), missEffect.transform.rotation);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+    }
+
+    public void SetActive()
+    {
+        gameObject.SetActive(true);
     }
 }

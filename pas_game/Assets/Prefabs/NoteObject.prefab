@@ -106,6 +106,7 @@ MonoBehaviour:
   x: 0
   y: 0
   arTiming: 0
+  pressTime: 0
   hitTime: 0
   startTime: 0
   canBePressed: 0
@@ -144,6 +145,6 @@ Rigidbody2D:
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
-  m_SleepingMode: 2
+  m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 5

@@ -6,15 +6,17 @@ namespace Timing
 {
     public class ARTiming
     {
-        public static float getArLessTimingThanFive(float AR)
+        public static float GetArLessTimingThanFive(float AR)
         {
-            var timing = ((-120 * AR) + 1800);
+            var mult = 120 * AR;
+            var timing =  mult + 1800;
             return timing;
         }
 
-        public static float getArTimingBiggerThanFive(float AR)
+        public static float GetArTimingBiggerThanFive(float AR)
         {
-            var timing = -150 * AR + 1950;
+            var mult = -150 * AR;
+            var timing = mult + 1950;
             return timing;
         }
     }
@@ -23,19 +25,19 @@ namespace Timing
     {
         public static float GetODTimingForPerfectHit(float OD)
         {
-            var timing = (-6 * OD) + 79.5f;
+            var timing = 64 - (OD * 3);
             return timing;
         }
 
         public static float GetODTimingForGoodHit(float OD)
         {
-            var timing = (-8 * OD) + 139.5f;
+            var timing = 127 - (OD * 3);
             return timing;
         }
 
         public static float GetODTimingForOkHit(float OD)
         {
-            var timing = (-10 * OD) + 199.5f;
+            var timing = 151 - (OD * 3);
             return timing;
         }
     }

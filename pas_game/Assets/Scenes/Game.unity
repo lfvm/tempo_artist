@@ -469,15 +469,17 @@ MonoBehaviour:
   lane4: {fileID: 25421090}
   lanes: []
   notes: []
-  songBpm: 174
+  songBpm: 170
   secPerBeat: 0
   songPosition: 0
+  songPositionMs: 0
   songPositionInBeats: 0
-  songTimeMs: 0
   dspSongTime: 0
-  noteSpeed: 10
+  gameTimeMS: 0
   timer: 0
-  songOffset: -200
+  AR: 10
+  OD: 7
+  offset: 0
   scoreText: {fileID: 1070867189}
   comboText: {fileID: 1745913304}
   msText: {fileID: 1768966926}
@@ -768,7 +770,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: c33db865077879e4396e11c5227ea04e, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 5b11658ebc0397242ba52cd0864376e4, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -862,7 +864,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 537407670}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
