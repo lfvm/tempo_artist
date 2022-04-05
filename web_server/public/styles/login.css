@@ -1,12 +1,24 @@
-html, body { margin: 0; padding: 0; }
-
-form{
-    margin-top: auto;
-    margin-right: auto; 
-    margin-left: auto; 
-    width: 800px;
-
-
-    justify-content: center;
-
+.bg-image-vertical {
+    position: relative;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    background-position: right center;
+    background-size: auto 100%;
+    }
+    
+    @media (min-width: 1025px) {
+    .h-custom-2 {
+    height: 100%;
+    }
 }
+
+.link-info{
+    color: blue;
+}
+
+.btn{
+    background-color: blue;
+    color: white;
+    border: none;
+}
+
