@@ -12,6 +12,13 @@ router.get('/', (req, res) => {
 
 
 
+router.get('/login', (req, res) => {
+
+    //Mandar un html que se encuentra en la carpeta public
+    res.sendFile('login.html', { root: ( './public/') });
+});
+
+
 // Definir una ruta "comodin" por si se accede a una ruta inexistente
 //Para ello se utiliza el simbolo *
 router.get('*'  , (req,res) => {

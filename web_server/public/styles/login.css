@@ -1,0 +1,12 @@
+html, body { margin: 0; padding: 0; }
+
+form{
+    margin-top: auto;
+    margin-right: auto; 
+    margin-left: auto; 
+    width: 800px;
+
+
+    justify-content: center;
+
+}

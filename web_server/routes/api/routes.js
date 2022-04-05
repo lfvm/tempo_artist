@@ -1,12 +1,12 @@
 const express = require('express');
 let router = express.Router();
-
+const connection = require('../../db/db_config')
 
 
 router.get('/', (req, res) => {
 
     res.json({
-        message: 'Api get'
+        message: 'Api get',
     });
 });
 
