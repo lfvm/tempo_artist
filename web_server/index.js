@@ -9,7 +9,7 @@ const pages = require('./routes/screens/routes');
 
 
 //Definir puerto en donde correra la app
-port = 8080;
+PORT = 8080;
 
 
 
@@ -32,6 +32,6 @@ app.use('/api', Apiroutes);
 
 
 
-app.listen( port, () => {
-    console.log(`App corriendo en http://localhost:${port}`)
+app.listen( PORT, () => {
+    console.log(`App corriendo en http://localhost:${PORT}`)
 })
