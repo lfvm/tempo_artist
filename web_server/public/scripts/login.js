@@ -15,12 +15,14 @@ const handleLogin = async(e) => {
         return alert('Please fill in all fields');
     }
 
-    //Guardar los datos en el localStorage
-    localStorage.setItem('mail', email);
+    
 
 
     //TODO: Enviar los datos al servidor para validar, en caso de ser correctos ir a home, de lo contrario mostrar mensaje de error
     
+
+    //Guardar los datos en el localStorage en caso de que el login sea exitoso
+    localStorage.setItem('mail', email);
 
     //Redirigir a home
     window.location.href = '/';
