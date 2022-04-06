@@ -17,7 +17,6 @@ const handleLogin = async(e) => {
 
     //Guardar los datos en el localStorage
     localStorage.setItem('mail', email);
-    localStorage.setItem('password', password);
 
 
     //TODO: Enviar los datos al servidor para validar, en caso de ser correctos ir a home, de lo contrario mostrar mensaje de error
