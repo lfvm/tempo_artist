@@ -7,7 +7,7 @@ CREATE TABLE `usuarios`(
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
     `nombre` VARCHAR(255) NOT NULL,
     `apellidos` VARCHAR(255) NOT NULL,
-    `correo` VARCHAR(255) NOT NULL,
+    `correo` VARCHAR(255) NOT NULL UNIQUE ,
     `contraseña` VARCHAR(255) NOT NULL,
     `genero` CHAR(255) NOT NULL,
     `fecha_creacion` DATETIME NOT NULL,
