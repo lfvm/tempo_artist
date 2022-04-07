@@ -1,4 +1,5 @@
 const express = require('express');
+const { createUser } = require('../../controllers/user');
 let router = express.Router();
 const connection = require('../../db/db_config')
 
@@ -37,9 +38,24 @@ router.get('/', async(req, res) => {
 //Ruta para crear un usuario
 router.post('/nuevo', async(req, res) => {
 
-    res.json({
-        status: 'success',
-    })
+    const user = req.body;
+
+    const response = await createUser(user);
+
+    if (response != false){
+        console.log(response)
+        return res.json({
+            status: 'Usuario creado correctamente',
+            response,
+        });
+
+    }
+
+
+    return res.json({
+        msg: 'error al crear cuenta'
+    });
+  
 
 });
 

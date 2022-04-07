@@ -52,3 +52,35 @@ function type_effect(){
 function main(){
     type_effect()
 }
+
+const handleCreateAccount = async(e) => {
+
+    e.preventDefault();
+    const form = document.getElementById('create_account_form');
+
+    //Obtener los datos del formulario
+    const data = {
+        correo: form[0].value,
+        password: form[1].value,
+        nombre: form[2].value,
+        apellidos: form[3].value,
+        gender: form[4].value,
+        instrumento: form[5].value,
+        edad: form[6].value
+    }
+    
+
+
+    fetch('http://localhost:8080/api/usuarios/nuevo', {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {"Content-type": "application/json; charset=UTF-8"}
+    })
+        .then((response) => { 
+            console.log(response.json())
+        }) 
+        .catch(err => console.log(err));
+}
+
+
+
