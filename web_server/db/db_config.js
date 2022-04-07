@@ -5,10 +5,10 @@
 
 var mysql = require('mysql');
 var connection = mysql.createConnection({
-  host :"us-cdbr-east-03.cleardb.com",
-  user: "b64c03ae0a0611",
-  password: "ddc2b455",
-  database: "heroku_1a3d473a4d95416"
+  host :"us-cdbr-east-05.cleardb.net",
+  user: "bdc4a16bdf0c22",
+  password: "ff9c831b",
+  database: "heroku_54233b1e776c413"
 });
 
 
