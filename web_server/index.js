@@ -4,7 +4,9 @@ const { request } = require('express');
 const express = require('express');
 const cors = require('cors');
 const app = express();
-const Apiroutes = require('./routes/api/routes');
+const users = require('./routes/api/users');
+const punctuations = require('./routes/api/puntuaciones');
+
 const pages = require('./routes/screens/routes');
 
 
@@ -22,16 +24,17 @@ app.use( express.static('public') );
 
 
 
-//Definiir rutas
+//Definiir rutas de la api
+app.use('/api/usuarios', users);
+app.use('/api/puntuaciones', punctuations);
 
-//paginas que se muestran al usar la app
+
+//paginas que se muestran al usar la app;
 app.use('/', pages);
-
-//rutas para utilizar la api
-app.use('/api', Apiroutes);
 
 
 
 app.listen( PORT, () => {
     console.log(`App corriendo en http://localhost:${PORT}`)
 })
+
