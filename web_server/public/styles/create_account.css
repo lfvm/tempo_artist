@@ -28,3 +28,14 @@
     margin: auto;
     padding: 10px;
 }
+
+
+#exampleFormControlSelect1{
+    margin-bottom: 1em;
+}
+
+
+input[type=number]
+{
+  margin-left: 1em;
+}
