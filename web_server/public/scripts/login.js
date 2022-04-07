@@ -30,7 +30,28 @@ const handleLogin = async(e) => {
 }
 
 
+function type_effect(){
+    let i = 0
+    let placeholder_1 = ""
+    let placeholder_2 = ""
+    const txt_1 = "example@mail.com"
+    const txt_2 = "password"
+    const speed = 150
 
+    function effect(){
+        placeholder_1 += txt_1.charAt(i)
+        placeholder_2 += txt_2.charAt(i)
+        document.getElementById("exampleInputEmail1").setAttribute("placeholder", placeholder_1)
+        document.getElementById("exampleInputPassword1").setAttribute("placeholder", placeholder_2)
+        i++
+        setTimeout(effect, speed)
+    } 
+    effect()
+}
+
+function main(){
+    type_effect()
+}
 
 const handleCreateAccount = async(e) => {
 
@@ -59,7 +80,7 @@ const handleCreateAccount = async(e) => {
             console.log(response.json())
         }) 
         .catch(err => console.log(err));
-
-
-
 }
+
+
+

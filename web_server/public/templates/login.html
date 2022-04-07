@@ -9,16 +9,16 @@
     <script src="../scripts/login.js"></script>
     <title>Login</title>
 </head>
-<body class="bg-dark text-light">
+<body class="bg-dark text-light" onload="main()">
 
   <div class="intro">
-    <h2 class="title">Welcome to Tempo Artist!</h2>
+    <h6>Welcome to</h6>
+    <h1 class="title"> Tempo Artist! </h1>
     <p>To use our service please log in:</p>
 
   </div>
 
-
-
+  
   <div class="content text-light">
 
     <div class="creation_form">
@@ -26,7 +26,7 @@
         <form onsubmit="handleLogin(event)" id="login_form">
           <div class="form-group text-light">
             <label for="exampleInputEmail1">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="example@gmail.com">
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
           </div>
           <div class="form-group text-light">
             <label for="exampleInputPassword1">Password</label>
