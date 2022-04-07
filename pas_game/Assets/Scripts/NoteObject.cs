@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class NoteObject : MonoBehaviour
 {
-    public Rigidbody2D rigidbody;
+    public new Rigidbody2D rigidbody;
     public GameObject OkHitEffect, goodHitEffect, perfectHitEffect, missEffect;
     public KeyCode keyToPress;
     
@@ -45,7 +45,6 @@ public class NoteObject : MonoBehaviour
         };
         gameObject.SetActive(true);
         arTiming = Timing.ARTiming.GetArTimingBiggerThanFive(AR);
-        //startTime = hitTime - (int)Timing.ARTiming.GetArTimingBiggerThanFive(AR);
         AR = GameController.instance.AR;
     }
 
@@ -53,37 +52,37 @@ public class NoteObject : MonoBehaviour
     {
         if (GameController.instance.gameHasStarted())
         {
-            moveNote();
+            StartCoroutine(MoveNote());
         }
-        if (Input.GetKeyDown(keyToPress))
+
+        if (!Input.GetKeyDown(keyToPress)) return;
+        if (!canBePressed) return;
+        
+        hit = true;
+        
+        if (GetSongTimeInMs() > hitTime - Timing.ODTiming.GetODTimingForPerfectHit(GameController.instance.GetOD()) + 360 || GetSongTimeInMs() < hitTime + Timing.ODTiming.GetODTimingForPerfectHit(GameController.instance.GetOD()) + 360)
         {
-            if (canBePressed)
-            {
-                hit = true;
-                if (GetSongTimeInMs() > hitTime - Timing.ODTiming.GetODTimingForPerfectHit(GameController.instance.GetOD()) + 360 || GetSongTimeInMs() < hitTime + Timing.ODTiming.GetODTimingForPerfectHit(GameController.instance.GetOD()) + 360)
-                {
-                    GameController.instance.PerfectHit();
-                    Instantiate(OkHitEffect, new Vector3(0f, -0.7f, 0f), OkHitEffect.transform.rotation);
-                }
-                else if (GetSongTimeInMs() > (hitTime - Timing.ODTiming.GetODTimingForGoodHit(GameController.instance.GetOD())) + 360 || GetSongTimeInMs() < hitTime + Timing.ODTiming.GetODTimingForGoodHit(GameController.instance.GetOD()) + 360 )
-                {
-                    GameController.instance.GoodHit();
-                    Instantiate(goodHitEffect, new Vector3(0f, -0.7f, 0f), OkHitEffect.transform.rotation);
-                }
-                else
-                {
-                    GameController.instance.Okhit();
-                    Instantiate(perfectHitEffect, new Vector3(0f, -0.7f, 0f), OkHitEffect.transform.rotation);
-                }
-                gameObject.SetActive(false);
-            }
+            GameController.instance.PerfectHit();
+            Instantiate(OkHitEffect, new Vector3(0f, -0.7f, 0f), OkHitEffect.transform.rotation);
         }
+        else if (GetSongTimeInMs() > (hitTime - Timing.ODTiming.GetODTimingForGoodHit(GameController.instance.GetOD())) + 360 || GetSongTimeInMs() < hitTime + Timing.ODTiming.GetODTimingForGoodHit(GameController.instance.GetOD()) + 360 )
+        {
+            GameController.instance.GoodHit();
+            Instantiate(goodHitEffect, new Vector3(0f, -0.7f, 0f), OkHitEffect.transform.rotation);
+        }
+        else
+        {
+            GameController.instance.Okhit();
+            Instantiate(perfectHitEffect, new Vector3(0f, -0.7f, 0f), OkHitEffect.transform.rotation);
+        }
+        gameObject.SetActive(false);
     }
 
-    private void moveNote()
+    IEnumerator MoveNote()
     {
-        //rigidbody.velocity = new Vector2(0, -AR);
-        transform.position = new Vector3(transform.position.x, transform.position.y - AR * Time.deltaTime, 0f);
+        transform.Translate(Vector3.down * AR * Time.smoothDeltaTime);
+        yield return null;
+
     }
 
     private float GetSongTimeInMs()
