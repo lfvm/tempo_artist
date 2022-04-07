@@ -60,12 +60,8 @@ public class GameController : MonoBehaviour
 
     private float deltaTime;
     private float lastTime;
-    
-    private bool hasStarted;
-    private bool songHasStarted;
-    //private bool paused;
 
-    private bool timeChecked;
+    private bool hasStarted;
     
     private void Start()
     {
@@ -117,7 +113,6 @@ public class GameController : MonoBehaviour
         {
             gameTimeMS = gameStopwatch.ElapsedMilliseconds;
             dspSongTime = (float) AudioSettings.dspTime;
-            timeChecked = true;
             songPosition = (float) (AudioSettings.dspTime - dspSongTime);
             songPositionMs = (int)GetElapsedSongTime();
             msText.text = songPositionMs.ToString();
