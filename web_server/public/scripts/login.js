@@ -13,7 +13,7 @@ const handleLogin = async(e) => {
 
     if (email === '' || password === '') {
         //TODO: Hacer que se quite el alert
-        addAlert()
+        addAlert("Please fill in all the required fields.");
     } else {
 
         //TODO: Enviar los datos al servidor para validar, en caso de ser correctos ir a home, de lo contrario mostrar mensaje de error
@@ -51,9 +51,22 @@ const handleCreateAccount = async(e) => {
         body: JSON.stringify(data),
         headers: {"Content-type": "application/json; charset=UTF-8"}
     })
-        .then((response) => { 
-            console.log(response.json())
-        }) 
+        .then( res => res.json())
+        .then(response => {
+            
+            console.log(response);
+
+            if(response['msg'] === 'ok'){
+            
+                localStorage.setItem('mail',form[0].value);
+                window.location.href = '/';
+    
+            } else {
+
+                addAlert("There was an error while creating your account, please try again.");
+            }
+
+        })
         .catch(err => console.log(err));
 }
 
@@ -78,17 +91,17 @@ const type_effect = async(e) => {
 
 
 
-function addAlert(){
+function addAlert(text){
     let form = document.getElementById("login_form");
 
     div = document.createElement("div");
 
-    div.setAttribute("class", "alert alert-danger");
+    div.setAttribute("class", "alert alert-danger alert-dismissible fade show");
     div.setAttribute("role", "alert");
     //txt = document.createTextNode("Llena todos los campos.")
-    div.appendChild(document.createTextNode("Please fill in all the required fields."))
+    div.appendChild(document.createTextNode(text))
 
-    form.appendChild(div)
+    document.body.appendChild(div)
 }
 
 function main(){
