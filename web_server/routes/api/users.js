@@ -1,7 +1,10 @@
 const express = require('express');
 const { createUser } = require('../../controllers/user');
 let router = express.Router();
-const connection = require('../../db/db_config')
+const { check } = require('express-validator');
+
+const connection = require('../../db/db_config');
+const { validateRequestFields } = require('../../middlewares/validar_campos');
 
 //Archivo para manejar operaciones CRUD con las puntuaciones
 
@@ -9,7 +12,6 @@ const connection = require('../../db/db_config')
 //Ruta para obtener todos los usuarios
 router.get('/', async(req, res) => {
 
-    await connection.connect();
 
 
     connection.query(`SELECT * FROM USUARIOS`, (err, rows, fields) => {
@@ -29,35 +31,24 @@ router.get('/', async(req, res) => {
         }
     });
 
-    connection.end();
 
 
 });
 
 
 //Ruta para crear un usuario
-router.post('/nuevo', async(req, res) => {
+router.post('/nuevo', [
 
-    const user = req.body;
+    check('correo', 'El correo es obligatorio').isEmail(),
+    check('password', 'La contraseña es obligatoria').not().isEmpty(),
+    check('nombre', 'el nombre es obligatorio').not().isEmpty(),
+    check('gender', 'El genero es obligatiorio').not().isEmpty(),
+    check('apellidos', 'El apellido es obligatorio').not().isEmpty(),
+    check('edad', 'La edad es obligatoria').not().isEmpty(),
+    check('instrumento', 'el instrumento es obligatorio').not().isEmpty(),
+    validateRequestFields
 
-    const response = await createUser(user);
-
-    if (response != false){
-        console.log(response)
-        return res.json({
-            status: 'Usuario creado correctamente',
-            response,
-        });
-
-    }
-
-
-    return res.json({
-        msg: 'error al crear cuenta'
-    });
-  
-
-});
+],createUser);
 
 
 
