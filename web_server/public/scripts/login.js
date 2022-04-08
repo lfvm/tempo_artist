@@ -76,6 +76,8 @@ const type_effect = async(e) => {
     effect();
 }
 
+
+
 function addAlert(){
     let form = document.getElementById("login_form");
 
@@ -84,7 +86,7 @@ function addAlert(){
     div.setAttribute("class", "alert alert-danger");
     div.setAttribute("role", "alert");
     //txt = document.createTextNode("Llena todos los campos.")
-    div.appendChild(document.createTextNode("Llena todos los campos."))
+    div.appendChild(document.createTextNode("Please fill in all the required fields."))
 
     form.appendChild(div)
 }
