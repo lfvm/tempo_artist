@@ -469,7 +469,7 @@ MonoBehaviour:
   lane4: {fileID: 25421090}
   lanes: []
   notes: []
-  songBpm: 170
+  songBpm: 200
   secPerBeat: 0
   songPosition: 0
   songPositionMs: 0
@@ -479,7 +479,7 @@ MonoBehaviour:
   timer: 0
   AR: 10
   OD: 7
-  offset: 0
+  offset: 1000
   scoreText: {fileID: 1070867189}
   comboText: {fileID: 1745913304}
   msText: {fileID: 1768966926}
@@ -770,7 +770,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 5b11658ebc0397242ba52cd0864376e4, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 722b26822f39bac4dba4c3a41871705a, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

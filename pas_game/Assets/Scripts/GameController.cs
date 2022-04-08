@@ -83,7 +83,7 @@ public class GameController : MonoBehaviour
         lanes.Add(lane4);
 
         var JsonParser = new JsonParser();
-        beatmap = JsonParser.JsonToBeatmap("Assets/Beatmaps/BeastBassBomb/BEAST BASS BOMB.json");
+        beatmap = JsonParser.JsonToBeatmap("Assets/Beatmaps/blue zenith/Blue Zenith.json");
         
         createNotesFromBeatmap();
     }
