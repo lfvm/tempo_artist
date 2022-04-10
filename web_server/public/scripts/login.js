@@ -1,7 +1,5 @@
 //Scripts para manejar la pantalla del login 
 
-
-
 const handleLogin = async(e) => {
 
     e.preventDefault();
@@ -12,8 +10,14 @@ const handleLogin = async(e) => {
     const password = loginForm[1].value;
 
     if (email === '' || password === '') {
-        //TODO: Hacer que se quite el alert
-        addAlert("Please fill in all the required fields.");
+        
+        // Validar si ya esta el alert en pantalla
+        if (alertInScreen()){
+            addAlert("Please fill in all the required fields.");
+            //TODO: Hacer que se quite el red highlight del input
+            redInputs(document.getElementById("exampleInputEmail1"));   
+        }
+        
     } else {
 
         //TODO: Enviar los datos al servidor para validar, en caso de ser correctos ir a home, de lo contrario mostrar mensaje de error
@@ -26,7 +30,6 @@ const handleLogin = async(e) => {
         window.location.href = '/';
     }
 }
-
 
 const handleCreateAccount = async(e) => {
 
@@ -89,8 +92,6 @@ const type_effect = async(e) => {
     effect();
 }
 
-
-
 function addAlert(text){
     let form = document.getElementById("login_form");
 
@@ -98,10 +99,18 @@ function addAlert(text){
 
     div.setAttribute("class", "alert alert-danger alert-dismissible fade show");
     div.setAttribute("role", "alert");
-    //txt = document.createTextNode("Llena todos los campos.")
     div.appendChild(document.createTextNode(text))
 
-    document.body.appendChild(div)
+    form.appendChild(div)
+}
+
+function redInputs(input){
+    input.classList.add("class", "is-invalid");
+}
+
+function alertInScreen(){
+    let form = document.getElementById('login_form');
+    return form.lastElementChild.className == "login_btn";
 }
 
 function main(){
