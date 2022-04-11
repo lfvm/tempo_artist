@@ -1,14 +1,16 @@
-//Scripts para manejar la pantalla del login 
 
 const handleLogin = async(e) => {
 
+    //Funcion para hacer login e ir a home
+
     e.preventDefault();
 
+    //Obtener los datos del form
     const loginForm = document.getElementById('login_form');
-
     const email = loginForm[0].value;
     const password = loginForm[1].value;
 
+    //Verificar que los datos no esten vacios, de lo contrario mostrar mensaje de error
     if (email === '' || password === '') {
         redHighlights(email, password);
         
@@ -18,21 +20,66 @@ const handleLogin = async(e) => {
             shakeAlert();
         
     } else {
-        //TODO: Enviar los datos al servidor para validar, en caso de ser correctos ir a home, de lo contrario mostrar mensaje de error
-        
+       
+        const data = {correo : email, password}
 
-        //Guardar los datos en el localStorage en caso de que el login sea exitoso
-        localStorage.setItem('mail', email);
+        //Mandar request a la API
+        fetch('http://localhost:8080/api/usuarios/login', {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {"Content-type": "application/json; charset=UTF-8"}
+        })
+        .then( res => res.json())
+        .then(response => {
+            
+    
+            if(response['status'] === 'succes'){
+            
+                //Guardar los datos en el localStorage en caso de que el login sea exitoso
+                localStorage.setItem('mail', email);
+                //Redirigir a home
+                window.location.href = '/';
+    
+            } else {
+                
+                //Mostrar mensajes de error
+                if (alertInScreen()){
+                    addAlert(response['msg']);
+                }
+                else {
+                    shakeAlert();
+                }
+            }
 
-        //Redirigir a home
-        window.location.href = '/';
+        })
+        .catch(err => console.log(err));
     }
 }
+
+
+
 
 const handleCreateAccount = async(e) => {
 
     e.preventDefault();
+
     const form = document.getElementById('create_account_form');
+
+    //Verificar que todos los elementos tengan informacion  
+    for (let index = 0; index < form.elements.length; index++) {
+        const element = form.elements[index].value;
+
+        if ( element === "" ) {
+            if (alertInScreen())
+                addAlert("Please fill in all the required fields.");
+            else 
+                shakeAlert();
+            return;
+        }
+        
+    }
+    
+
 
     //Obtener los datos del formulario
     const data = {
@@ -44,9 +91,12 @@ const handleCreateAccount = async(e) => {
         instrumento: form[5].value,
         edad: form[6].value
     }
+
+
+
     
 
-
+    //Hacer llamada a la API
     fetch('http://localhost:8080/api/usuarios/nuevo', {
         method: "POST",
         body: JSON.stringify(data),
@@ -57,7 +107,7 @@ const handleCreateAccount = async(e) => {
             
             console.log(response);
 
-            if(response['msg'] === 'ok'){
+            if(response['status'] === 'succes'){
             
                 localStorage.setItem('mail',form[0].value);
                 window.location.href = '/';
@@ -70,6 +120,7 @@ const handleCreateAccount = async(e) => {
         })
         .catch(err => console.log(err));
 }
+
 
 const type_effect = async(e) => {
     let i = 0;
@@ -90,8 +141,20 @@ const type_effect = async(e) => {
     effect();
 }
 
+
+
 function addAlert(text){
-    let form = document.getElementById("login_form");
+
+    const pathname = window.location.pathname
+
+    let form;
+
+    if (pathname == '/create'){
+        form = document.getElementById("create_account_form");
+    } else{
+        form = document.getElementById("login_form");
+    }
+    
 
     div = document.createElement("div");
 
@@ -101,6 +164,9 @@ function addAlert(text){
 
     form.appendChild(div)
 }
+
+
+
 
 function redHighlights(email, password){
     // TODO: Limpiar este codigo
@@ -126,9 +192,19 @@ function redHighlights(email, password){
     }
 }
 
+
+
 function alertInScreen(){
-    let form = document.getElementById('login_form');
-    return form.lastElementChild.className == "login_btn";
+
+    const pathname = window.location.pathname
+
+    if (pathname === '/login'){
+        let form = document.getElementById('login_form');
+        return form.lastElementChild.className == "login_btn";
+    } else {
+        let form = document.getElementById('create_account_form');
+        return form.lastElementChild.className == "login_btn";
+    }
 }
 
 function shakeAlert(){
