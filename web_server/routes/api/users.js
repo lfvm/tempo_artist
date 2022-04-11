@@ -1,39 +1,14 @@
 const express = require('express');
-const { createUser } = require('../../controllers/user');
+const { createUser, getAllUsers, logUserIn } = require('../../controllers/user');
 let router = express.Router();
 const { check } = require('express-validator');
-
-const connection = require('../../db/db_config');
 const { validateRequestFields } = require('../../middlewares/validar_campos');
 
 //Archivo para manejar operaciones CRUD con las puntuaciones
 
 
 //Ruta para obtener todos los usuarios
-router.get('/', async(req, res) => {
-
-
-
-    connection.query(`SELECT * FROM USUARIOS`, (err, rows, fields) => {
-        
-        if (!err) {
-            res.json({
-                status: 'success', 
-                rows
-            });
-
-        } else {
-
-            res.json({
-                status: 'fail', 
-                'message': err
-            });
-        }
-    });
-
-
-
-});
+router.get('/', getAllUsers);
 
 
 //Ruta para crear un usuario
@@ -50,6 +25,11 @@ router.post('/nuevo', [
 
 ],createUser);
 
+router.post('/login', [
+    check('correo', 'El correo es obligatorio').isEmail(),
+    check('password', 'La contraseña es obligatoria').not().isEmpty(),
+    validateRequestFields
+],logUserIn);
 
 
 
