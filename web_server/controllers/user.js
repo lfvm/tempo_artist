@@ -22,14 +22,47 @@ const getAllUsers = (req,res) => {
     });
 }
 
+
+const getUserById = (req,res) => {
+
+    const id = req.params.id;
+    connection.query(`SELECT * FROM usuarios WHERE (id_usaurio=${id})`, (err, rows, fields) => {
+        
+        if (!err) {
+
+            if (rows.length < 1){
+
+                return res.json({
+                    status: 'fail', 
+                    msg: "no user with the given id"
+                });
+
+            }
+
+            const user = rows[0]
+            return res.json({
+                status: 'success', 
+                user
+            });
+
+        } else {
+
+            return res.json({
+                status: 'fail', 
+                'message': err
+            });
+        }
+    });
+}
+
+
 const createUser =  async( req, res ) => {
 
     //Guardar el usuaior en la base de datos
 
-    let date;
     let cliente = 'cliente'
-    let today = new Date().toLocaleDateString()
-
+    //Obtener fecha y tiempo actual
+    let today = new Date();
     let user  = req.body;
 
 
@@ -43,31 +76,29 @@ const createUser =  async( req, res ) => {
         rol,
         edad,
         toca_instrumento
-    )VALUES('${user.nombre}','${user.apellidos}','${user.correo}','${user.password}','${user.gender}','${date}','${cliente}','${user.edad}',${true});`
+    )VALUES('${user.nombre}','${user.apellidos}','${user.correo}','${user.password}','${user.gender}','${today}','${cliente}','${user.edad}',${true});`
 
 
     connection.query(query, function(err, rows, fields) {
 
-        if (err) {
+        if (!err) {
 
-            console.log( err);
+                  
             return res.json({
-                msg: "error",
-                error
+                status: "succes",
+                user
             });
+
         }
             
         return res.json({
-            msg: "ok",
-            user
+            status: "fail",
+            err
         });
     });
         
 
-    return res.json({
-        msg: "error",
-        error
-    });
+  
         
     
    
@@ -86,33 +117,33 @@ const logUserIn = async(req,res) => {
 
     connection.query(query, function(err, rows, fields) {
 
-        if (err) {
-            console.log( err);
+        if (!err) {
+             //Verfifcar que exista un usuario con ese mail y contraseña
+            if(rows.length < 1 ){
+
+                return res.json({
+                    status: "fail",
+                    msg: "Incorrect email or password"
+                });
+
+            }
+
+            //Mandar mensaje de exito
+            const user = rows[0]
             return res.json({
-                msg: "error",
-                error
+
+                status: "succes",
+                user
             });
+        
         }   
         
-        //Verfifcar que exista un usuario con ese mail y contraseña
-        if(rows.length < 1 ){
-
-            return res.json({
-                status: "auth error",
-                msg: "Incorrect email or password"
-            });
-
-        }
-
-        //Mandar mensaje de exito
-        const user = rows[0]
+        console.log( err);
         return res.json({
-
-            status: "succes",
-            user
+            status: "fail",
+            error
         });
-    
- 
+
     });
         
 
@@ -126,6 +157,7 @@ module.exports = {
 
     createUser,
     logUserIn,
-    getAllUsers
+    getAllUsers,
+    getUserById 
 
 }

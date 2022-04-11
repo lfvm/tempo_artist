@@ -1,5 +1,5 @@
 const express = require('express');
-const { createUser, getAllUsers, logUserIn } = require('../../controllers/user');
+const { createUser, getAllUsers, logUserIn, getUserById } = require('../../controllers/user');
 let router = express.Router();
 const { check } = require('express-validator');
 const { validateRequestFields } = require('../../middlewares/validar_campos');
@@ -9,6 +9,11 @@ const { validateRequestFields } = require('../../middlewares/validar_campos');
 
 //Ruta para obtener todos los usuarios
 router.get('/', getAllUsers);
+
+router.get('/:id',[
+    check('id', 'El id es obligatorio').not().isEmpty(),
+], getUserById);
+
 
 
 //Ruta para crear un usuario
