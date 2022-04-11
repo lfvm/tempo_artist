@@ -10,18 +10,14 @@ const handleLogin = async(e) => {
     const password = loginForm[1].value;
 
     if (email === '' || password === '') {
+        redHighlights(email, password);
         
-        // Validar si ya esta el alert en pantalla
-        if (alertInScreen()){
+        if (alertInScreen())
             addAlert("Please fill in all the required fields.");
-            //TODO: Hacer que se quite el red highlight del input
-            redInputs(document.getElementById("exampleInputEmail1"));   
-        } else {
+        else 
             shakeAlert();
-        }
         
     } else {
-
         //TODO: Enviar los datos al servidor para validar, en caso de ser correctos ir a home, de lo contrario mostrar mensaje de error
         
 
@@ -106,8 +102,28 @@ function addAlert(text){
     form.appendChild(div)
 }
 
-function redInputs(input){
-    input.classList.add("class", "is-invalid");
+function redHighlights(email, password){
+    // TODO: Limpiar este codigo
+    let email_input = document.getElementById("exampleInputEmail1");
+    let password_input = document.getElementById("exampleInputPassword1");
+
+    let email_label = document.querySelector("label[for=exampleInputEmail1]");
+    let password_label = document.querySelector("label[for=exampleInputPassword1]");
+
+
+    email_input.setAttribute("class", "form-control");
+    password_input.setAttribute("class", "form-control");
+    email_label.classList.remove("class", "set-red-label");
+    password_label.classList.remove("class", "set-red-label");
+
+    if (email === ''){
+        email_input.classList.add("class", "is-invalid")
+        email_label.classList.add("class", "set-red-label")
+    }
+    if (password === ''){
+        password_input.classList.add("class", "is-invalid");
+        password_label.classList.add("class", "set-red-label")
+    }
 }
 
 function alertInScreen(){
@@ -120,6 +136,7 @@ function shakeAlert(){
 
     alert[0].classList.add("apply-shake")
     
+    // Remover la animacion para que aparezca cada que se de click
     alert[0].addEventListener("animationend", (e) => {
         alert[0].classList.remove("apply-shake");
     }); 
