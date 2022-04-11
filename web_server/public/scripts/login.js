@@ -13,11 +13,7 @@ const handleLogin = async(e) => {
     //Verificar que los datos no esten vacios, de lo contrario mostrar mensaje de error
     if (email === '' || password === '') {
         redHighlights(email, password);
-        
-        if (alertInScreen())
-            addAlert("Please fill in all the required fields.");
-        else 
-            shakeAlert();
+        addAlert("Please fill in all the required fields.");
         
     } else {
        
@@ -43,12 +39,8 @@ const handleLogin = async(e) => {
             } else {
                 
                 //Mostrar mensajes de error
-                if (alertInScreen()){
-                    addAlert(response['msg']);
-                }
-                else {
-                    shakeAlert();
-                }
+                addAlert(response['msg']);
+                
             }
 
         })
@@ -58,43 +50,40 @@ const handleLogin = async(e) => {
 
 
 
-
 const handleCreateAccount = async(e) => {
 
     e.preventDefault();
 
     const form = document.getElementById('create_account_form');
 
-    //Verificar que todos los elementos tengan informacion  
-    for (let index = 0; index < form.elements.length; index++) {
-        const element = form.elements[index].value;
-
-        if ( element === "" ) {
-            if (alertInScreen())
-                addAlert("Please fill in all the required fields.");
-            else 
-                shakeAlert();
-            return;
-        }
-        
-    }
-    
-
-
     //Obtener los datos del formulario
+    const correo = form[0].value;
+    const password = form[1].value;
+    const nombre = form[2].value;
+    const apellidos = form[3].value;
+    const gender = form[4].value;
+    const instrumento = form[5].value;
+    const edad = form[6].value;
     const data = {
-        correo: form[0].value,
-        password: form[1].value,
-        nombre: form[2].value,
-        apellidos: form[3].value,
-        gender: form[4].value,
-        instrumento: form[5].value,
-        edad: form[6].value
+        correo,
+        password,        
+        nombre,
+        apellidos,
+        gender,
+        instrumento,
+        edad
     }
 
 
+    //verificar que los datos del objeto data no esten vacios
+    for (const element in data) {
 
-    
+        if (data[element] === ''){
+
+            addAlert("Please fill in all the required fields.");
+            return
+        }
+    }
 
     //Hacer llamada a la API
     fetch('http://localhost:8080/api/usuarios/nuevo', {
@@ -114,7 +103,12 @@ const handleCreateAccount = async(e) => {
     
             } else {
 
-                addAlert("There was an error while creating your account, please try again.");
+                //Verificar si el error es por correo ya existente
+                if(response['err']['code'] === 'ER_DUP_ENTRY'){
+                    addAlert("The email is already in use.");
+                } else {
+                    addAlert("There was an error while creating your account, please try again.");
+                }
             }
 
         })
@@ -145,26 +139,31 @@ const type_effect = async(e) => {
 
 function addAlert(text){
 
-    const pathname = window.location.pathname
-
-    let form;
-
-    if (pathname == '/create'){
-        form = document.getElementById("create_account_form");
-    } else{
-        form = document.getElementById("login_form");
-    }
+    if (alertInScreen()){
+        const pathname = window.location.pathname
     
+        let form;
+    
+        if (pathname == '/create'){
+            form = document.getElementById("create_account_form");
+        } else{
+            form = document.getElementById("login_form");
+        }
+        
+    
+        div = document.createElement("div");
+    
+        div.setAttribute("class", "alert alert-danger alert-dismissible fade show");
+        div.setAttribute("role", "alert");
+        div.appendChild(document.createTextNode(text))
+    
+        form.appendChild(div)
+    }
+    else {
+        shakeAlert();
+    }
 
-    div = document.createElement("div");
-
-    div.setAttribute("class", "alert alert-danger alert-dismissible fade show");
-    div.setAttribute("role", "alert");
-    div.appendChild(document.createTextNode(text))
-
-    form.appendChild(div)
 }
-
 
 
 
