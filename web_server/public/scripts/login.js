@@ -16,6 +16,8 @@ const handleLogin = async(e) => {
             addAlert("Please fill in all the required fields.");
             //TODO: Hacer que se quite el red highlight del input
             redInputs(document.getElementById("exampleInputEmail1"));   
+        } else {
+            shakeAlert();
         }
         
     } else {
@@ -111,6 +113,16 @@ function redInputs(input){
 function alertInScreen(){
     let form = document.getElementById('login_form');
     return form.lastElementChild.className == "login_btn";
+}
+
+function shakeAlert(){
+    let alert = document.getElementsByClassName("alert alert-danger alert-dismissible fade show");
+
+    alert[0].classList.add("apply-shake")
+    
+    alert[0].addEventListener("animationend", (e) => {
+        alert[0].classList.remove("apply-shake");
+    }); 
 }
 
 function main(){
