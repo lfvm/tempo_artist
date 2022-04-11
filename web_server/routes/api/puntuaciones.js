@@ -1,6 +1,6 @@
 const express = require('express');
+const { getAllPunctuations } = require('../../controllers/puntuations');
 let router = express.Router();
-const connection = require('../../db/db_config')
 
 
 //Archivo para manejar operaciones CRUD con los usuarios
@@ -8,32 +8,7 @@ const connection = require('../../db/db_config')
 
 
 //Ruta para obtener todas las puntuaciones
-router.get('/', async(req, res) => {
-
-    await connection.connect();
-
-
-    connection.query(`SELECT * FROM puntuaciones`, (err, rows, fields) => {
-        
-        if (!err) {
-            res.json({
-                status: 'success', 
-                rows
-            });
-
-        } else {
-
-            res.json({
-                status: 'fail', 
-                'message': err
-            });
-        }
-    });
-
-    connection.end();
-
-
-});
+router.get('/', getAllPunctuations);
 
 
 
