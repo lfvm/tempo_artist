@@ -14,6 +14,8 @@ public class NoteObject : MonoBehaviour
     public float arTiming;
     public float pressTime;
 
+    private float hitZoneY;
+
     private float songPosMs;
     
     public int hitTime;
@@ -35,6 +37,7 @@ public class NoteObject : MonoBehaviour
 
     private void Start()
     {
+        hitZoneY = GameController.instance.hitBox1.transform.position.y;
         keyToPress = x switch
         {
             -1.5f => KeyCode.A,
@@ -50,7 +53,7 @@ public class NoteObject : MonoBehaviour
 
     private void Update()
     {
-        if (GameController.instance.gameHasStarted())
+        if (GameController.instance.gameTimeMS >= (hitTime - arTiming) + GameController.instance.offset)
         {
             StartCoroutine(MoveNote());
         }
@@ -60,21 +63,7 @@ public class NoteObject : MonoBehaviour
         
         hit = true;
         
-        if (GetSongTimeInMs() > hitTime - Timing.ODTiming.GetODTimingForPerfectHit(GameController.instance.GetOD()) + 360 || GetSongTimeInMs() < hitTime + Timing.ODTiming.GetODTimingForPerfectHit(GameController.instance.GetOD()) + 360)
-        {
-            GameController.instance.PerfectHit();
-            Instantiate(OkHitEffect, new Vector3(0f, -0.7f, 0f), OkHitEffect.transform.rotation);
-        }
-        else if (GetSongTimeInMs() > (hitTime - Timing.ODTiming.GetODTimingForGoodHit(GameController.instance.GetOD())) + 360 || GetSongTimeInMs() < hitTime + Timing.ODTiming.GetODTimingForGoodHit(GameController.instance.GetOD()) + 360 )
-        {
-            GameController.instance.GoodHit();
-            Instantiate(goodHitEffect, new Vector3(0f, -0.7f, 0f), OkHitEffect.transform.rotation);
-        }
-        else
-        {
-            GameController.instance.Okhit();
-            Instantiate(perfectHitEffect, new Vector3(0f, -0.7f, 0f), OkHitEffect.transform.rotation);
-        }
+        CalculateNoteHitAccuracy();
         gameObject.SetActive(false);
     }
 
@@ -108,5 +97,24 @@ public class NoteObject : MonoBehaviour
     public void SetActive()
     {
         gameObject.SetActive(true);
+    }
+
+    void CalculateNoteHitAccuracy()
+    {
+        if (Mathf.Abs(transform.position.y - hitZoneY) >=  0.25f)
+        {
+            GameController.instance.Okhit();
+            Instantiate(perfectHitEffect, new Vector3(0f, -0.7f, 0f), OkHitEffect.transform.rotation);
+        }
+        else if (Mathf.Abs(transform.position.y - hitZoneY) >=  0.05f)
+        {
+            GameController.instance.GoodHit();
+            Instantiate(goodHitEffect, new Vector3(0f, -0.7f, 0f), OkHitEffect.transform.rotation);
+        }
+        else
+        {
+            GameController.instance.PerfectHit();
+            Instantiate(OkHitEffect, new Vector3(0f, -0.7f, 0f), OkHitEffect.transform.rotation);
+        }
     }
 }

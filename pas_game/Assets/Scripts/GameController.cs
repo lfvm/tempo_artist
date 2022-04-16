@@ -174,7 +174,7 @@ public class GameController : MonoBehaviour
                 _ => newX
             };
             
-            var note = Instantiate(noteObject, new Vector3(newX, y,0), Quaternion.identity);
+            var note = Instantiate(noteObject, new Vector3(newX, 7,0), Quaternion.identity);
             note.x = newX;
             note.y = y;
             note.hitTime = hitTime;
