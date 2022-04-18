@@ -62,7 +62,8 @@ const createUser =  async( req, res ) => {
 
     let cliente = 'cliente'
     //Obtener fecha y tiempo actual
-    let today = new Date();
+    let today = new Date().toISOString().slice(0, 19).replace('T', ' ');
+
     let user  = req.body;
 
 
