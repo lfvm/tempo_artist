@@ -29,6 +29,21 @@ router.get('/create', (req, res) => {
 });
 
 
+
+router.get('/stats', (req, res) => {
+
+    //Mandar un html que se encuentra en la carpeta public
+    res.sendFile('my_stats.html', { root: ( './public/templates') });
+});
+
+
+router.get('/account', (req, res) => {
+
+    //Mandar un html que se encuentra en la carpeta public
+    res.sendFile('my_account.html', { root: ( './public/templates') });
+});
+
+
 // Definir una ruta "comodin" por si se accede a una ruta inexistente
 //Para ello se utiliza el simbolo *
 router.get('*'  , (req,res) => {
