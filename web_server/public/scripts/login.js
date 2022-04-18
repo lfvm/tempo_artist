@@ -20,7 +20,7 @@ const handleLogin = async(e) => {
         const data = {correo : email, password}
 
         //Mandar request a la API
-        fetch('http://localhost:8080/api/usuarios/login', {
+        fetch('/api/usuarios/login', {
             method: "POST",
             body: JSON.stringify(data),
             headers: {"Content-type": "application/json; charset=UTF-8"}
@@ -91,7 +91,7 @@ const handleCreateAccount = async(e) => {
     }
 
     //Hacer llamada a la API
-    fetch('http://localhost:8080/api/usuarios/nuevo', {
+    fetch('/api/usuarios/nuevo', {
         method: "POST",
         body: JSON.stringify(data),
         headers: {"Content-type": "application/json; charset=UTF-8"}
