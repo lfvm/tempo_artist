@@ -33,6 +33,11 @@ const handleLogin = async(e) => {
             
                 //Guardar los datos en el localStorage en caso de que el login sea exitoso
                 localStorage.setItem('mail', email);
+                localStorage.setItem('nombre', response['user']['nombre']);
+                localStorage.setItem('apellidos', response['user']['apellidos']);
+                localStorage.setItem('id', response['user']['id_usaurio']);
+
+
                 //Redirigir a home
                 window.location.href = '/';
     
@@ -99,6 +104,9 @@ const handleCreateAccount = async(e) => {
             if(response['status'] === 'succes'){
             
                 localStorage.setItem('mail',form[0].value);
+                localStorage.setItem('nombre', response['user']['nombre']);
+                localStorage.setItem('apellidos', response['user']['apellidos']);
+                localStorage.setItem('id', response['id']);
                 window.location.href = '/';
     
             } else {
