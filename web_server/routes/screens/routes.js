@@ -7,7 +7,7 @@ let router = express.Router();
 router.get('/', (req, res) => {
 
     //Mandar un html que se encuentra en la carpeta public
-    res.sendFile('home.html', { root: ( './public/templates') });
+    res.sendFile('play.html', { root: ( './public/templates') });
 });
 
 
