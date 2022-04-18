@@ -87,7 +87,8 @@ const createUser =  async( req, res ) => {
                   
             return res.json({
                 status: "succes",
-                user
+                user, 
+                id: rows.insertId
             });
 
         }
