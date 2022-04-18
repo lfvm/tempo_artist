@@ -10,6 +10,9 @@ router.get('/', (req, res) => {
     res.sendFile('home.html', { root: ( './public/templates') });
 });
 
+
+
+
  
 
 router.get('/login', (req, res) => {
