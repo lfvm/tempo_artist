@@ -29,3 +29,41 @@ const setInputValues = () => {
 
 
 }
+
+const handleUpdateAccount = async(e) => {
+
+    const nombre = document.getElementById('name_input').value 
+    const apellidos = document.getElementById('last_input').value 
+    const correo = document.getElementById('email_input').value 
+    const id = localStorage.getItem('id');
+
+    const data = {
+        nombre,
+        apellidos,
+        correo
+    }
+
+    //Hcer la peticion para actualizar los datos
+    const response = await fetch(`/api/usuarios/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(res => res.json())
+    .then(res => {
+        console.log(res);
+        if(res.status == 'succes'){
+
+            //Actualizar los datos del local storage 
+            localStorage.setItem('nombre', nombre);
+            localStorage.setItem('apellidos', apellidos);
+            localStorage.setItem('mail', correo);
+            alert(res['msg']);
+
+            //Hacer refresh de la pagina
+            location.reload();
+
+        }
+    });
+}

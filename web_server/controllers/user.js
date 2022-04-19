@@ -158,10 +158,34 @@ const logUserIn = async(req,res) => {
 const updateUser = async(req,res) => {
 
     const id = req.params.id;
-    return res.json({
-        status: "succes",
-        id
+
+    const { nombre, correo, apellidos } = req.body;
+
+    const query = `
+    UPDATE usuarios SET
+    nombre = '${nombre}',
+    correo = '${correo}',
+    apellidos = '${apellidos}'
+    WHERE id_usaurio = ${id}
+    `
+
+    connection.query(query, function(err, rows, fields) {
+
+        if (!err) {
+            //Verfifcar que exista un usuario con ese mail y contraseña
+           return res.json({
+            status: "succes",
+            rows,
+            msg: "User updated succesfully"
+           });
+        } 
+
+        return res.json({
+            status: "fail",
+            msg : err
+        })
     });
+
 }
 
 module.exports = {
