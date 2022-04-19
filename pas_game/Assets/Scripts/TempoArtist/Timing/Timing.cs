@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace Timing
+namespace TempoArtist.Timing
 {
     public class ARTiming
     {
@@ -37,7 +33,7 @@ namespace Timing
 
         public static float GetODTimingForOkHit(float OD)
         {
-            var timing = 151 - (OD * 3);
+            var timing = 188 - (OD * 3);
             return timing;
         }
     }

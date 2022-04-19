@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6076951377677540043}
   - component: {fileID: -4003986703320866688}
   m_Layer: 0
-  m_Name: NoteObject
+  m_Name: HitObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -94,23 +94,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 6076951377677540044}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a9080c6fe4b6604d9dc6cf0d9969b66, type: 3}
+  m_Script: {fileID: 11500000, guid: 37b618c41aab4cf289dd9c65e4d28628, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigidbody: {fileID: 0}
-  OkHitEffect: {fileID: 5519818027030782101, guid: 59f1d66e401e01544860ef0ec46a5753, type: 3}
-  goodHitEffect: {fileID: 2853807391465890775, guid: ec6f9fc049e55e048be18e10cee5d7ea, type: 3}
-  perfectHitEffect: {fileID: 3280384965051186281, guid: f18afb26de4d47f40bc62f7c88c85512, type: 3}
-  missEffect: {fileID: 5850653165012320951, guid: a886a8785590c3348ac257c4d3c90ad4, type: 3}
-  keyToPress: 0
   x: 0
   y: 0
-  arTiming: 0
-  pressTime: 0
-  hitTime: 0
-  startTime: 0
-  canBePressed: 0
-  AR: 0
+  time: 0
+  queueId: 0
+  IsHitAttempted: 0
+  canBeHit: 0
+  keyToPress: 0
+  InteractionID: 0
+  AccuracyLaybackMs: 0
+  PerfectInteractionTimeInMs: 0
+  InteractionBoundsStartTimeInMs: 0
+  InteractionBoundsEndTimeInMs: 0
 --- !u!58 &6076951377677540043
 CircleCollider2D:
   m_ObjectHideFlags: 0

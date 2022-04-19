@@ -1,17 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 
-namespace BeatmapConverter
+namespace TempoArtist.Beatmaps
 {
     public class Beatmap
     {
         public Metadata metadata { get; set; }
         public DifficultyInfo difficulty { get; set; }
-        public List<HitObject> hitObjects { get; set; }
+        public List<BeatmapHitObject> hitObjects { get; set; }
     }
     
-    public class HitObject
+    public class BeatmapHitObject
     {
         public string x { get; set; }
         public string y { get; set; }
