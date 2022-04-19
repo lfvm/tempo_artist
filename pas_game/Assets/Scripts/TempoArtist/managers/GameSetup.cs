@@ -78,12 +78,12 @@ namespace TempoArtist
             
                 var hitObject = Instantiate(HitObject, new Vector3(newX, y,0), Quaternion.identity);
                 
-                hitObject.x = newX;
-                hitObject.y = y;
-                hitObject.time = time;
+                hitObject.X = newX;
+                hitObject.Y = y;
+                hitObject.Time = time;
 
                 hitObject.name = objectActivationQueue.Count + "-Hitcircle";
-                hitObject.queueId = objectActivationQueue.Count;
+                hitObject.QueueID = objectActivationQueue.Count;
                 
                 objectActivationQueue.Add(hitObject);
                 notes.Add(hitObject);

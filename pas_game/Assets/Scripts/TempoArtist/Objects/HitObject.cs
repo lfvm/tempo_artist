@@ -6,48 +6,63 @@ namespace TempoArtist.Objects
 {
     public class HitObject : MonoBehaviour
     {
+        public int Time
+        { 
+            get => time;
+            set => time = Time;
+        }
+        
+        public float X
+        {
+            get => x;
+            set => x = Y;
+        }
+        
+        public float Y
+        {
+            get => Y;
+            set => y = Y;
+        }
+        
+        public int QueueID
+        {
+            get => queueId;
+            set => QueueID = queueId;
+        }
+        
+        
         // Reference to the GameManager and GameSetup instances.
         private GameManager GameManager;
         private GameSetup GameSetup;
 
-        private GameObject hitZone;
-        
         // x and Y position of the note
-        public float x;
-        public float y;
-        
+        private float x;
+        private float y;
         // when the note has to be hit
-        public int time;
+        private int time;
         // When the note should become active
-        public float startTime;
+        private float startTime;
+        private float speed;
+        private int queueId;
 
-        public float speed;
+        private float scrollSpeed;
+        private float ODTimingOkHit;
+        private float ODTimingGoodHit;
+        private float ODTimingPerfectHit;
 
-        public int queueId;
-        
-        public bool IsHitAttempted;
-
-        public float scrollSpeed;
-
-        public bool canBeHit;
+        private bool canBeHit;
         private bool hit;
 
-        public KeyCode keyToPress;
+        private KeyCode keyToPress;
 
-        // public event EventHandler OnInteract;
-
-        public int InteractionID;
-        public int AccuracyLaybackMs;
-        public float PerfectInteractionTimeInMs;
-        public float InteractionBoundsStartTimeInMs;
-        public float InteractionBoundsEndTimeInMs;
+        private float PerfectInteractionTimeInMs;
+        private float InteractionBoundsStartTimeInMs;
+        private float InteractionBoundsEndTimeInMs;
 
         private void Awake()
         {
             GameManager = GameManager.instance;
             GameSetup = GameSetup.instance;
-
-            hitZone = GameObject.Find("HitZone1");
             
             transform.GetComponent<Rigidbody2D>().simulated = false;
             transform.GetComponent<CircleCollider2D>().enabled = true;
@@ -56,18 +71,15 @@ namespace TempoArtist.Objects
         
         void Start()
         {
-            keyToPress = x switch
-            {
-                -1.5f => KeyCode.A,
-                -0.5f => KeyCode.S,
-                0.5f => KeyCode.K,
-                1.5f => KeyCode.L,
-                _ => keyToPress
-            };
+            ODTimingOkHit = Timing.ODTiming.GetODTimingForOkHit(GameManager.OD);
+            ODTimingGoodHit = Timing.ODTiming.GetODTimingForGoodHit(GameManager.OD);
+            ODTimingPerfectHit = Timing.ODTiming.GetODTimingForPerfectHit(GameManager.OD);
             
+            SetKeyToPress();
+
             PerfectInteractionTimeInMs = time + GameManager.noteTimeOffset;
-            InteractionBoundsStartTimeInMs = PerfectInteractionTimeInMs - Timing.ODTiming.GetODTimingForOkHit(GameManager.OD);
-            InteractionBoundsEndTimeInMs = PerfectInteractionTimeInMs + Timing.ODTiming.GetODTimingForOkHit(GameManager.OD);
+            InteractionBoundsStartTimeInMs = PerfectInteractionTimeInMs - ODTimingOkHit;
+            InteractionBoundsEndTimeInMs = PerfectInteractionTimeInMs + ODTimingOkHit;
 
             scrollSpeed = GameManager.scrollSpeed;
             startTime = time - scrollSpeed;
@@ -85,10 +97,11 @@ namespace TempoArtist.Objects
             {
                 transform.GetComponent<Rigidbody2D>().simulated = true;
                 transform.GetComponent<CircleCollider2D>().enabled = true;
+                
                 if (Input.GetKeyDown(keyToPress))
                 {
-                    CalculateHitNoteAccuracy(GameManager.GetTimeInMs());
                     hit = true;
+                    CalculateHitNoteAccuracy(GameManager.GetTimeInMs());
                     gameObject.SetActive(false);
                 }
             }
@@ -101,43 +114,50 @@ namespace TempoArtist.Objects
             }
         }
 
-        private void CalculateHitNoteAccuracy(double time)
+        private void CalculateHitNoteAccuracy(double gameTime)
         {
-            if (time < PerfectInteractionTimeInMs + Timing.ODTiming.GetODTimingForPerfectHit(GameManager.OD) 
-                && time > PerfectInteractionTimeInMs - Timing.ODTiming.GetODTimingForPerfectHit(GameManager.OD))
+            if (gameTime < PerfectInteractionTimeInMs + ODTimingPerfectHit 
+                && gameTime > PerfectInteractionTimeInMs - ODTimingPerfectHit)
             {
                 GameManager.PerfectHit();
             }
-            else if (time > PerfectInteractionTimeInMs + Timing.ODTiming.GetODTimingForPerfectHit(GameManager.OD) &&
-                     time < PerfectInteractionTimeInMs + Timing.ODTiming.GetODTimingForOkHit(GameManager.OD) ||
-                     time < PerfectInteractionTimeInMs - Timing.ODTiming.GetODTimingForPerfectHit(GameManager.OD) &&
-                     time > PerfectInteractionTimeInMs - Timing.ODTiming.GetODTimingForOkHit(GameManager.OD))
+            else if (gameTime > PerfectInteractionTimeInMs + ODTimingPerfectHit &&
+                     gameTime < PerfectInteractionTimeInMs + ODTimingOkHit ||
+                     gameTime < PerfectInteractionTimeInMs - ODTimingPerfectHit &&
+                     gameTime > PerfectInteractionTimeInMs - ODTimingOkHit)
             {
                 GameManager.OkHit();
             }
             GameManager.GoodHit();
         }
 
+        private void SetKeyToPress()
+        {
+            keyToPress = x switch
+            {
+                -1.5f => KeyCode.A,
+                -0.5f => KeyCode.S,
+                0.5f => KeyCode.K,
+                1.5f => KeyCode.L,
+                _ => keyToPress
+            };  
+        }
+
         IEnumerator HitObjectMove()
         {
             speed = y / (scrollSpeed / 1000);
-            transform.Translate(Vector3.down * (speed * Time.deltaTime));
+            transform.Translate(Vector3.down * (speed * UnityEngine.Time.deltaTime));
             yield return null;
         }
 
-        public bool IsInInteractionBound(double time)
+        public bool IsInInteractionBound(double gameTime)
         {
-            if (time >= InteractionBoundsStartTimeInMs
-                && time <= InteractionBoundsEndTimeInMs)
+            if (gameTime >= InteractionBoundsStartTimeInMs
+                && gameTime <= InteractionBoundsEndTimeInMs)
             {
                 return true;
             }
             return false;
-        }
-
-        private void OnTriggerEnter(Collider other)
-        {
-            Debug.Log("a");
         }
 
         private void OnTriggerExit2D(Collider2D other)

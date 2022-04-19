@@ -28,20 +28,21 @@ namespace TempoArtist
         // Reference to the GameSetup object instance
         private GameSetup GameSetup;
         
-        private float scorePerOkNote = 50f;
-        private float scorePerGoodNote = 100f;
-        private float scorePerPerfectNote = 300f;
-        private float scorePerMiss = 0f;
+        private const float scorePerOkNote = 50f;
+        private const float scorePerGoodNote = 100f;
+        private const float scorePerPerfectNote = 300f;
+        private const float scorePerMiss = 0f;
 
         public int score;
         public int combo;
         public float health;
         public int scrollSpeed;
         public float OD;
+        public float HPDrain;
         
-        public int NextObjToHit = 0;
+        public int NextObjToHit = 0; 
         [SerializeField] private int nextObjectID;
-         private int NextObjToActivateID = 0;
+        private int NextObjToActivateID = 0;
 
         [SerializeField] private int okHits;
         [SerializeField] private int goodHits;
@@ -64,7 +65,7 @@ namespace TempoArtist
         
         public Text scoreText;
         public Text comboText;
-        public Text msText;
+        public Text timeText;
         public Text accuracyText;
         
         private Stopwatch Stopwatch { get; } = new Stopwatch();
@@ -101,7 +102,6 @@ namespace TempoArtist
             {
                 if (!GameSetup.MusicSource.isPlaying)
                     GameSetup.MusicSource.Play();
-                //handleHealth();
             }
             
             if (gameFinished)
@@ -113,10 +113,11 @@ namespace TempoArtist
             IterateObjectQueue();
             GetTimeInMs();
             
+            health = handleHealth();
             rank = calculateRank(); 
             accuracy = CalculateAccuracy();
             
-            msText.text = GetTimeInMs().ToString();
+            timeText.text = GetTimeInMs().ToString();
             accuracyText.text = CalculateAccuracy().ToString();
         }
 
@@ -145,9 +146,10 @@ namespace TempoArtist
             return accuracy;
         }
 
-        private void handleHealth()
+        private float handleHealth()
         {
-            throw new NotImplementedException();
+            health -= HPDrain * Time.deltaTime;
+            return health;
         }
 
         private string calculateRank()
@@ -168,25 +170,25 @@ namespace TempoArtist
 
         private void IterateObjectQueue()
         {
-            if (GetTimeInMs() >= GameSetup.objectActivationQueue[NextObjToActivateID].time - Timing.ODTiming.GetODTimingForOkHit(OD))
+            if (GetTimeInMs() >= GameSetup.objectActivationQueue[NextObjToActivateID].Time - Timing.ODTiming.GetODTimingForOkHit(OD))
             {
                 (GameSetup.objectActivationQueue[NextObjToActivateID]).gameObject.SetActive(true);
                 NextObjToActivateID++;
-
             }
+            
             if (nextObjectID == GameSetup.objectActivationQueue.Count && nextObjectID == GameSetup.objectInteractQueue.Count)
                 gameFinished = true;
         }
         
-        public void IterateInteractionQueue(int? thisId = null)
-        {
-            if (thisId != null)
-            {
-                NextObjToHit = (int)thisId + 1;
-                Debug.Log($"set nextHitObj to:{NextObjToHit}");
-                return;
-            }
-        }
+        // public void IterateInteractionQueue(int? thisId = null)
+        // {
+        //     if (thisId != null)
+        //     {
+        //         NextObjToHit = (int)thisId + 1;
+        //         Debug.Log($"set nextHitObj to:{NextObjToHit}");
+        //         return;
+        //     }
+        // }
 
         public double GetTimeInMs()
         {
@@ -213,24 +215,24 @@ namespace TempoArtist
 
         public void OkHit()
         {
+            NoteHit();
             Instantiate(OkHitEffect, new Vector3(0f, -0.7f, 0f), OkHitEffect.transform.rotation);
             score += (int)scorePerOkNote * combo;
-            NoteHit();
             okHits++;
         }
 
         public void GoodHit()
         {
-            Instantiate(goodHitEffect, new Vector3(0f, -0.7f, 0f), OkHitEffect.transform.rotation);
             NoteHit();
+            Instantiate(goodHitEffect, new Vector3(0f, -0.7f, 0f), OkHitEffect.transform.rotation);
             score += (int)scorePerGoodNote * combo;
             goodHits++;
         }
 
         public void PerfectHit()
         {
-            Instantiate(perfectHitEffect, new Vector3(0f, -0.7f, 0f), OkHitEffect.transform.rotation);
             NoteHit();
+            Instantiate(perfectHitEffect, new Vector3(0f, -0.7f, 0f), OkHitEffect.transform.rotation);
             score += (int)scorePerPerfectNote * combo;
             perfectHits++;
         }
