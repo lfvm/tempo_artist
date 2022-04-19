@@ -114,9 +114,9 @@ namespace TempoArtist
             IterateObjectQueue();
             GetTimeInMs();
             msText.text = GetTimeInMs().ToString();
-            rank = calculateRank();
-            accuracy = CalculateAccuracy();
-            accuracyText.text = CalculateAccuracy().ToString();
+            rank = calculateRank(); 
+            //accuracy = CalculateAccuracy();
+            //accuracyText.text = CalculateAccuracy().ToString();
         }
 
         private void callResultsWindow()
