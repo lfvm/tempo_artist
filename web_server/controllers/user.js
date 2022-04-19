@@ -155,11 +155,21 @@ const logUserIn = async(req,res) => {
 }
 
 
+const updateUser = async(req,res) => {
+
+    const id = req.params.id;
+    return res.json({
+        status: "succes",
+        id
+    });
+}
+
 module.exports = {
 
     createUser,
     logUserIn,
     getAllUsers,
-    getUserById 
+    getUserById,
+    updateUser 
 
 }

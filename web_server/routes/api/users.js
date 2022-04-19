@@ -1,5 +1,5 @@
 const express = require('express');
-const { createUser, getAllUsers, logUserIn, getUserById } = require('../../controllers/user');
+const { createUser, getAllUsers, logUserIn, getUserById, updateUser } = require('../../controllers/user');
 let router = express.Router();
 const { check } = require('express-validator');
 const { validateRequestFields } = require('../../middlewares/validar_campos');
@@ -30,12 +30,23 @@ router.post('/nuevo', [
 
 ],createUser);
 
+
+
 router.post('/login', [
     check('correo', 'El correo es obligatorio').isEmail(),
     check('password', 'La contraseña es obligatoria').not().isEmpty(),
     validateRequestFields
 ],logUserIn);
 
+
+
+router.put('/:id', [
+    check('id', 'El id es obligatorio').not().isEmpty(),
+    check('correo', 'El correo es obligatorio').isEmail(),
+    check('nombre', 'el nombre es obligatorio').not().isEmpty(),
+    check('apellidos', 'El apellido es obligatorio').not().isEmpty(),
+    validateRequestFields
+],updateUser);
 
 
 
