@@ -5,9 +5,11 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const users = require('./routes/api/users');
+const levels = require('./routes/api/levels');
 const punctuations = require('./routes/api/puntuaciones');
 
 const pages = require('./routes/screens/routes');
+const { check } = require('express-validator');
 
 
 //Definir puerto en donde correra la app
@@ -27,10 +29,14 @@ app.use( express.static('public') );
 //Definiir rutas de la api
 app.use('/api/usuarios', users);
 app.use('/api/puntuaciones', punctuations);
+app.use('/api/niveles', levels);
+
 
 
 //paginas que se muestran al usar la app;
-app.use('/', pages);
+app.use('/',[
+    check('id_usuario').not().isEmpty(),
+], pages);
 
 
 

@@ -4,13 +4,12 @@
   "description": "Primer ejemplo de api usando node y express",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "nodemon index.js",
     "start": "node index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "all": "^0.0.0",
     "cors": "^2.8.5",
     "express": "^4.17.3",
     "express-validator": "^6.14.0",

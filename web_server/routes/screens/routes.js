@@ -7,8 +7,11 @@ let router = express.Router();
 router.get('/', (req, res) => {
 
     //Mandar un html que se encuentra en la carpeta public
-    res.sendFile('home.html', { root: ( './public/templates') });
+    res.sendFile('play.html', { root: ( './public/templates') });
 });
+
+
+
 
  
 
@@ -23,6 +26,21 @@ router.get('/create', (req, res) => {
 
     //Mandar un html que se encuentra en la carpeta public
     res.sendFile('create_account.html', { root: ( './public/templates') });
+});
+
+
+
+router.get('/stats', (req, res) => {
+
+    //Mandar un html que se encuentra en la carpeta public
+    res.sendFile('my_stats.html', { root: ( './public/templates') });
+});
+
+
+router.get('/account', (req, res) => {
+
+    //Mandar un html que se encuentra en la carpeta public
+    res.sendFile('my_account.html', { root: ( './public/templates') });
 });
 
 

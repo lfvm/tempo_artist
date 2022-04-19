@@ -28,7 +28,13 @@ const getAllPunctuations = (req, res) => {
 
 
 
+const createPunctuation = (req, res) => {
 
+    return res.json({
+        status: 'success'
+    });
+
+}
 
 
 
@@ -36,6 +42,6 @@ const getAllPunctuations = (req, res) => {
 
 
 module.exports = {
-
+    createPunctuation,
     getAllPunctuations,
 }

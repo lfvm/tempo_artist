@@ -20,7 +20,7 @@ const handleLogin = async(e) => {
         const data = {correo : email, password}
 
         //Mandar request a la API
-        fetch('http://localhost:8080/api/usuarios/login', {
+        fetch('/api/usuarios/login', {
             method: "POST",
             body: JSON.stringify(data),
             headers: {"Content-type": "application/json; charset=UTF-8"}
@@ -33,6 +33,11 @@ const handleLogin = async(e) => {
             
                 //Guardar los datos en el localStorage en caso de que el login sea exitoso
                 localStorage.setItem('mail', email);
+                localStorage.setItem('nombre', response['user']['nombre']);
+                localStorage.setItem('apellidos', response['user']['apellidos']);
+                localStorage.setItem('id', response['user']['id_usaurio']);
+
+
                 //Redirigir a home
                 window.location.href = '/';
     
@@ -86,7 +91,7 @@ const handleCreateAccount = async(e) => {
     }
 
     //Hacer llamada a la API
-    fetch('http://localhost:8080/api/usuarios/nuevo', {
+    fetch('/api/usuarios/nuevo', {
         method: "POST",
         body: JSON.stringify(data),
         headers: {"Content-type": "application/json; charset=UTF-8"}
@@ -99,6 +104,9 @@ const handleCreateAccount = async(e) => {
             if(response['status'] === 'succes'){
             
                 localStorage.setItem('mail',form[0].value);
+                localStorage.setItem('nombre', response['user']['nombre']);
+                localStorage.setItem('apellidos', response['user']['apellidos']);
+                localStorage.setItem('id', response['id']);
                 window.location.href = '/';
     
             } else {

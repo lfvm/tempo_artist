@@ -478,8 +478,8 @@ MonoBehaviour:
   gameTimeMS: 0
   timer: 0
   AR: 10
-  OD: 7
-  offset: 1000
+  OD: 10
+  offset: -400
   scoreText: {fileID: 1070867189}
   comboText: {fileID: 1745913304}
   msText: {fileID: 1768966926}
