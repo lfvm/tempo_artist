@@ -103,17 +103,19 @@ namespace TempoArtist.Objects
 
         private void CalculateHitNoteAccuracy(double time)
         {
-            if (time >= this.time + Timing.ODTiming.GetODTimingForPerfectHit(GameManager.OD) 
-                || time <= this.time + Timing.ODTiming.GetODTimingForPerfectHit(GameManager.OD))
+            if (time < PerfectInteractionTimeInMs + Timing.ODTiming.GetODTimingForPerfectHit(GameManager.OD) 
+                && time > PerfectInteractionTimeInMs - Timing.ODTiming.GetODTimingForPerfectHit(GameManager.OD))
             {
                 GameManager.PerfectHit();
             }
-            else if (time >= this.time + Timing.ODTiming.GetODTimingForGoodHit(GameManager.OD)
-                     || time <= this.time + Timing.ODTiming.GetODTimingForGoodHit(GameManager.OD))
+            else if (time > PerfectInteractionTimeInMs + Timing.ODTiming.GetODTimingForPerfectHit(GameManager.OD) &&
+                     time < PerfectInteractionTimeInMs + Timing.ODTiming.GetODTimingForOkHit(GameManager.OD) ||
+                     time < PerfectInteractionTimeInMs - Timing.ODTiming.GetODTimingForPerfectHit(GameManager.OD) &&
+                     time > PerfectInteractionTimeInMs - Timing.ODTiming.GetODTimingForOkHit(GameManager.OD))
             {
-                GameManager.GoodHit();
+                GameManager.OkHit();
             }
-            GameManager.OkHit();
+            GameManager.GoodHit();
         }
 
         IEnumerator HitObjectMove()

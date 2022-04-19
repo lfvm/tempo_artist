@@ -28,10 +28,10 @@ namespace TempoArtist
         // Reference to the GameSetup object instance
         private GameSetup GameSetup;
         
-        private int scorePerOkNote = 50;
-        private int scorePerGoodNote = 100;
-        private int scorePerPerfectNote = 300;
-        private int scorePerMiss = 0;
+        private float scorePerOkNote = 50f;
+        private float scorePerGoodNote = 100f;
+        private float scorePerPerfectNote = 300f;
+        private float scorePerMiss = 0f;
 
         public int score;
         public int combo;
@@ -43,14 +43,14 @@ namespace TempoArtist
         [SerializeField] private int nextObjectID;
          private int NextObjToActivateID = 0;
 
-        private int okHits;
-        private int goodHits;
-        private int perfectHits;
-        private int missedHits;
+        [SerializeField] private int okHits;
+        [SerializeField] private int goodHits;
+        [SerializeField] private int perfectHits;
+        [SerializeField] private int missedHits;
 
         private string rank;
 
-        [SerializeField] private float accuracy;
+        [SerializeField] private double accuracy;
         
         private bool resultsCreated = false;
 
@@ -110,13 +110,14 @@ namespace TempoArtist
                 GameSetup.MusicSource.Stop();
             }
             
-            GameTimeMs = Stopwatch.ElapsedMilliseconds;
             IterateObjectQueue();
             GetTimeInMs();
-            msText.text = GetTimeInMs().ToString();
+            
             rank = calculateRank(); 
-            //accuracy = CalculateAccuracy();
-            //accuracyText.text = CalculateAccuracy().ToString();
+            accuracy = CalculateAccuracy();
+            
+            msText.text = GetTimeInMs().ToString();
+            accuracyText.text = CalculateAccuracy().ToString();
         }
 
         private void callResultsWindow()
@@ -137,10 +138,9 @@ namespace TempoArtist
             }
         }
 
-        private float CalculateAccuracy()
+        private double CalculateAccuracy()
         {
-            accuracy = ((scorePerPerfectNote * perfectHits) + (goodHits * scorePerGoodNote) +
-                        (okHits * scorePerOkNote) + (scorePerMiss * missedHits)) /
+            accuracy = (scorePerPerfectNote * perfectHits + goodHits * scorePerGoodNote + okHits * scorePerOkNote + scorePerMiss * missedHits) /
                        ((perfectHits + goodHits + okHits + missedHits) * scorePerPerfectNote);
             return accuracy;
         }
@@ -214,7 +214,7 @@ namespace TempoArtist
         public void OkHit()
         {
             Instantiate(OkHitEffect, new Vector3(0f, -0.7f, 0f), OkHitEffect.transform.rotation);
-            score += scorePerOkNote * combo;
+            score += (int)scorePerOkNote * combo;
             NoteHit();
             okHits++;
         }
@@ -223,7 +223,7 @@ namespace TempoArtist
         {
             Instantiate(goodHitEffect, new Vector3(0f, -0.7f, 0f), OkHitEffect.transform.rotation);
             NoteHit();
-            score += scorePerGoodNote * combo;
+            score += (int)scorePerGoodNote * combo;
             goodHits++;
         }
 
@@ -231,7 +231,7 @@ namespace TempoArtist
         {
             Instantiate(perfectHitEffect, new Vector3(0f, -0.7f, 0f), OkHitEffect.transform.rotation);
             NoteHit();
-            score += scorePerPerfectNote * combo;
+            score += (int)scorePerPerfectNote * combo;
             perfectHits++;
         }
 

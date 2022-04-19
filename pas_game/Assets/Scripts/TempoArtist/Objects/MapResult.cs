@@ -12,7 +12,7 @@ public class MapResult : MonoBehaviour
 
     public static string rank;
 
-    public static float accuracy;
+    public static double accuracy;
 
     // public static void Init(int score, int okHits, int goodHits, int perfectHits, int missedHits, int maxCombo, string rank, float accuracy, int totalNotes)
     // {
