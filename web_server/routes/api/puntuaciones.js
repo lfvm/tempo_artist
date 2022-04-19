@@ -17,7 +17,6 @@ router.post('/nueva',[
     check('id_usuario', "el id del usuario es obligatorio").not().isEmpty(),
     check('id_nivel',   "el id del nivel es obligatorio").not().isEmpty(),
     check('total_puntos',"los puntos son obligatorios").not().isEmpty(),
-    check('fecha', "la fecha es obligatoria").not().isEmpty(),
 
 
     validateRequestFields

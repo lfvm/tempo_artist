@@ -22,40 +22,6 @@ const getAllUsers = (req,res) => {
     });
 }
 
-
-const getUserById = (req,res) => {
-
-    const id = req.params.id;
-    connection.query(`SELECT * FROM usuarios WHERE (id_usaurio=${id})`, (err, rows, fields) => {
-        
-        if (!err) {
-
-            if (rows.length < 1){
-
-                return res.json({
-                    status: 'fail', 
-                    msg: "no user with the given id"
-                });
-
-            }
-
-            const user = rows[0]
-            return res.json({
-                status: 'success', 
-                user
-            });
-
-        } else {
-
-            return res.json({
-                status: 'fail', 
-                'message': err
-            });
-        }
-    });
-}
-
-
 const createUser =  async( req, res ) => {
 
     //Guardar el usuaior en la base de datos
@@ -65,6 +31,10 @@ const createUser =  async( req, res ) => {
     let today = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
     let user  = req.body;
+
+
+    //Convertir el string del instrumento a un boolean
+    user.instrumento = user.instrumento === 'yes' ? true : false;
 
 
     const query = `INSERT INTO usuarios (
@@ -77,7 +47,7 @@ const createUser =  async( req, res ) => {
         rol,
         edad,
         toca_instrumento
-    )VALUES('${user.nombre}','${user.apellidos}','${user.correo}','${user.password}','${user.gender}','${today}','${cliente}','${user.edad}',${true});`
+    )VALUES('${user.nombre}','${user.apellidos}','${user.correo}','${user.password}','${user.gender}','${today}','${cliente}','${user.edad}',${user.instrumento});`
 
 
     connection.query(query, function(err, rows, fields) {
@@ -193,7 +163,6 @@ module.exports = {
     createUser,
     logUserIn,
     getAllUsers,
-    getUserById,
     updateUser 
 
 }
