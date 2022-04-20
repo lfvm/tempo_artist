@@ -16,13 +16,13 @@ router.get('/', getAllUsers);
 //Ruta para crear un usuario
 router.post('/nuevo', [
 
-    check('correo', 'El correo es obligatorio').isEmail(),
+    check('mail', 'El correo es obligatorio').isEmail(),
     check('password', 'La contraseña es obligatoria').not().isEmpty(),
-    check('nombre', 'el nombre es obligatorio').not().isEmpty(),
+    check('name', 'el nombre es obligatorio').not().isEmpty(),
     check('gender', 'El genero es obligatiorio').not().isEmpty(),
-    check('apellidos', 'El apellido es obligatorio').not().isEmpty(),
-    check('edad', 'La edad es obligatoria').not().isEmpty(),
-    check('instrumento', 'el instrumento es obligatorio').not().isEmpty(),
+    check('last_name', 'El apellido es obligatorio').not().isEmpty(),
+    check('age', 'La edad es obligatoria').not().isEmpty(),
+    check('plays_instrument', 'el instrumento es obligatorio').not().isEmpty(),
     validateRequestFields
 
 ],createUser);
@@ -30,7 +30,7 @@ router.post('/nuevo', [
 
 
 router.post('/login', [
-    check('correo', 'El correo es obligatorio').isEmail(),
+    check('mail', 'El correo es obligatorio').isEmail(),
     check('password', 'La contraseña es obligatoria').not().isEmpty(),
     validateRequestFields
 ],logUserIn);
@@ -40,9 +40,9 @@ router.post('/login', [
 
 router.put('/:id', [
     check('id', 'El id es obligatorio').not().isEmpty(),
-    check('correo', 'El correo es obligatorio').isEmail(),
-    check('nombre', 'el nombre es obligatorio').not().isEmpty(),
-    check('apellidos', 'El apellido es obligatorio').not().isEmpty(),
+    check('mail', 'El correo es obligatorio').isEmail(),
+    check('name', 'el nombre es obligatorio').not().isEmpty(),
+    check('last_name', 'El apellido es obligatorio').not().isEmpty(),
     validateRequestFields
 ],updateUser);
 

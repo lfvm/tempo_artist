@@ -18,8 +18,8 @@ const logOut = (e) => {
 const setInputValues = () => {
 
     const mail = localStorage.getItem('mail');
-    const name = localStorage.getItem('nombre');
-    const lastName = localStorage.getItem('apellidos');
+    const name = localStorage.getItem('name');
+    const lastName = localStorage.getItem('last_name');
 
     document.getElementById('title').innerHTML = name + " " + lastName;
     document.getElementById('name_input').value = name;
@@ -32,19 +32,19 @@ const setInputValues = () => {
 
 const handleUpdateAccount = async(e) => {
 
-    const nombre = document.getElementById('name_input').value 
-    const apellidos = document.getElementById('last_input').value 
-    const correo = document.getElementById('email_input').value 
-    const id = localStorage.getItem('id');
+    const name = document.getElementById('name_input').value 
+    const last_name = document.getElementById('last_input').value 
+    const mail = document.getElementById('email_input').value 
+    const user_id = localStorage.getItem('id');
 
     const data = {
-        nombre,
-        apellidos,
-        correo
+        name,
+        last_name,
+        mail,
     }
 
     //Hcer la peticion para actualizar los datos
-    const response = await fetch(`/api/usuarios/${id}`, {
+    const response = await fetch(`/api/usuarios/${user_id}`, {
         method: 'PUT',
         body: JSON.stringify(data),
         headers: {
@@ -56,10 +56,9 @@ const handleUpdateAccount = async(e) => {
         if(res.status == 'succes'){
 
             //Actualizar los datos del local storage 
-            localStorage.setItem('nombre', nombre);
-            localStorage.setItem('apellidos', apellidos);
-            localStorage.setItem('mail', correo);
-            alert(res['msg']);
+            localStorage.setItem('name', name);
+            localStorage.setItem('last_name', last_name);
+            localStorage.setItem('mail', mail);
 
             //Hacer refresh de la pagina
             location.reload();

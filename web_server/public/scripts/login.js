@@ -7,17 +7,17 @@ const handleLogin = async(e) => {
 
     //Obtener los datos del form
     const loginForm = document.getElementById('login_form');
-    const email = loginForm[0].value;
+    const mail = loginForm[0].value;
     const password = loginForm[1].value;
 
     //Verificar que los datos no esten vacios, de lo contrario mostrar mensaje de error
-    if (email === '' || password === '') {
+    if (mail === '' || password === '') {
         redHighlights(email, password);
         addAlert("Please fill in all the required fields.");
         
     } else {
        
-        const data = {correo : email, password}
+        const data = {mail, password}
 
         //Mandar request a la API
         fetch('/api/usuarios/login', {
@@ -32,10 +32,10 @@ const handleLogin = async(e) => {
             if(response['status'] === 'succes'){
             
                 //Guardar los datos en el localStorage en caso de que el login sea exitoso
-                localStorage.setItem('mail', email);
-                localStorage.setItem('nombre', response['user']['nombre']);
-                localStorage.setItem('apellidos', response['user']['apellidos']);
-                localStorage.setItem('id', response['user']['id_usaurio']);
+                localStorage.setItem('mail', mail);
+                localStorage.setItem('name', response['user']['name']);
+                localStorage.setItem('last_name', response['user']['last_name']);
+                localStorage.setItem('id', response['user']['user_id']);
 
 
                 //Redirigir a home
@@ -62,21 +62,21 @@ const handleCreateAccount = async(e) => {
     const form = document.getElementById('create_account_form');
 
     //Obtener los datos del formulario
-    const correo = form[0].value;
+    const mail = form[0].value;
     const password = form[1].value;
-    const nombre = form[2].value;
-    const apellidos = form[3].value;
+    const name = form[2].value;
+    const last_name = form[3].value;
     const gender = form[4].value;
-    const instrumento = form[5].value;
-    const edad = form[6].value;
+    const plays_instrument = form[5].value;
+    const age = form[6].value;
     const data = {
-        correo,
+        mail,
         password,        
-        nombre,
-        apellidos,
+        name,
+        last_name,
         gender,
-        instrumento,
-        edad
+        plays_instrument,
+        age
     }
 
 
@@ -104,8 +104,8 @@ const handleCreateAccount = async(e) => {
             if(response['status'] === 'succes'){
             
                 localStorage.setItem('mail',form[0].value);
-                localStorage.setItem('nombre', response['user']['nombre']);
-                localStorage.setItem('apellidos', response['user']['apellidos']);
+                localStorage.setItem('name', response['user']['name']);
+                localStorage.setItem('last_name', response['user']['last_name']);
                 localStorage.setItem('id', response['id']);
                 window.location.href = '/';
     

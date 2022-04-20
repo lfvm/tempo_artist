@@ -4,7 +4,7 @@
 const connection = require('../db/db_config');
 
 const getAllUsers = (req,res) => {
-    connection.query(`SELECT * FROM USUARIOS`, (err, rows, fields) => {
+    connection.query(`SELECT * FROM Users`, (err, rows, fields) => {
         
         if (!err) {
             res.json({
@@ -34,20 +34,20 @@ const createUser =  async( req, res ) => {
 
 
     //Convertir el string del instrumento a un boolean
-    user.instrumento = user.instrumento === 'yes' ? true : false;
+    user.plays_instrument = user.plays_instrument === 'yes' ? true : false;
 
 
-    const query = `INSERT INTO usuarios (
-        nombre,
-        apellidos,
-        correo,
-        contraseña,
-        genero,
-        fecha_creacion,
-        rol,
-        edad,
-        toca_instrumento
-    )VALUES('${user.nombre}','${user.apellidos}','${user.correo}','${user.password}','${user.gender}','${today}','${cliente}','${user.edad}',${user.instrumento});`
+    const query = `INSERT INTO Users (
+        name,
+        last_name,
+        mail,
+        password,
+        gender,
+        created_at,
+        role,
+        age,
+        plays_instrument
+    )VALUES('${user.name}','${user.last_name}','${user.mail}','${user.password}','${user.gender}','${today}','${cliente}','${user.age}',${user.plays_instrument});`
 
 
     connection.query(query, function(err, rows, fields) {
@@ -80,10 +80,10 @@ const createUser =  async( req, res ) => {
 const logUserIn = async(req,res) => {
 
 
-    const {correo ,password} = req.body;
+    const {mail ,password} = req.body;
 
-    const query = `SELECT * FROM usuarios WHERE 
-    (correo='${correo}' AND contraseña='${password}');
+    const query = `SELECT * FROM Users WHERE 
+    (mail='${mail}' AND password='${password}');
     `
 
 
@@ -129,14 +129,14 @@ const updateUser = async(req,res) => {
 
     const id = req.params.id;
 
-    const { nombre, correo, apellidos } = req.body;
+    const { name, mail, last_name } = req.body;
 
     const query = `
-    UPDATE usuarios SET
-    nombre = '${nombre}',
-    correo = '${correo}',
-    apellidos = '${apellidos}'
-    WHERE id_usaurio = ${id}
+    UPDATE Users SET
+    name = '${name}',
+    mail = '${mail}',
+    last_name = '${last_name}'
+    WHERE user_id = ${id}
     `
 
     connection.query(query, function(err, rows, fields) {
