@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 479359176}
   - component: {fileID: 479359175}
   - component: {fileID: 479359174}
+  - component: {fileID: 479359178}
   m_Layer: 5
   m_Name: play button
   m_TagString: Untagged
@@ -224,7 +225,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 479359176}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 479359178}
+        m_TargetAssemblyTypeName: TempoArtist.Objects.UIButton, Assembly-CSharp
+        m_MethodName: ChangeScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: SongSelect
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &479359176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -263,6 +276,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 479359172}
   m_CullTransparentMesh: 1
+--- !u!114 &479359178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 479359172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98471e5f44ed94642a5eba855571ff3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1448570295
 GameObject:
   m_ObjectHideFlags: 0
@@ -274,7 +299,7 @@ GameObject:
   - component: {fileID: 1448570297}
   - component: {fileID: 1448570296}
   m_Layer: 0
-  m_Name: UiController
+  m_Name: UIManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -289,7 +314,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1448570295}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc509dd8110844a29b76f86ff31c84de, type: 3}
+  m_Script: {fileID: 11500000, guid: effef67729f532f4db32cb3e21387b48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &1448570297
