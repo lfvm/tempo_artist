@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
+using TempoArtist.Beatmaps;
 
 namespace TempoArtist
 {
@@ -39,6 +40,7 @@ namespace TempoArtist
         public int scrollSpeed;
         public float OD;
         public float HPDrain;
+        public int maxCombo;
         
         public int NextObjToHit = 0; 
         [SerializeField] private int nextObjectID;
@@ -116,6 +118,7 @@ namespace TempoArtist
             health = handleHealth();
             rank = calculateRank(); 
             accuracy = CalculateAccuracy();
+            HandleCombo(combo);
             
             timeText.text = GetTimeInMs().ToString();
             accuracyText.text = CalculateAccuracy().ToString();
@@ -126,7 +129,7 @@ namespace TempoArtist
             if (!resultsCreated)
             {
                 MapResult.score = score;
-                MapResult.maxCombo = combo;
+                MapResult.maxCombo = maxCombo;
                 MapResult.okHits = okHits;
                 MapResult.goodHits = goodHits;
                 MapResult.perfectHits = perfectHits;
@@ -136,6 +139,14 @@ namespace TempoArtist
                 MapResult.accuracy = accuracy;
                 resultsCreated = true;
                 SceneManager.LoadScene("Results");
+            }
+        }
+
+        private void HandleCombo(int combo)
+        {
+            if (combo > maxCombo)
+            {
+                maxCombo = combo;
             }
         }
 

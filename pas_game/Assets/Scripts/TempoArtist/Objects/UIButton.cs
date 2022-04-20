@@ -12,6 +12,11 @@ namespace TempoArtist.Objects
         {
             UIManager.Instance.LoadScene(sceneName);
         }
+
+        public bool IsClicked()
+        {
+            return true;
+        }
     }
 }
 

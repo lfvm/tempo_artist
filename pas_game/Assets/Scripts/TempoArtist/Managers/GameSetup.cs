@@ -18,7 +18,7 @@ namespace TempoArtist
         // Reference to the GameManager instance
         private GameManager GameManager;
 
-        private Beatmap Beatmap;
+        public Beatmap Beatmap { get; set; }
         
         public List<HitObject> notes;
 
