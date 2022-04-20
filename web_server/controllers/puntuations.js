@@ -3,7 +3,7 @@ const connection = require("../db/db_config")
 
 const getAllPunctuations = (req, res) => {
 
-    connection.query(`SELECT * FROM puntuaciones`, (err, rows, fields) => {
+    connection.query(`SELECT * FROM Scores`, (err, rows, fields) => {
         
         if (!err) {
 
@@ -30,22 +30,30 @@ const getAllPunctuations = (req, res) => {
 
 const createPunctuation = (req, res) => {
 
-    const punctuation = req.body;
+    const score = req.body;
     let today = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
 
     const query = `
-    INSERT INTO puntuaciones 
+    INSERT INTO Scores 
     (
-        id_usuario,
-        id_nivel,
-        total_puntos,
-        fecha
+        user_id,
+        level_id,
+        total_points,
+        created_at,
+        perfect_hits,
+        good_hits,
+        accuracy,
+        max_combo
     ) VALUES (
-        '${punctuation.id_usuario}',
-        '${punctuation.id_nivel}',
-        '${punctuation.total_puntos}',
-        '${today}'
+        '${score.user_id}',
+        '${score.level_id}',
+        '${score.total_points}',
+        '${today}',
+        '${score.perfect_hits}',
+        '${score.good_hits}',
+        '${score.accuracy}',
+        '${score.max_combo}'
     );
     `
 

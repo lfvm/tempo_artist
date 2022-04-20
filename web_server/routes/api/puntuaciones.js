@@ -14,9 +14,14 @@ router.get('/', getAllPunctuations);
 
 router.post('/nueva',[
 
-    check('id_usuario', "el id del usuario es obligatorio").not().isEmpty(),
-    check('id_nivel',   "el id del nivel es obligatorio").not().isEmpty(),
-    check('total_puntos',"los puntos son obligatorios").not().isEmpty(),
+    check('user_id', "el id del usuario es obligatorio").not().isEmpty(),
+    check('level_id',   "el id del nivel es obligatorio").not().isEmpty(),
+    check('total_points',"los puntos son obligatorios").not().isEmpty(),
+    check('perfect_hits',"las notas perfcectas son obligatorias").not().isEmpty(),
+    check('good_hits',"las notas correctas son obligatorias").not().isEmpty(),
+    check('accuracy',"La precision es obligatoria").not().isEmpty(),
+    check('max_combo',"El combo es obligatorios").not().isEmpty(),
+
 
 
     validateRequestFields

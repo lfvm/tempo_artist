@@ -13,8 +13,11 @@ router.get("/", getAllLevels);
 
 router.post('/nuevo',[
 
-    check('nombre' , 'el nombre del nivel es obligatorio').not().isEmpty(),
-    check('duración' ,'la duracion del nivel es obligatoria').not().isEmpty(),
+    check('name' , 'el nombre del nivel es obligatorio').not().isEmpty(),
+    check('lenght' ,'la duracion del nivel es obligatoria').not().isEmpty(),
+    check('difficulty' ,'la dificultad del nivel es obligatoria').not().isEmpty(),
+    check('total_notes' ,'las notas totales del son obligatorias').not().isEmpty(),
+
     validateRequestFields
 ],createLevel);
 

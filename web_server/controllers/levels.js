@@ -3,7 +3,7 @@ const connection = require("../db/db_config")
 
 const getAllLevels = (req, res) => {
 
-    connection.query("SELECT * FROM niveles", (err, rows, fields) => {
+    connection.query("SELECT * FROM Levels", (err, rows, fields) => {
         if (!err) {
             
             res.json({
@@ -28,12 +28,16 @@ const createLevel = (req, res) => {
     const level = req.body;
 
     const query = `
-    INSERT INTO niveles (
-    duración, 
-    nombre
+    INSERT INTO Levels (
+    lenght, 
+    name,
+    difficulty,
+    total_notes
     )VALUES(
-        '${level.duración}',
-        '${level.nombre}'
+        '${level.lenght}',
+        '${level.name}',
+        '${level.difficulty}',
+        '${level.total_notes}'
     );
     `
 
