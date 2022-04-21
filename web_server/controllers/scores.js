@@ -1,6 +1,6 @@
 const connection = require("../db/db_config")
 
-
+//Funcion para obtener todas las puntuaciones
 const getAllPunctuations = (req, res) => {
 
     connection.query(`SELECT * FROM Scores`, (err, rows, fields) => {
@@ -27,7 +27,7 @@ const getAllPunctuations = (req, res) => {
 
 
 
-
+//FUncion para crear puntuacion
 const createPunctuation = (req, res) => {
 
     const score = req.body;
@@ -81,19 +81,14 @@ const createPunctuation = (req, res) => {
 }
 
 
-
+//Funcion para obtener las puntuaciones de un usuario por su id 
 const getUserScores = (req, res) => {
 
     const id = req.params.id;
 
+    //Query que consulta la vista user_stats de la db
     const query = `
-    SELECT total_points, perfect_hits, good_hits, Levels.total_notes, Scores.created_at, accuracy, max_combo, Levels.name  
-    FROM Users INNER JOIN  Scores 
-        USING(user_id)
-        INNER JOIN levels
-        USING(level_id)
-        where user_id = ${id}
-        ORDER BY total_points DESC;
+    SELECT * FROM user_stats WHERE user_id = ${id};
     `
     connection.query(query, (err, rows, fields) => {
         
