@@ -1,6 +1,6 @@
 const express = require('express');
 const { check } = require('express-validator');
-const { getAllPunctuations, createPunctuation } = require('../../controllers/puntuations');
+const { getAllPunctuations, createPunctuation, getUserScores } = require('../../controllers/scores');
 const { validateRequestFields } = require('../../middlewares/validar_campos');
 let router = express.Router();
 
@@ -27,6 +27,10 @@ router.post('/nueva',[
     validateRequestFields
 ], createPunctuation);
 
+
+router.get('/usuario/:id',[
+    check("id", "El id del usuario es obligatorio").not().isEmpty(),
+], getUserScores);
 
 
 

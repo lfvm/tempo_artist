@@ -82,10 +82,43 @@ const createPunctuation = (req, res) => {
 
 
 
+const getUserScores = (req, res) => {
 
+    const id = req.params.id;
+
+    const query = `
+    SELECT total_points, perfect_hits, good_hits, Levels.total_notes, Scores.created_at, accuracy, max_combo, Levels.name  
+    FROM Users INNER JOIN  Scores 
+        USING(user_id)
+        INNER JOIN levels
+        USING(level_id)
+        where user_id = ${id}
+        ORDER BY total_points DESC;
+    `
+    connection.query(query, (err, rows, fields) => {
+        
+        if (!err) {
+
+
+            res.json({
+                status: 'success', 
+                scores: rows
+            });
+
+        } else {
+
+            res.json({
+                status: 'fail', 
+                err
+            });
+        }
+    });
+
+}
 
 
 module.exports = {
     createPunctuation,
     getAllPunctuations,
+    getUserScores
 }
