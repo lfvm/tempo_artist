@@ -1,7 +1,26 @@
-body{
+.wrap {
+    height: 100vh;
+}
+
+.purple_gradient, nav{
+    height:70%;
+    width:100%;
     background: linear-gradient(-45deg, #2d5cc0, #8029d0);
 }
 
-main{
-    margin: 1em;
+.purple_gradient{
+    padding: 1em;
+}
+
+.graphics{
+    background:#fff;
+    height:70%;
+    width:100%;
+}
+
+
+#title{
+    font-size:2em;
+    text-align:center;
+    padding-top:5%;
 }
