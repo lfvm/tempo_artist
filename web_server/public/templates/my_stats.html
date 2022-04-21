@@ -7,10 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../styles/home.css">
     <link rel="stylesheet" href="../styles/my_stats.css">
-    <script src="../scripts/check_auth.js"></script>
+    <script src="../scripts/my_stats.js"></script>
     <title>Tempo Artist</title>
 </head>
-<body class="bg-dark" onload="checkAuth(event)">
+<body class="bg-dark" onload="main(event)">
 
 
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -47,22 +47,13 @@
           <th scope="col">Perfect hits </th>
           <th scope="col">Good hits </th>
           <th scope="col">Total notes</th>
+          <th scope="col">Missed notes</th>
           <th scope="col">Accuracy</th>
           <th scope="col">Date</th>
 
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <td>Getting Started</td>
-          <td>3232</td>
-          <td>123</td>
-          <td>45</td>
-          <td>300</td>
-          <td>100%</td>
-          <td>2020-01-01</td>
-        </tr>
-        
+      <tbody id="scores">       
       </tbody>
     </table>
 
