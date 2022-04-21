@@ -1,18 +1,25 @@
-body{
-    background: linear-gradient(-45deg, #2d5cc0, #8029d0);
-}
- 
+
 .wrap {
     height: 100vh;
 }
 .black{
-    height:80%;
+    background: linear-gradient(-45deg, #2d5cc0, #8029d0);
+    height:70%;
     width:100%;
+    text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
     color: white;
+    font-size: 2em;
+
 }
+
+nav{
+    background: linear-gradient(-45deg, #2d5cc0, #8029d0);
+
+}
+
 .white{
     background:#fff;
     height:50%;
