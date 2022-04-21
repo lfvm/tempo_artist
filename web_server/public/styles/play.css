@@ -1,11 +1,17 @@
-
+body{
+    background: linear-gradient(-45deg, #2d5cc0, #8029d0);
+}
+ 
 .wrap {
     height: 100vh;
 }
 .black{
-    background:#000;
     height:80%;
     width:100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
 }
 .white{
     background:#fff;

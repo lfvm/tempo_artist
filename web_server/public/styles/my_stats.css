@@ -1,3 +1,7 @@
+body{
+    background: linear-gradient(-45deg, #2d5cc0, #8029d0);
+}
+
 main{
     margin: 1em;
 }

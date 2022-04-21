@@ -12,72 +12,74 @@
 </head>
 <body class="bg-dark" onload="setInputValues()">
 
+  <div id="bg-container">
 
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="/">Tempo Artist</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
+  
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">Tempo Artist</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+            
+              <li class="nav-item">
+                <a class="nav-link" href="/">Play</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/stats">My Stats</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="/account">My Account</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+    </nav>
+
+
+    <div class="container">
+      <div id="title"></div>
+      <form  id="account_form">
+
+        <div class="name">
           
-            <li class="nav-item">
-              <a class="nav-link" href="/">Play</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/stats">My Stats</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="/account">My Account</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-  </nav>
+          <div class="input">
+            <label for="name_input">Name</label>
+            <input type="text"  id="name_input" placeholder="Juan">
+          </div>
 
+          <div class="input">
+            <label for="last_input">Last Name</label>
+            <input type="text" id="last_input" placeholder="Vazques">
 
-  <div class="container">
-    <div id="title"></div>
-    <form  id="account_form">
-
-      <div class="name">
+          </div>
         
-        <div class="input">
-          <label for="name_input">Name</label>
-          <input type="text"  id="name_input" placeholder="Juan">
         </div>
 
-        <div class="input">
-          <label for="last_input">Last Name</label>
-          <input type="text" id="last_input" placeholder="Vazques">
-
+        <div class="email">
+          <div class="input">
+            <label for="email_input">Email</label>
+            <input type="text" id="email_input" placeholder="prueba2@gmail.com">
+    
+          </div>
+          
         </div>
-      
-      </div>
-
-      <div class="email">
-        <div class="input">
-          <label for="email_input">Email</label>
-          <input type="text" id="email_input" placeholder="prueba2@gmail.com">
-  
-        </div>
-        
-      </div>
 
 
-    </form>       
-    <div class="action_buttons">
-  
-      <button id="save_button" onClick="handleUpdateAccount(event)">SAVE</button>
-      <button id="logout_button" onclick="logOut(event)">LOG OUT</button>
-  
-  
-    </div>     
-  </div>
+      </form>       
+      <div class="action_buttons">
+    
+        <button id="save_button" onClick="handleUpdateAccount(event)">SAVE</button>
+        <button id="logout_button" onclick="logOut(event)">LOG OUT</button>
+    
+    
+      </div>     
+    </div>
 
   
-
+</div>
 
    
     
