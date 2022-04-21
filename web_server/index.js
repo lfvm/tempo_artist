@@ -29,8 +29,6 @@ app.use('/api/usuarios', users);
 app.use('/api/puntuaciones', scores);
 app.use('/api/niveles', levels);
 
-
-
 //paginas que se muestran al usar la app;
 app.use('/',[
     check('id_usuario').not().isEmpty(),
