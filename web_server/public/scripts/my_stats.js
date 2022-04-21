@@ -3,7 +3,7 @@ const getScores = async() => {
 
     //Hacer peticion a la api y mandar el id del usuario
     const id = localStorage.getItem('id');
-    const response = await fetch(`http://localhost:8080/api/puntuaciones/usuario/${id}`)
+    const response = await fetch(`/api/puntuaciones/usuario/${id}`)
         .then(res => res.json())
         .then(res => {
             console.log(res);
