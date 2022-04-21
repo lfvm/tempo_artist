@@ -15,7 +15,7 @@ namespace TempoArtist.Objects
         public float X
         {
             get => x;
-            set => x = Y;
+            set => x = X;
         }
         
         public float Y

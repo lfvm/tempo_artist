@@ -14,6 +14,7 @@ namespace TempoArtist.Beatmaps
         public string x { get; set; }
         public string y { get; set; }
         public string time { get; set; }
+        public string hitsound { get; set; }
     }
 
     public class Metadata

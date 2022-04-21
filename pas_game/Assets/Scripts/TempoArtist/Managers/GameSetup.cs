@@ -23,7 +23,6 @@ namespace TempoArtist
         public List<HitObject> notes;
 
         public AudioSource MusicSource;
-        public AudioSource HitSource;
 
         public List<HitObject> objectInteractQueue = new List<HitObject>();
         public List<HitObject> objectActivationQueue = new List<HitObject>();
