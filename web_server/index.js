@@ -8,11 +8,10 @@ const levels = require('./routes/api/levels');
 const scores = require('./routes/api/scores');
 const pages = require('./routes/screens/routes');
 const { check } = require('express-validator');
-
+require('dotenv').config();
 const app = express();
 
 //Definir puerto en donde correra la app
-PORT = 8080;
 
 
 
@@ -39,7 +38,7 @@ app.use('/',[
 
 
 
-app.listen( PORT || 5000, () => {
-    console.log(`App corriendo en http://localhost:${PORT}`)
+app.listen( process.env.PORT || 8080, () => {
+    console.log(`App corriendo en http://localhost:${process.env.PORT || 8080}`)
 })
 
