@@ -1,7 +1,7 @@
 {
-  "name": "first_example",
+  "name": "tempo_artist",
   "version": "1.0.0",
-  "description": "Primer ejemplo de api usando node y express",
+  "description": "Web server para tempo artist",
   "main": "index.js",
   "scripts": {
     "test": "nodemon index.js",
