@@ -667,7 +667,7 @@ MonoBehaviour:
   gameFinished: 0
   useMusicTimeline: 0
   isGameReady: 0
-  noteTimeOffset: 400
+  noteTimeOffset: 490
   score: 0
   combo: 0
   health: 0
