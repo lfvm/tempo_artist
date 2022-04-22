@@ -1,6 +1,7 @@
 
 .wrap {
     height: 100vh;
+    background: linear-gradient(-45deg, #2d5cc0, #8029d0);
 }
 .black{
     background: linear-gradient(-45deg, #2d5cc0, #8029d0);
@@ -30,6 +31,7 @@ nav{
     font-size:2em;
     text-align:center;
     margin-top:5%;
+    margin-bottom: 2%;
 }
 
 .description{
