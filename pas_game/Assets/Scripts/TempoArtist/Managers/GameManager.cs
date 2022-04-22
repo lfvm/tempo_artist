@@ -8,8 +8,9 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
 using TempoArtist.Beatmaps;
+using TempoArtist.Objects;
 
-namespace TempoArtist
+namespace TempoArtist.Managers
 {
     public class GameManager : MonoBehaviour
     {
@@ -187,19 +188,9 @@ namespace TempoArtist
                 NextObjToActivateID++;
             }
             
-            if (nextObjectID == GameSetup.objectActivationQueue.Count && nextObjectID == GameSetup.objectInteractQueue.Count)
+            if (nextObjectID == GameSetup.objectActivationQueue.Count + 1)
                 gameFinished = true;
         }
-        
-        // public void IterateInteractionQueue(int? thisId = null)
-        // {
-        //     if (thisId != null)
-        //     {
-        //         NextObjToHit = (int)thisId + 1;
-        //         Debug.Log($"set nextHitObj to:{NextObjToHit}");
-        //         return;
-        //     }
-        // }
 
         public double GetTimeInMs()
         {

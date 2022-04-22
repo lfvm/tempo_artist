@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using TempoArtist.Managers;
 using UnityEngine;
 
 namespace TempoArtist.Objects
@@ -29,11 +30,17 @@ namespace TempoArtist.Objects
             get => queueId;
             set {queueId = value; }
         }
-        
-        
+
         // Reference to the GameManager and GameSetup instances.
         private GameManager GameManager;
         private GameSetup GameSetup;
+        
+        private AudioSource hitsound;
+        
+        [SerializeField] private AudioClip hitClap;
+        [SerializeField] private AudioClip hitNormal;
+        
+        private KeyCode keyToPress;
 
         // x and Y position of the note
         private float x;
@@ -53,8 +60,6 @@ namespace TempoArtist.Objects
         private bool canBeHit;
         private bool hit;
 
-        private KeyCode keyToPress;
-
         private float PerfectInteractionTimeInMs;
         private float InteractionBoundsStartTimeInMs;
         private float InteractionBoundsEndTimeInMs;
@@ -64,8 +69,10 @@ namespace TempoArtist.Objects
             GameManager = GameManager.instance;
             GameSetup = GameSetup.instance;
             
-            transform.GetComponent<Rigidbody2D>().simulated = false;
-            transform.GetComponent<CircleCollider2D>().enabled = true;
+            hitsound = GetComponent<AudioSource>();
+
+            GetComponent<Rigidbody2D>().simulated = false;
+            GetComponent<CircleCollider2D>().enabled = true;
             gameObject.SetActive(false);
         }
         
@@ -77,12 +84,17 @@ namespace TempoArtist.Objects
             
             SetKeyToPress();
 
-            PerfectInteractionTimeInMs = time + GameManager.noteTimeOffset;
+            PerfectInteractionTimeInMs = time;
             InteractionBoundsStartTimeInMs = PerfectInteractionTimeInMs - ODTimingOkHit;
             InteractionBoundsEndTimeInMs = PerfectInteractionTimeInMs + ODTimingOkHit;
 
             scrollSpeed = GameManager.scrollSpeed;
             startTime = time - scrollSpeed;
+
+            hitsound.clip = hitNormal;
+            
+            Debug.Log($"Current time: {GameManager.GetTimeInMs()}");
+            Debug.Log($"Interraction bound start: {InteractionBoundsStartTimeInMs} Interraction bound end: {InteractionBoundsEndTimeInMs}");
         }
 
         private void Update()
@@ -101,15 +113,17 @@ namespace TempoArtist.Objects
                 if (Input.GetKeyDown(keyToPress))
                 {
                     hit = true;
+                    hitsound.Play();
                     CalculateHitNoteAccuracy(GameManager.GetTimeInMs());
                     gameObject.SetActive(false);
+                    Debug.Log($"Object hittime: {time} time hit: {GameManager.GetTimeInMs()} time to get 300: {PerfectInteractionTimeInMs}");
                 }
             }
 
             if (!IsInInteractionBound(GameManager.GetTimeInMs()) &&
                 GameManager.GetTimeInMs() > InteractionBoundsEndTimeInMs)
             {
-                GameManager.instance.NoteMiss();
+                GameManager.NoteMiss();
                 gameObject.SetActive(false);
             }
         }
@@ -145,7 +159,8 @@ namespace TempoArtist.Objects
 
         IEnumerator HitObjectMove()
         {
-            speed = y / (scrollSpeed / 1000);
+            var newY = y + 3.85f;
+            speed = newY / (scrollSpeed / 1000);
             transform.Translate(Vector3.down * (speed * UnityEngine.Time.deltaTime));
             yield return null;
         }

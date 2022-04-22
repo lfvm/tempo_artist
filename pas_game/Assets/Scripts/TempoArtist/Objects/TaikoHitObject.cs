@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Experimental;
 using UnityEngine;
+using TempoArtist.Managers;
 
 namespace TempoArtist.Objects
 {
@@ -22,10 +23,9 @@ namespace TempoArtist.Objects
         // When the note should become active
         public int hitsound;
         private float startTime;
-        private float speed;
         public int queueId;
 
-        private float scrollSpeed;
+        private float speed;
         private float ODTimingOkHit;
         private float ODTimingGoodHit;
         private float ODTimingPerfectHit;
@@ -42,10 +42,10 @@ namespace TempoArtist.Objects
         [SerializeField] private Sprite katSprite;
         [SerializeField] private Sprite donSprite;
 
-        public AudioSource hitSound;
+        [SerializeField] private AudioSource hitSound;
         
-        public AudioClip hitClap;
-        public AudioClip hitNormal;
+        [SerializeField] private AudioClip hitClap;
+        [SerializeField] private AudioClip hitNormal;
 
         private void Awake()
         {
@@ -74,8 +74,8 @@ namespace TempoArtist.Objects
             SetKeyToPress();
             SetSpriteAndHitsound();
 
-            scrollSpeed = GameManager.scrollSpeed;
-            startTime = time - scrollSpeed;
+            speed = GameManager.scrollSpeed;
+            startTime = time - speed;
         }
 
         private void Update()
@@ -150,18 +150,18 @@ namespace TempoArtist.Objects
             {
                 case 0:
                     spriteRenderer.sprite = donSprite;
-                    //hitSound.clip = hitNormal;
+                    hitSound.clip = hitNormal;
                     GetComponent<AudioSource>().clip = hitNormal;
                     break;
                 case 8:
                     //A - L
                     spriteRenderer.sprite = katSprite;
-                    //hitSound.clip = hitClap;
+                    hitSound.clip = hitClap;
                     GetComponent<AudioSource>().clip = hitNormal;
                     break;
                 default:
                     spriteRenderer.sprite = katSprite;
-                    //hitSound.clip = hitNormal;
+                    hitSound.clip = hitNormal;
                     GetComponent<AudioSource>().clip = hitNormal;
                     break;
             }
@@ -169,7 +169,7 @@ namespace TempoArtist.Objects
 
         IEnumerator HitObjectMove()
         {
-            speed = x / (scrollSpeed / 1000);
+            speed = x / (speed / 1000);
             transform.Translate(Vector3.left * (speed * UnityEngine.Time.deltaTime));
             yield return null;
         }

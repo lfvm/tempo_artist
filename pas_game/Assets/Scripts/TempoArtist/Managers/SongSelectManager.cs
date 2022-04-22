@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 using System.IO;
 using TempoArtist.Beatmaps;
@@ -10,6 +11,7 @@ using TMPro;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Debug = UnityEngine.Debug;
 
 namespace TempoArtist.Managers
 {
@@ -31,24 +33,23 @@ namespace TempoArtist.Managers
         [SerializeField] private BeatmapCard beatmapCard;
         [SerializeField] private MapInfoCard mapInfoCard;
 
-        public AudioSource musicPreview;
-        public AudioClip musicPreviewClip;
-
+        private Beatmap tempBeatmap;
         public Beatmap selectedBeatmap { get; set; }
-        private BeatmapCard selectedBeatmapCard;
-
-        private AudioSource beatmapSong;
         
+        private BeatmapCard selectedBeatmapCard;
+        
+        public AudioSource beatmapSong;
+
         private bool beatmapCardSelected;
 
-        private string selectedBeatmapName;
+        private bool samplePlaying = false;
 
-        private bool samplePlaying;
-        
+        public string selectedBeatmapName;
+
         private void Awake()
         {
             Instance = this;
-            mapInfoCard = MapInfoCard.Instance;
+
             jsonBeatmapPaths = new List<string>();
             beatmapList = new List<Beatmap>();
             
@@ -58,24 +59,33 @@ namespace TempoArtist.Managers
 
         void Start()
         {
-            beatmapSong = new AudioSource();
+            mapInfoCard = MapInfoCard.Instance;
             UIManager = UIManager.Instance;
             GameSetup = GameSetup.instance;
+            
             var beatmapFoldersPath = "./Assets/Resources/Beatmaps";
+            
             CreateBeatmaps(beatmapFoldersPath);
             CreateBeatmapMapCards();
-            Instantiate(musicPreview);
+
+            PrintBeatmapList();
+
+            //beatmapSong.clip = beatmapList[0].MusicSource;
         }
 
         void Update()
         {
             if (beatmapCardSelected)
             {
-                if (!samplePlaying)
-                {
-                    PlayAudioSample();
-                }
                 UpdateMapInfoCard(selectedBeatmapCard);
+            }
+        }
+
+        private void PrintBeatmapList()
+        {
+            foreach (var beatmap in beatmapList)
+            {
+                Debug.Log(beatmap.MusicSource);
             }
         }
 
@@ -88,26 +98,22 @@ namespace TempoArtist.Managers
         {
             var beatmapFolders = Directory.GetDirectories(path);
 
+            string[] beatmapJsonPaths;
+            string[] beatmapSongPaths;
+            
             foreach (var beatmapFolderPath in beatmapFolders)
             {
-                foreach (var filePath in Directory.GetFiles(beatmapFolderPath))
-                {
-                    var extension = Path.GetExtension(filePath);
-                    var beatmap = new Beatmap();
-                    if (extension == ".json")
-                    {
-                        beatmap = JsonParser.JsonToBeatmap(filePath);
-                        beatmapList.Add(beatmap);
-                    }
-                    else if (extension == ".mp3")
-                    {
-                        var dividedPath = filePath.Split('/');
-                        var auxPath =  "Beatmaps/" + dividedPath[dividedPath.Length -2] + "/" + dividedPath[dividedPath.Length - 1];
-                        Debug.Log(auxPath);
-                        beatmap.MusicSource = Resources.Load<AudioClip>(auxPath);
-                        Debug.Log(beatmap.MusicSource);
-                    }
-                }
+                beatmapJsonPaths = Directory.GetFiles(beatmapFolderPath, "*.json");
+                beatmapSongPaths = Directory.GetFiles(beatmapFolderPath, "*.mp3");
+                
+                Beatmap beatmap = JsonParser.JsonToBeatmap(beatmapJsonPaths[0]);
+
+                var beatmapSongPath = beatmapSongPaths[0];
+                var dividedPath = beatmapSongPaths[0].Split('/');
+                var auxPath =  dividedPath[dividedPath.Length - 1];
+                auxPath = GetFullPathWithoutExtension(auxPath);
+                beatmap.MusicSource = Resources.Load<AudioClip>(auxPath);
+                beatmapList.Add(beatmap);
             }
         }
 
@@ -138,29 +144,16 @@ namespace TempoArtist.Managers
             }
         }
 
-        private void PlayAudioSample()
+        public void PlayAudioSample()
         {
-            musicPreviewClip = selectedBeatmap.MusicSource;
-            musicPreview.clip = musicPreviewClip;
-            musicPreview.Play();
+            beatmapSong.clip = selectedBeatmap.MusicSource;
+            beatmapSong.Play();
             samplePlaying = true;
         }
-        
-        IEnumerator GetAudioClip(string path)
-        {
-            using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(path, AudioType.MPEG))
-            {
-                yield return www.SendWebRequest();
 
-                if (www.result == UnityWebRequest.Result.ConnectionError)
-                {
-                    Debug.Log(www.error);
-                }
-                else
-                {
-                   musicPreviewClip = DownloadHandlerAudioClip.GetContent(www);
-                }
-            }
+        private String GetFullPathWithoutExtension(String path)
+        {
+            return Path.Combine(Path.GetDirectoryName(path), Path.GetFileNameWithoutExtension(path));
         }
     }
 }

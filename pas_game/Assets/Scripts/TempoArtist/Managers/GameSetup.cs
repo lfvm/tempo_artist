@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using TempoArtist.Objects;
 using TempoArtist.Beatmaps;
-using TempoArtist.Managers;
-using TempoArtist.Utils;
+using TempoArtist.Objects;
 using UnityEngine;
+using UnityEngineInternal;
 
-namespace TempoArtist
+namespace TempoArtist.Managers
 {
     public class GameSetup : MonoBehaviour
     {
@@ -48,16 +47,21 @@ namespace TempoArtist
         {
             GameManager = GameManager.instance;
             SongSelectManager = SongSelectManager.Instance;
-            
-            // Path of the beatmap's json file
-            // Beatmap = JsonParser.JsonToBeatmap("Assets/Beatmaps/blue zenith/Blue Zenith.json");
 
             GameManager.useMusicTimeline = true;
 
             Beatmap = SongSelectManager.selectedBeatmap;
-            MusicSource.clip = Beatmap.MusicSource;
+
+            SetBeatmapSong();
+            
             if (SongReady)
                 InstantiateObjects();
+        }
+
+        private void SetBeatmapSong()
+        {
+            MusicSource.clip = Beatmap.MusicSource;
+            SongReady = true;
         }
 
         private void InstantiateObjects()
@@ -84,7 +88,7 @@ namespace TempoArtist
                 
                 hitObject.X = newX;
                 hitObject.Y = y;
-                hitObject.Time = time;
+                hitObject.Time = time + GameManager.noteTimeOffset;
 
                 hitObject.name = objectActivationQueue.Count + "-Hitcircle";
                 hitObject.QueueID = objectActivationQueue.Count;

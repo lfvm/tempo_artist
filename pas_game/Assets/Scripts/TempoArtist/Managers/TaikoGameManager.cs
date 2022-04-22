@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using TempoArtist;
+﻿using System.Diagnostics;
+using TempoArtist.Objects;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using Debug = UnityEngine.Debug;
-using TempoArtist.Beatmaps;
 
-namespace TempoArtist
+namespace TempoArtist.Managers
 {
     public class TaikoGameManager : MonoBehaviour
     {

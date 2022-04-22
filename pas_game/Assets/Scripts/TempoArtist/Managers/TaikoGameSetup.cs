@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using TempoArtist.Objects;
 using TempoArtist.Beatmaps;
+using TempoArtist.Managers;
 using TempoArtist.Utils;
 using UnityEngine;
 
-namespace TempoArtist
+namespace TempoArtist.Managers
 {
     public class TaikoGameSetup : MonoBehaviour
     {

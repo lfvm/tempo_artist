@@ -1,24 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class ButtonController : MonoBehaviour
+namespace TempoArtist.Managers
 {
-    public Sprite defaultImage;
-    public Sprite pressedImage;
-
-    public KeyCode keyToPress;
-    private SpriteRenderer spriteRenderer;
-
-    private void Start()
+    public class ButtonController : MonoBehaviour
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-    }
+        public Sprite defaultImage;
+        public Sprite pressedImage;
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(keyToPress)) spriteRenderer.sprite = pressedImage;
+        public KeyCode keyToPress;
+        private SpriteRenderer spriteRenderer;
 
-        if (Input.GetKeyUp(keyToPress)) spriteRenderer.sprite = defaultImage;
+        private void Start()
+        {
+            spriteRenderer = GetComponent<SpriteRenderer>();
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(keyToPress)) spriteRenderer.sprite = pressedImage;
+
+            if (Input.GetKeyUp(keyToPress)) spriteRenderer.sprite = defaultImage;
+        }
     }
 }
