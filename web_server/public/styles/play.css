@@ -4,7 +4,7 @@
 }
 .black{
     background: linear-gradient(-45deg, #2d5cc0, #8029d0);
-    height:70%;
+    height:100%;
     width:100%;
     text-align: center;
     display: flex;
@@ -39,4 +39,9 @@ nav{
     margin: 1em;
     padding: 1em;
 
+}
+
+#unity-container{
+    margin: 2em;
+    padding: 2em;
 }
