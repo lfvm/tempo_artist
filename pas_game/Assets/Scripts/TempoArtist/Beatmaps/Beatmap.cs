@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace TempoArtist.Beatmaps
 {
@@ -7,6 +8,8 @@ namespace TempoArtist.Beatmaps
         public Metadata metadata { get; set; }
         public DifficultyInfo difficulty { get; set; }
         public List<BeatmapHitObject> hitObjects { get; set; }
+        
+        public AudioClip MusicSource { get; set; }
     }
     
     public class BeatmapHitObject

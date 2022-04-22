@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TempoArtist.Objects;
 using TempoArtist.Beatmaps;
+using TempoArtist.Managers;
 using TempoArtist.Utils;
 using UnityEngine;
 
@@ -17,6 +18,7 @@ namespace TempoArtist
         
         // Reference to the GameManager instance
         private GameManager GameManager;
+        private SongSelectManager SongSelectManager;
 
         public Beatmap Beatmap { get; set; }
         
@@ -34,6 +36,8 @@ namespace TempoArtist
         private bool ready { get; set; }
         
         private int InteractionID { get; set; } = -1;
+        
+        public bool SongReady { get; set; }
 
         private void Awake()
         {
@@ -43,16 +47,17 @@ namespace TempoArtist
         private void Start()
         {
             GameManager = GameManager.instance;
+            SongSelectManager = SongSelectManager.Instance;
             
             // Path of the beatmap's json file
-            Beatmap = JsonParser.JsonToBeatmap("Assets/Beatmaps/blue zenith/Blue Zenith.json");
-            
-            //HitSource = GameObject.Find("HitSource").GetComponent<AudioSource>();
-            // = GameObject.Find("MusicSource").GetComponent<AudioSource>();
+            // Beatmap = JsonParser.JsonToBeatmap("Assets/Beatmaps/blue zenith/Blue Zenith.json");
 
             GameManager.useMusicTimeline = true;
 
-            InstantiateObjects();
+            Beatmap = SongSelectManager.selectedBeatmap;
+            MusicSource.clip = Beatmap.MusicSource;
+            if (SongReady)
+                InstantiateObjects();
         }
 
         private void InstantiateObjects()

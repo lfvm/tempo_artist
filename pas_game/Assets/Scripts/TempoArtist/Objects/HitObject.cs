@@ -9,25 +9,25 @@ namespace TempoArtist.Objects
         public int Time
         { 
             get => time;
-            set => time = Time;
+            set { time = value; }
         }
         
         public float X
         {
             get => x;
-            set => x = X;
+            set { x = value; }
         }
         
         public float Y
         {
-            get => Y;
-            set => y = Y;
+            get => y;
+            set { y = value; }
         }
         
         public int QueueID
         {
             get => queueId;
-            set => QueueID = queueId;
+            set {queueId = value; }
         }
         
         
