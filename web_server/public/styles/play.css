@@ -1,10 +1,12 @@
+#bg-container{
+    background: linear-gradient(-45deg, #2d5cc0, #8029d0);
+}
 
 .wrap {
     height: 100vh;
-    background: linear-gradient(-45deg, #2d5cc0, #8029d0);
 }
+
 .black{
-    background: linear-gradient(-45deg, #2d5cc0, #8029d0);
     height:100%;
     width:100%;
     text-align: center;
@@ -13,11 +15,6 @@
     align-items: center;
     color: white;
     font-size: 2em;
-
-}
-
-nav{
-    background: linear-gradient(-45deg, #2d5cc0, #8029d0);
 
 }
 

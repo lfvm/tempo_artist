@@ -1,3 +1,7 @@
+#bg-contatiner{
+    background: linear-gradient(-45deg, #2d5cc0, #8029d0);
+}
+
 .wrap {
     height: 100vh;
 }
@@ -5,7 +9,6 @@
 .purple_gradient, nav{
     height:70%;
     width:100%;
-    background: linear-gradient(-45deg, #2d5cc0, #8029d0);
 }
 
 .purple_gradient{
