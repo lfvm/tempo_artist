@@ -1,13 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class EffectObject : MonoBehaviour
+namespace TempoArtist.Objects
 {
-    public float lifeTime = 0.05f;
-
-    private void Update()
+    public class EffectObject : MonoBehaviour
     {
-        Destroy(gameObject, lifeTime);
+        public float lifeTime = 0.05f;
+
+        private void Update()
+        {
+            Destroy(gameObject, lifeTime);
+        }
     }
 }

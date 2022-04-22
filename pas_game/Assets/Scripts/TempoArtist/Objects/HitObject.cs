@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using TempoArtist.Managers;
 using UnityEngine;
 
 namespace TempoArtist.Objects
@@ -9,31 +10,37 @@ namespace TempoArtist.Objects
         public int Time
         { 
             get => time;
-            set => time = Time;
+            set { time = value; }
         }
         
         public float X
         {
             get => x;
-            set => x = Y;
+            set { x = value; }
         }
         
         public float Y
         {
-            get => Y;
-            set => y = Y;
+            get => y;
+            set { y = value; }
         }
         
         public int QueueID
         {
             get => queueId;
-            set => QueueID = queueId;
+            set {queueId = value; }
         }
-        
-        
+
         // Reference to the GameManager and GameSetup instances.
         private GameManager GameManager;
         private GameSetup GameSetup;
+        
+        private AudioSource hitsound;
+        
+        [SerializeField] private AudioClip hitClap;
+        [SerializeField] private AudioClip hitNormal;
+        
+        private KeyCode keyToPress;
 
         // x and Y position of the note
         private float x;
@@ -41,7 +48,7 @@ namespace TempoArtist.Objects
         // when the note has to be hit
         private int time;
         // When the note should become active
-        private float startTime;
+        [SerializeField] private float startTime;
         private float speed;
         private int queueId;
 
@@ -50,22 +57,23 @@ namespace TempoArtist.Objects
         private float ODTimingGoodHit;
         private float ODTimingPerfectHit;
 
-        private bool canBeHit;
+        [SerializeField] private bool canBeHit;
         private bool hit;
 
-        private KeyCode keyToPress;
-
-        private float PerfectInteractionTimeInMs;
-        private float InteractionBoundsStartTimeInMs;
-        private float InteractionBoundsEndTimeInMs;
+        [SerializeField] private float PerfectInteractionTimeInMs;
+        [SerializeField] private float InteractionBoundsStartTimeInMs;
+        [SerializeField] private float InteractionBoundsEndTimeInMs;
 
         private void Awake()
         {
             GameManager = GameManager.instance;
             GameSetup = GameSetup.instance;
             
-            transform.GetComponent<Rigidbody2D>().simulated = false;
-            transform.GetComponent<CircleCollider2D>().enabled = true;
+            hitsound = GetComponent<AudioSource>();
+
+            // GetComponent<Rigidbody2D>().simulated = false;
+            // GetComponent<CircleCollider2D>().enabled = true;
+            
             gameObject.SetActive(false);
         }
         
@@ -82,53 +90,74 @@ namespace TempoArtist.Objects
             InteractionBoundsEndTimeInMs = PerfectInteractionTimeInMs + ODTimingOkHit;
 
             scrollSpeed = GameManager.scrollSpeed;
-            startTime = time - scrollSpeed;
+            startTime = time - GameManager.noteTimeOffset;
+
+            hitsound.clip = hitNormal;
+            
+            Debug.Log($"Current time: {GameManager.GetTimeInMs()}");
+            Debug.Log($"Interraction bound start: {InteractionBoundsStartTimeInMs} Interraction bound end: {InteractionBoundsEndTimeInMs}");
         }
 
         private void Update()
         {
-            canBeHit = IsInInteractionBound(GameManager.GetTimeInMs());
+            //canBeHit = IsInInteractionBound(GameManager.GetTimeInMs());
             if (GameManager.GetTimeInMs() >= startTime)
             {
                 StartCoroutine(HitObjectMove());
             }
 
-            if (IsInInteractionBound(GameManager.GetTimeInMs()))
+            if (canBeHit)
             {
-                transform.GetComponent<Rigidbody2D>().simulated = true;
-                transform.GetComponent<CircleCollider2D>().enabled = true;
+                // transform.GetComponent<Rigidbody2D>().simulated = true;
+                // transform.GetComponent<CircleCollider2D>().enabled = true;
                 
                 if (Input.GetKeyDown(keyToPress))
                 {
                     hit = true;
+                    hitsound.Play();
                     CalculateHitNoteAccuracy(GameManager.GetTimeInMs());
                     gameObject.SetActive(false);
+                    Debug.Log($"Object hittime: {time} time hit: {GameManager.GetTimeInMs()} time to get 300: {PerfectInteractionTimeInMs}");
                 }
             }
 
-            if (!IsInInteractionBound(GameManager.GetTimeInMs()) &&
-                GameManager.GetTimeInMs() > InteractionBoundsEndTimeInMs)
-            {
-                GameManager.instance.NoteMiss();
-                gameObject.SetActive(false);
-            }
+            // if (!canBeHit && GameManager.GetTimeInMs() > InteractionBoundsEndTimeInMs)
+            // {
+            //     GameManager.NoteMiss();
+            //     gameObject.SetActive(false);
+            // }
         }
 
         private void CalculateHitNoteAccuracy(double gameTime)
         {
-            if (gameTime < PerfectInteractionTimeInMs + ODTimingPerfectHit 
-                && gameTime > PerfectInteractionTimeInMs - ODTimingPerfectHit)
+            if (transform.position.y < -3.1 && transform.position.y > -3.9)
             {
                 GameManager.PerfectHit();
             }
-            else if (gameTime > PerfectInteractionTimeInMs + ODTimingPerfectHit &&
-                     gameTime < PerfectInteractionTimeInMs + ODTimingOkHit ||
-                     gameTime < PerfectInteractionTimeInMs - ODTimingPerfectHit &&
-                     gameTime > PerfectInteractionTimeInMs - ODTimingOkHit)
+            else if (transform.position.y < -2.9 && transform.position.y > -4.1)
+            {
+                GameManager.GoodHit();
+            }
+            else
             {
                 GameManager.OkHit();
             }
-            GameManager.GoodHit();
+            
+            // Need to fix this 
+            
+            // if (gameTime < PerfectInteractionTimeInMs + ODTimingPerfectHit 
+            //     && gameTime > PerfectInteractionTimeInMs - ODTimingPerfectHit)
+            // {
+            //     GameManager.PerfectHit();
+            // }
+            // else if (gameTime > PerfectInteractionTimeInMs + ODTimingPerfectHit &&
+            //          gameTime < PerfectInteractionTimeInMs + ODTimingOkHit ||
+            //          gameTime < PerfectInteractionTimeInMs - ODTimingPerfectHit &&
+            //          gameTime > PerfectInteractionTimeInMs - ODTimingOkHit)
+            // {
+            //     GameManager.OkHit();
+            // }
+            // GameManager.GoodHit();
         }
 
         private void SetKeyToPress()
@@ -145,7 +174,8 @@ namespace TempoArtist.Objects
 
         IEnumerator HitObjectMove()
         {
-            speed = y / (scrollSpeed / 1000);
+            var newY = y + 3.85f;
+            speed = newY / (scrollSpeed / 1000);
             transform.Translate(Vector3.down * (speed * UnityEngine.Time.deltaTime));
             yield return null;
         }
@@ -160,13 +190,31 @@ namespace TempoArtist.Objects
             return false;
         }
 
-        private void OnTriggerExit2D(Collider2D other)
+        private void OnTriggerEnter2D(Collider2D col)
         {
-            if (!other.CompareTag("Activator")) return;
-            if (hit) return;
-            canBeHit = false;
-            GameManager.NoteMiss();
-            gameObject.SetActive(false);
+            if (col.CompareTag("Activator"))
+            {
+                canBeHit = true;
+            }
+        }
+
+        private void OnTriggerExit2D(Collider2D col)
+        {
+            if (col.CompareTag("Activator"))
+            {
+                if (!hit)
+                {
+                    GameManager.NoteMiss();
+                }
+                canBeHit = false;
+                GameSetup.notes.Remove(this);
+                Destroy(gameObject);
+            }
+        }
+
+        public bool IsActive()
+        {
+            return gameObject.activeSelf;
         }
     }
 }

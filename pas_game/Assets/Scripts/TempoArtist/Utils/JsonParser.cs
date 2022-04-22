@@ -9,8 +9,7 @@ namespace TempoArtist.Utils
     {
         public static Beatmap JsonToBeatmap(string jsonPath)
         {
-            var beatMap = JsonConvert.DeserializeObject<Beatmap>(File.ReadAllText(jsonPath));
-            return beatMap;
+            return JsonConvert.DeserializeObject<Beatmap>(File.ReadAllText(jsonPath));
         }
     }
 }
