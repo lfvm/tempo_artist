@@ -11,11 +11,11 @@ GameObject:
   - component: {fileID: 7831060835819608765}
   - component: {fileID: 6963015164173066495}
   - component: {fileID: 2042504811677445725}
-  - component: {fileID: 2042504811677445724}
   - component: {fileID: -8994932395056343879}
+  - component: {fileID: 5557935333434530137}
   m_Layer: 0
   m_Name: HitZone1
-  m_TagString: scoreBox
+  m_TagString: Activator
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -95,7 +95,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -111,21 +111,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5.13, y: 1.97}
   m_EdgeRadius: 0
---- !u!114 &2042504811677445724
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3052448115875052275}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8d9ec6bb879cf14e92bd5c390e5472d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defaultImage: {fileID: 21300000, guid: 31af50030299a2c4f8f94ba0799bda98, type: 3}
-  pressedImage: {fileID: 21300000, guid: 527bd1b83c0c6fd4e84c37d9cb41f24f, type: 3}
-  keyToPress: 122
 --- !u!50 &-8994932395056343879
 Rigidbody2D:
   serializedVersion: 4
@@ -147,3 +132,18 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &5557935333434530137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3052448115875052275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a8b222dad8919142b6f930fb3244a73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultImage: {fileID: 0}
+  pressedImage: {fileID: 0}
+  keyToPress: 0

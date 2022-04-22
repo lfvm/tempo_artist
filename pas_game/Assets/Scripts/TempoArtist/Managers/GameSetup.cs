@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TempoArtist.Beatmaps;
 using TempoArtist.Objects;
+using TempoArtist.Utils;
 using UnityEngine;
 using UnityEngineInternal;
 
@@ -36,6 +37,8 @@ namespace TempoArtist.Managers
         
         private int InteractionID { get; set; } = -1;
         
+        private const string defaultBeatmapPath = "Assets/Resources/Beatmaps/BeastBassBomb/BEAST BASS BOMB.json";
+        
         public bool SongReady { get; set; }
 
         private void Awake()
@@ -51,9 +54,8 @@ namespace TempoArtist.Managers
             GameManager.useMusicTimeline = true;
 
             Beatmap = SongSelectManager.selectedBeatmap;
-
             SetBeatmapSong();
-            
+
             if (SongReady)
                 InstantiateObjects();
         }
@@ -88,7 +90,7 @@ namespace TempoArtist.Managers
                 
                 hitObject.X = newX;
                 hitObject.Y = y;
-                hitObject.Time = time + GameManager.noteTimeOffset;
+                hitObject.Time = time;
 
                 hitObject.name = objectActivationQueue.Count + "-Hitcircle";
                 hitObject.QueueID = objectActivationQueue.Count;

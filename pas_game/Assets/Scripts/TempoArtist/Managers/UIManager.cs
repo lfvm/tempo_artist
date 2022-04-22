@@ -12,13 +12,7 @@ namespace TempoArtist.Managers
 
         private void Awake()
         {
-            if (Instance == null)
-            {
-                Instance = this;
-                DontDestroyOnLoad(this);
-            }
-        
-            Destroy(this);
+            Instance = this;
         }
 
         public void LoadScene(string sceneName)

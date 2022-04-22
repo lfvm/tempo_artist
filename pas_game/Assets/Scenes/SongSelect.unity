@@ -155,6 +155,7 @@ MonoBehaviour:
   beatmapCard: {fileID: 7074173900867918498, guid: ff4c9b886f1f05149b1f13c17b822916, type: 3}
   mapInfoCard: {fileID: 0}
   beatmapSong: {fileID: 894242573}
+  beatmapCardSelected: 0
   selectedBeatmapName: 
 --- !u!4 &89002442
 Transform:
@@ -205,7 +206,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: -461.04935}
-  m_SizeDelta: {x: 800, y: 0}
+  m_SizeDelta: {x: 733.69, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &135017906
 MonoBehaviour:
@@ -240,8 +241,8 @@ MonoBehaviour:
     m_Bottom: 0
   m_ChildAlignment: 1
   m_Spacing: 300
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
+  m_ChildForceExpandWidth: 0
+  m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
@@ -358,7 +359,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: e0504ab867a4e7d459bdcea3b3eb9809, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -862,7 +863,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -1018,7 +1019,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 19c91c2ecccbbc04387ce902c5d6f085, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3f911326d4d896f49a316b56689fe475, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1359,8 +1360,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -78.952}
-  m_SizeDelta: {x: 800, y: 922.1}
+  m_AnchoredPosition: {x: 0, y: -78.95001}
+  m_SizeDelta: {x: 700, y: 922.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1808531120
 MonoBehaviour:

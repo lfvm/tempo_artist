@@ -70,6 +70,8 @@ namespace TempoArtist.Managers
         public Text comboText;
         public Text timeText;
         public Text accuracyText;
+
+        public bool allNotesInActive;
         
         private Stopwatch Stopwatch { get; } = new Stopwatch();
 
@@ -112,8 +114,12 @@ namespace TempoArtist.Managers
                 callResultsWindow();
                 GameSetup.MusicSource.Stop();
             }
+
+            if (GameSetup.notes.Count != 0)
+            {
+                IterateObjectQueue();
+            }
             
-            IterateObjectQueue();
             GetTimeInMs();
             
             health = handleHealth();
@@ -122,7 +128,12 @@ namespace TempoArtist.Managers
             HandleCombo(combo);
             
             timeText.text = GetTimeInMs().ToString();
-            accuracyText.text = CalculateAccuracy().ToString();
+            accuracyText.text = CalculateAccuracy().ToString("0.00") + "%";
+
+            allNotesInActive = AllNotesInActive();
+            
+            if (AllNotesInActive())
+                gameFinished = true;
         }
 
         private void callResultsWindow()
@@ -135,7 +146,6 @@ namespace TempoArtist.Managers
                 MapResult.goodHits = goodHits;
                 MapResult.perfectHits = perfectHits;
                 MapResult.missedHits = missedHits;
-                MapResult.totalNotes = GameSetup.instance.notes.Count;
                 MapResult.rank = rank;
                 MapResult.accuracy = accuracy;
                 resultsCreated = true;
@@ -153,9 +163,9 @@ namespace TempoArtist.Managers
 
         private double CalculateAccuracy()
         {
-            accuracy = (scorePerPerfectNote * perfectHits + goodHits * scorePerGoodNote + okHits * scorePerOkNote + scorePerMiss * missedHits) /
+            var acc = (scorePerPerfectNote * perfectHits + goodHits * scorePerGoodNote + okHits * scorePerOkNote + scorePerMiss * missedHits) /
                        ((perfectHits + goodHits + okHits + missedHits) * scorePerPerfectNote);
-            return accuracy;
+            return acc * 100;
         }
 
         private float handleHealth()
@@ -187,9 +197,6 @@ namespace TempoArtist.Managers
                 (GameSetup.objectActivationQueue[NextObjToActivateID]).gameObject.SetActive(true);
                 NextObjToActivateID++;
             }
-            
-            if (nextObjectID == GameSetup.objectActivationQueue.Count + 1)
-                gameFinished = true;
         }
 
         public double GetTimeInMs()
@@ -245,6 +252,15 @@ namespace TempoArtist.Managers
             combo = 0;
             comboText.text = combo.ToString();
             missedHits++;
+        }
+
+        private bool AllNotesInActive()
+        {
+            if (GameSetup.notes.Count == 0)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

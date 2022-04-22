@@ -48,7 +48,7 @@ namespace TempoArtist.Objects
         // when the note has to be hit
         private int time;
         // When the note should become active
-        private float startTime;
+        [SerializeField] private float startTime;
         private float speed;
         private int queueId;
 
@@ -57,12 +57,12 @@ namespace TempoArtist.Objects
         private float ODTimingGoodHit;
         private float ODTimingPerfectHit;
 
-        private bool canBeHit;
+        [SerializeField] private bool canBeHit;
         private bool hit;
 
-        private float PerfectInteractionTimeInMs;
-        private float InteractionBoundsStartTimeInMs;
-        private float InteractionBoundsEndTimeInMs;
+        [SerializeField] private float PerfectInteractionTimeInMs;
+        [SerializeField] private float InteractionBoundsStartTimeInMs;
+        [SerializeField] private float InteractionBoundsEndTimeInMs;
 
         private void Awake()
         {
@@ -71,8 +71,9 @@ namespace TempoArtist.Objects
             
             hitsound = GetComponent<AudioSource>();
 
-            GetComponent<Rigidbody2D>().simulated = false;
-            GetComponent<CircleCollider2D>().enabled = true;
+            // GetComponent<Rigidbody2D>().simulated = false;
+            // GetComponent<CircleCollider2D>().enabled = true;
+            
             gameObject.SetActive(false);
         }
         
@@ -84,12 +85,12 @@ namespace TempoArtist.Objects
             
             SetKeyToPress();
 
-            PerfectInteractionTimeInMs = time;
+            PerfectInteractionTimeInMs = time + GameManager.noteTimeOffset;
             InteractionBoundsStartTimeInMs = PerfectInteractionTimeInMs - ODTimingOkHit;
             InteractionBoundsEndTimeInMs = PerfectInteractionTimeInMs + ODTimingOkHit;
 
             scrollSpeed = GameManager.scrollSpeed;
-            startTime = time - scrollSpeed;
+            startTime = time - GameManager.noteTimeOffset;
 
             hitsound.clip = hitNormal;
             
@@ -99,16 +100,16 @@ namespace TempoArtist.Objects
 
         private void Update()
         {
-            canBeHit = IsInInteractionBound(GameManager.GetTimeInMs());
+            //canBeHit = IsInInteractionBound(GameManager.GetTimeInMs());
             if (GameManager.GetTimeInMs() >= startTime)
             {
                 StartCoroutine(HitObjectMove());
             }
 
-            if (IsInInteractionBound(GameManager.GetTimeInMs()))
+            if (canBeHit)
             {
-                transform.GetComponent<Rigidbody2D>().simulated = true;
-                transform.GetComponent<CircleCollider2D>().enabled = true;
+                // transform.GetComponent<Rigidbody2D>().simulated = true;
+                // transform.GetComponent<CircleCollider2D>().enabled = true;
                 
                 if (Input.GetKeyDown(keyToPress))
                 {
@@ -120,29 +121,43 @@ namespace TempoArtist.Objects
                 }
             }
 
-            if (!IsInInteractionBound(GameManager.GetTimeInMs()) &&
-                GameManager.GetTimeInMs() > InteractionBoundsEndTimeInMs)
-            {
-                GameManager.NoteMiss();
-                gameObject.SetActive(false);
-            }
+            // if (!canBeHit && GameManager.GetTimeInMs() > InteractionBoundsEndTimeInMs)
+            // {
+            //     GameManager.NoteMiss();
+            //     gameObject.SetActive(false);
+            // }
         }
 
         private void CalculateHitNoteAccuracy(double gameTime)
         {
-            if (gameTime < PerfectInteractionTimeInMs + ODTimingPerfectHit 
-                && gameTime > PerfectInteractionTimeInMs - ODTimingPerfectHit)
+            if (transform.position.y < -3.1 && transform.position.y > -3.9)
             {
                 GameManager.PerfectHit();
             }
-            else if (gameTime > PerfectInteractionTimeInMs + ODTimingPerfectHit &&
-                     gameTime < PerfectInteractionTimeInMs + ODTimingOkHit ||
-                     gameTime < PerfectInteractionTimeInMs - ODTimingPerfectHit &&
-                     gameTime > PerfectInteractionTimeInMs - ODTimingOkHit)
+            else if (transform.position.y < -2.9 && transform.position.y > -4.1)
+            {
+                GameManager.GoodHit();
+            }
+            else
             {
                 GameManager.OkHit();
             }
-            GameManager.GoodHit();
+            
+            // Need to fix this 
+            
+            // if (gameTime < PerfectInteractionTimeInMs + ODTimingPerfectHit 
+            //     && gameTime > PerfectInteractionTimeInMs - ODTimingPerfectHit)
+            // {
+            //     GameManager.PerfectHit();
+            // }
+            // else if (gameTime > PerfectInteractionTimeInMs + ODTimingPerfectHit &&
+            //          gameTime < PerfectInteractionTimeInMs + ODTimingOkHit ||
+            //          gameTime < PerfectInteractionTimeInMs - ODTimingPerfectHit &&
+            //          gameTime > PerfectInteractionTimeInMs - ODTimingOkHit)
+            // {
+            //     GameManager.OkHit();
+            // }
+            // GameManager.GoodHit();
         }
 
         private void SetKeyToPress()
@@ -175,13 +190,31 @@ namespace TempoArtist.Objects
             return false;
         }
 
-        private void OnTriggerExit2D(Collider2D other)
+        private void OnTriggerEnter2D(Collider2D col)
         {
-            if (!other.CompareTag("Activator")) return;
-            if (hit) return;
-            canBeHit = false;
-            GameManager.NoteMiss();
-            gameObject.SetActive(false);
+            if (col.CompareTag("Activator"))
+            {
+                canBeHit = true;
+            }
+        }
+
+        private void OnTriggerExit2D(Collider2D col)
+        {
+            if (col.CompareTag("Activator"))
+            {
+                if (!hit)
+                {
+                    GameManager.NoteMiss();
+                }
+                canBeHit = false;
+                GameSetup.notes.Remove(this);
+                Destroy(gameObject);
+            }
+        }
+
+        public bool IsActive()
+        {
+            return gameObject.activeSelf;
         }
     }
 }

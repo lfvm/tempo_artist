@@ -40,7 +40,7 @@ namespace TempoArtist.Managers
         
         public AudioSource beatmapSong;
 
-        private bool beatmapCardSelected;
+        public bool beatmapCardSelected;
 
         private bool samplePlaying = false;
 
@@ -67,10 +67,6 @@ namespace TempoArtist.Managers
             
             CreateBeatmaps(beatmapFoldersPath);
             CreateBeatmapMapCards();
-
-            PrintBeatmapList();
-
-            //beatmapSong.clip = beatmapList[0].MusicSource;
         }
 
         void Update()

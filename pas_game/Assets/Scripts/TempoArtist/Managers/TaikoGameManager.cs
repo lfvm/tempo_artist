@@ -123,7 +123,6 @@ namespace TempoArtist.Managers
                 MapResult.goodHits = goodHits;
                 MapResult.perfectHits = perfectHits;
                 MapResult.missedHits = missedHits;
-                MapResult.totalNotes = GameSetup.instance.notes.Count;
                 MapResult.rank = rank;
                 MapResult.accuracy = accuracy;
                 resultsCreated = true;

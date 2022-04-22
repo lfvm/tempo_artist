@@ -6,10 +6,8 @@ namespace TempoArtist.Managers
 {
     public class ResultsManager : MonoBehaviour
     {
-        private string rankStr = "S";
-    
-        private float accuracy = 100;
-    
+        //private string rankStr = "S";
+
         [SerializeField] private GameObject rank;
         [SerializeField] public TextMeshProUGUI scoreText,
             okHitsText,
@@ -21,21 +19,18 @@ namespace TempoArtist.Managers
 
         private void Start()
         {
-            var totalHits = MapResult.okHits + MapResult.goodHits + MapResult.perfectHits;
-            accuracy = (totalHits / MapResult.totalNotes) * 100f;
-        
             scoreText.text = MapResult.score.ToString();
             okHitsText.text = MapResult.okHits.ToString();
             goodHitsText.text = MapResult.goodHits.ToString();
             perfectHitsText.text = MapResult.perfectHits.ToString();
             missedHitsText.text = MapResult.missedHits.ToString();
             maxComboText.text = MapResult.maxCombo.ToString();
-            accuracyText.text = accuracy.ToString("F1") + "%";
+            accuracyText.text = MapResult.accuracy.ToString("0.00") + "%";
         }
 
-        private GameObject getRankIcon(string rankStr)
-        {
-            return null;
-        }
+        // private GameObject getRankIcon(string rankStr)
+        // {
+        //     
+        // }
     }
 }
