@@ -12,7 +12,7 @@ const handleLogin = async(e) => {
 
     //Verificar que los datos no esten vacios, de lo contrario mostrar mensaje de error
     if (mail === '' || password === '') {
-        redHighlights(email, password);
+        redHighlights(mail, password);
         addAlert("Please fill in all the required fields.");
         
     } else {
@@ -216,9 +216,8 @@ function alertInScreen(){
 
 function shakeAlert(){
     let alert = document.getElementsByClassName("alert alert-danger alert-dismissible fade show");
-
-    alert[0].classList.add("apply-shake")
     
+    alert[0].classList.add("apply-shake");
     // Remover la animacion para que aparezca cada que se de click
     alert[0].addEventListener("animationend", (e) => {
         alert[0].classList.remove("apply-shake");
