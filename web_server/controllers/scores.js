@@ -88,7 +88,7 @@ const getUserScores = (req, res) => {
 
     //Query que consulta la vista user_stats de la db
     const query = `
-    SELECT * FROM user_stats WHERE user_id = ${id};
+    SELECT * FROM user_stats WHERE user_id = ${id} limit 10;
     `
     connection.query(query, (err, rows, fields) => {
         
