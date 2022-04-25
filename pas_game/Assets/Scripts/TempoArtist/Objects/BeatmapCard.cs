@@ -14,6 +14,7 @@ namespace TempoArtist.Objects
         private Button button;
     
         private SongSelectManager songSelectManager;
+        
         private void Awake()
         {
             button = transform.GetComponent<Button>();

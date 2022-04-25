@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using TempoArtist.Objects;
+using TempoArtist.Objects.HitObjects;
 using TempoArtist.Beatmaps;
 using TempoArtist.Managers;
 using TempoArtist.Utils;
@@ -16,25 +17,23 @@ namespace TempoArtist.Managers
         // Instance of this GameSetup object
         public static TaikoGameSetup instance;
         
+        public Beatmap Beatmap { get; set; }
+
+        public List<TaikoHitObject> objectInteractQueue;
+        public List<TaikoHitObject> objectActivationQueue;
+
+        public AudioSource MusicSource;
+        
+        [SerializeField] private List<TaikoHitObject> notes;
+        
         // Reference to the GameManager instance
         private TaikoGameManager TaikoGameManager;
 
-        public Beatmap Beatmap { get; set; }
-        
-        public List<TaikoHitObject> notes;
+        private SongSelectManager SongSelectManager;
 
-        public AudioSource MusicSource;
-
-        public List<TaikoHitObject> objectInteractQueue = new List<TaikoHitObject>();
-        public List<TaikoHitObject> objectActivationQueue = new List<TaikoHitObject>();
-
-        public static int AccuracyLaybackMs = 100;
+        private bool songReady;
         
-        public bool AddOffset { get; set; }
-        
-        private bool ready { get; set; }
-        
-        private int InteractionID { get; set; } = -1;
+        private const string defaultBeatmapPath = "Assets/Resources/Beatmaps/Akasha/Akasha.json";
 
         private void Awake()
         {
@@ -43,14 +42,25 @@ namespace TempoArtist.Managers
         
         private void Start()
         {
+            objectActivationQueue = new List<TaikoHitObject>();
+            objectInteractQueue = new List<TaikoHitObject>();
+            
+            SongSelectManager = SongSelectManager.Instance;
             TaikoGameManager = TaikoGameManager.instance;
             
-            // Path of the beatmap's json file
-            Beatmap = JsonParser.JsonToBeatmap("Assets/Beatmaps/Akasha/Akasha.json");
+            Beatmap = SongSelectManager.selectedBeatmap;
+            SetBeatmapSong();
+
+            if (songReady)
+                InstantiateObjects();
 
             TaikoGameManager.useMusicTimeline = true;
+        }
 
-            InstantiateObjects();
+        private void SetBeatmapSong()
+        {
+            MusicSource.clip = Beatmap.MusicSource;
+            songReady = true;
         }
 
         private void InstantiateObjects()

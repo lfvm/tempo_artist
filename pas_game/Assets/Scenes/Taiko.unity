@@ -730,10 +730,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HitObject: {fileID: 2733453316827742084, guid: ce39d8780d8a6cb438c1d7edfbd79164, type: 3}
-  notes: []
-  MusicSource: {fileID: 826095856}
   objectInteractQueue: []
   objectActivationQueue: []
+  MusicSource: {fileID: 826095856}
+  notes: []
 --- !u!4 &1192385794
 Transform:
   m_ObjectHideFlags: 0
@@ -1011,7 +1011,7 @@ Transform:
   m_Children:
   - {fileID: 617367581}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1613531053
 GameObject:
@@ -1589,7 +1589,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8209645112195398016, guid: ce36a1879da09bd4390a66bc84c68bd4, type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8209645112195398016, guid: ce36a1879da09bd4390a66bc84c68bd4, type: 3}
       propertyPath: m_LocalScale.x
@@ -1601,7 +1601,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8209645112195398016, guid: ce36a1879da09bd4390a66bc84c68bd4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.5696
+      value: -5.5
       objectReference: {fileID: 0}
     - target: {fileID: 8209645112195398016, guid: ce36a1879da09bd4390a66bc84c68bd4, type: 3}
       propertyPath: m_LocalPosition.y
