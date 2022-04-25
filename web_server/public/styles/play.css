@@ -44,3 +44,8 @@
     margin: 2em;
     padding: 2em;
 }
+
+#image_arrows{
+   display: flex;
+   justify-content: center;
+}
