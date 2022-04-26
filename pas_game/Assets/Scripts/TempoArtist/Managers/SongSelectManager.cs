@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
 using System.IO;
+using System.Linq;
 using TempoArtist.Beatmaps;
 using TempoArtist.Utils;
 using TempoArtist.Objects;
@@ -21,7 +22,7 @@ namespace TempoArtist.Managers
         public Beatmap selectedBeatmap { get; private set; }
 
         public AudioSource beatmapSong;
-        
+
         [SerializeField] private BeatmapCard beatmapCard;
         
         [SerializeField] private MapInfoCard mapInfoCard;
@@ -67,6 +68,7 @@ namespace TempoArtist.Managers
             
             var beatmapFoldersPath = "./Assets/Resources/Beatmaps";
             
+            
             CreateBeatmaps(beatmapFoldersPath);
             CreateBeatmapMapCards();
         }
@@ -106,11 +108,10 @@ namespace TempoArtist.Managers
                 
                 Beatmap beatmap = JsonParser.JsonToBeatmap(beatmapJsonPaths[0]);
 
-                var beatmapSongPath = beatmapSongPaths[0];
-                var dividedPath = beatmapSongPaths[0].Split('/');
-                var auxPath =  dividedPath[dividedPath.Length - 1];
-                auxPath = GetFullPathWithoutExtension(auxPath);
-                beatmap.MusicSource = Resources.Load<AudioClip>(auxPath);
+                var dividedPath = beatmapSongPaths[0].Split('/').Reverse().Take(3).Reverse().ToArray();
+                var finalPath = GetFullPathWithoutExtension(string.Join("/", dividedPath));
+                
+                beatmap.MusicSource = Resources.Load<AudioClip>(finalPath);
                 beatmapList.Add(beatmap);
             }
         }
@@ -133,6 +134,7 @@ namespace TempoArtist.Managers
             selectedBeatmap = card.Beatmap;
             selectedBeatmapName = card.Beatmap.metadata.Title;
             selectedBeatmapMode = Int32.Parse(card.Beatmap.general.mode);
+            PlayAudioSample();
         }
 
         public void playSelectedBeatmap()
@@ -153,6 +155,8 @@ namespace TempoArtist.Managers
 
         public void PlayAudioSample()
         {
+            Debug.Log("Playing audio sample");
+            Debug.Log(selectedBeatmap.MusicSource);
             beatmapSong.clip = selectedBeatmap.MusicSource;
             beatmapSong.Play();
         }

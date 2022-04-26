@@ -1,6 +1,8 @@
+using System;
 using TempoArtist.Beatmaps;
 using TempoArtist.Managers;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace TempoArtist.Objects
@@ -10,14 +12,16 @@ namespace TempoArtist.Objects
         public GameObject cardTitle { get; set; }
         public GameObject cardArtist { get; set; }
         public Beatmap Beatmap { get; set; }
+        
+        // public UnityAction onBeatmapCardClicked;
 
-        private Button button;
+        public Button button;
     
         private SongSelectManager songSelectManager;
         
         private void Awake()
         {
-            button = transform.GetComponent<Button>();
+            //button = transform.GetComponent<Button>();
             cardTitle = transform.GetChild(0).gameObject;
             cardArtist = transform.GetChild(1).gameObject;
         }
@@ -25,13 +29,13 @@ namespace TempoArtist.Objects
         private void Start()
         { 
             songSelectManager = SongSelectManager.Instance;
-            button.onClick.AddListener(TaskOnClick);
+            button.onClick.AddListener(OnBeatmapCardClicked);
         }
     
-        void TaskOnClick()
+        void OnBeatmapCardClicked()
         {
             songSelectManager.SetSelectedBeatmapCard(this);
-            songSelectManager.PlayAudioSample();
+            // songSelectManager.PlayAudioSample();
         }
     }
 }
