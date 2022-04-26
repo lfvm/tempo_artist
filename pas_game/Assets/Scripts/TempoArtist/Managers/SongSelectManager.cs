@@ -18,33 +18,34 @@ namespace TempoArtist.Managers
     public class SongSelectManager : MonoBehaviour
     {
         public static SongSelectManager Instance;
+        public Beatmap selectedBeatmap { get; private set; }
+
+        public AudioSource beatmapSong;
         
-        private GameSetup GameSetup;
+        [SerializeField] private BeatmapCard beatmapCard;
+        
+        [SerializeField] private MapInfoCard mapInfoCard;
+        
+        // Reference to the GameSetup instance
+        private ManiaGameSetup ManiaGameSetup;
+        private TaikoGameSetup TaikoGameSetup;
+        
         private UIManager UIManager;
         
         private List<string> jsonBeatmapPaths;
+        
         private List<Beatmap> beatmapList;
-
-        private Button playButton;
-
+        
         private GameObject beatmapsPanel;
+        
         private GameObject canvas;
         
-        [SerializeField] private BeatmapCard beatmapCard;
-        [SerializeField] private MapInfoCard mapInfoCard;
-
-        private Beatmap tempBeatmap;
-        public Beatmap selectedBeatmap { get; set; }
-        
         private BeatmapCard selectedBeatmapCard;
-        
-        public AudioSource beatmapSong;
 
-        public bool beatmapCardSelected;
-
-        private bool samplePlaying = false;
+        private bool beatmapCardSelected;
 
         public string selectedBeatmapName;
+        public int selectedBeatmapMode;
 
         private void Awake()
         {
@@ -61,7 +62,8 @@ namespace TempoArtist.Managers
         {
             mapInfoCard = MapInfoCard.Instance;
             UIManager = UIManager.Instance;
-            GameSetup = GameSetup.instance;
+            ManiaGameSetup = ManiaGameSetup.instance;
+            TaikoGameSetup = TaikoGameSetup.instance;
             
             var beatmapFoldersPath = "./Assets/Resources/Beatmaps";
             
@@ -130,13 +132,22 @@ namespace TempoArtist.Managers
             beatmapCardSelected = true;
             selectedBeatmap = card.Beatmap;
             selectedBeatmapName = card.Beatmap.metadata.Title;
+            selectedBeatmapMode = Int32.Parse(card.Beatmap.general.mode);
         }
 
         public void playSelectedBeatmap()
         {
             if (beatmapCardSelected)
             {
-                SceneManager.LoadScene("Game");
+                switch (selectedBeatmapMode)
+                {
+                    case 3:
+                        SceneManager.LoadScene("Game");
+                        break;
+                    case 1:
+                        SceneManager.LoadScene("Taiko");
+                        break;
+                }
             }
         }
 
@@ -144,7 +155,6 @@ namespace TempoArtist.Managers
         {
             beatmapSong.clip = selectedBeatmap.MusicSource;
             beatmapSong.Play();
-            samplePlaying = true;
         }
 
         private String GetFullPathWithoutExtension(String path)

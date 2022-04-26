@@ -3,9 +3,9 @@ using System.Collections;
 using TempoArtist.Managers;
 using UnityEngine;
 
-namespace TempoArtist.Objects
+namespace TempoArtist.Objects.HitObjects
 {
-    public class HitObject : MonoBehaviour
+    public class ManiaHitObject : MonoBehaviour
     {
         public int Time
         { 
@@ -32,8 +32,8 @@ namespace TempoArtist.Objects
         }
 
         // Reference to the GameManager and GameSetup instances.
-        private GameManager GameManager;
-        private GameSetup GameSetup;
+        private ManiaGameManager GameManager;
+        private ManiaGameSetup GameSetup;
         
         private AudioSource hitsound;
         
@@ -66,8 +66,8 @@ namespace TempoArtist.Objects
 
         private void Awake()
         {
-            GameManager = GameManager.instance;
-            GameSetup = GameSetup.instance;
+            GameManager = ManiaGameManager.instance;
+            GameSetup = ManiaGameSetup.instance;
             
             hitsound = GetComponent<AudioSource>();
 
@@ -79,12 +79,12 @@ namespace TempoArtist.Objects
         
         void Start()
         {
+            SetKeyToPress();
+            
             ODTimingOkHit = Timing.ODTiming.GetODTimingForOkHit(GameManager.OD);
             ODTimingGoodHit = Timing.ODTiming.GetODTimingForGoodHit(GameManager.OD);
             ODTimingPerfectHit = Timing.ODTiming.GetODTimingForPerfectHit(GameManager.OD);
             
-            SetKeyToPress();
-
             PerfectInteractionTimeInMs = time + GameManager.noteTimeOffset;
             InteractionBoundsStartTimeInMs = PerfectInteractionTimeInMs - ODTimingOkHit;
             InteractionBoundsEndTimeInMs = PerfectInteractionTimeInMs + ODTimingOkHit;
@@ -117,7 +117,7 @@ namespace TempoArtist.Objects
                     hitsound.Play();
                     CalculateHitNoteAccuracy(GameManager.GetTimeInMs());
                     gameObject.SetActive(false);
-                    Debug.Log($"Object hittime: {time} time hit: {GameManager.GetTimeInMs()} time to get 300: {PerfectInteractionTimeInMs}");
+                    Debug.Log($"Object hit time: {time} time hit: {GameManager.GetTimeInMs()} time to get 300: {PerfectInteractionTimeInMs}");
                 }
             }
 
@@ -142,22 +142,26 @@ namespace TempoArtist.Objects
             {
                 GameManager.OkHit();
             }
+        }
+
+        // Testing
+        private void CalculateHitAccuracy(double gameTime)
+        {
+            if (gameTime < PerfectInteractionTimeInMs + ODTimingPerfectHit 
+                && gameTime > PerfectInteractionTimeInMs - ODTimingPerfectHit)
+            {
+                GameManager.PerfectHit();
+            }
             
-            // Need to fix this 
+            else if (gameTime > PerfectInteractionTimeInMs + ODTimingPerfectHit &&
+                     gameTime < PerfectInteractionTimeInMs + ODTimingOkHit ||
+                     gameTime < PerfectInteractionTimeInMs - ODTimingPerfectHit &&
+                     gameTime > PerfectInteractionTimeInMs - ODTimingOkHit)
+            {
+                GameManager.OkHit();
+            }
             
-            // if (gameTime < PerfectInteractionTimeInMs + ODTimingPerfectHit 
-            //     && gameTime > PerfectInteractionTimeInMs - ODTimingPerfectHit)
-            // {
-            //     GameManager.PerfectHit();
-            // }
-            // else if (gameTime > PerfectInteractionTimeInMs + ODTimingPerfectHit &&
-            //          gameTime < PerfectInteractionTimeInMs + ODTimingOkHit ||
-            //          gameTime < PerfectInteractionTimeInMs - ODTimingPerfectHit &&
-            //          gameTime > PerfectInteractionTimeInMs - ODTimingOkHit)
-            // {
-            //     GameManager.OkHit();
-            // }
-            // GameManager.GoodHit();
+            GameManager.GoodHit();
         }
 
         private void SetKeyToPress()
@@ -206,6 +210,7 @@ namespace TempoArtist.Objects
                 {
                     GameManager.NoteMiss();
                 }
+                
                 canBeHit = false;
                 GameSetup.notes.Remove(this);
                 Destroy(gameObject);

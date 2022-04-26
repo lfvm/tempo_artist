@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Results.unity
     guid: 1d39b3b36d2a5408ea57ecd0102c51ce
+  - enabled: 1
+    path: Assets/Scenes/Taiko.unity
+    guid: 3a22c6c63cc377048b95b37d5de5dc16
   - enabled: 0
     path: Assets/Scenes/Options.unity
     guid: 78c8be5299d3141fe94498106de9bd5b

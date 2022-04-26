@@ -12,12 +12,12 @@ using TempoArtist.Objects;
 
 namespace TempoArtist.Managers
 {
-    public class GameManager : MonoBehaviour
+    public class ManiaGameManager : MonoBehaviour
     {
         [SerializeField] private double GameTimeMs;
         
         // Instance of this object
-        public static GameManager instance;
+        public static ManiaGameManager instance;
         
         public GameObject OkHitEffect, goodHitEffect, perfectHitEffect, missEffect;
         
@@ -28,33 +28,35 @@ namespace TempoArtist.Managers
         public int noteTimeOffset = 0;
         
         // Reference to the GameSetup object instance
-        private GameSetup GameSetup;
+        private ManiaGameSetup GameSetup;
+        
+        // private ResultsManager resultsManager;
+        private MapResult MapResults;
         
         private const float scorePerOkNote = 50f;
         private const float scorePerGoodNote = 100f;
         private const float scorePerPerfectNote = 300f;
         private const float scorePerMiss = 0f;
 
-        public int score;
-        public int combo;
-        public float health;
-        public int scrollSpeed;
-        public float OD;
-        public float HPDrain;
-        public int maxCombo;
+        [SerializeField] public int score;
+        [SerializeField] public int combo;
+        [SerializeField] public float health;
+        [SerializeField] public int scrollSpeed;
+        [SerializeField] public float OD;
+        [SerializeField] public float HPDrain;
+        [SerializeField] public int maxCombo;
+        [SerializeField] private double accuracy;
         
-        public int NextObjToHit = 0; 
+        [SerializeField] private int NextObjToHit = 0; 
         [SerializeField] private int nextObjectID;
-        private int NextObjToActivateID = 0;
+        [SerializeField] private int NextObjToActivateID = 0;
 
         [SerializeField] private int okHits;
         [SerializeField] private int goodHits;
         [SerializeField] private int perfectHits;
         [SerializeField] private int missedHits;
 
-        private string rank;
-
-        [SerializeField] private double accuracy;
+        [SerializeField] private string rank;
         
         private bool resultsCreated = false;
 
@@ -63,31 +65,29 @@ namespace TempoArtist.Managers
         public GameObject HitZone3;
         public GameObject HitZone4;
 
-       // private ResultsManager resultsManager;
-       private MapResult mapResults;
-        
         public Text scoreText;
         public Text comboText;
         public Text timeText;
         public Text accuracyText;
 
         public bool allNotesInActive;
-        
+        private bool GamePaused;
+
         private Stopwatch Stopwatch { get; } = new Stopwatch();
 
         private void Awake()
         {
+            instance = this;
+            
             HitZone1 = GameObject.Find("HitZone1");
             HitZone2 = GameObject.Find("HitZone2");
             HitZone3 = GameObject.Find("HitZone3");
             HitZone4 = GameObject.Find("HitZone4");
-            
-            instance = this;
         }
 
         private void Start()
         {
-            GameSetup = GameSetup.instance;
+            GameSetup = ManiaGameSetup.instance;
         }
         
         public void SetGameReady()
@@ -98,7 +98,7 @@ namespace TempoArtist.Managers
 
         private void Update()
         {
-            if (!isGameReady)
+            if (!isGameReady || GamePaused)
             {
                 return;
             }
@@ -120,6 +120,9 @@ namespace TempoArtist.Managers
                 IterateObjectQueue();
             }
             
+            if (AllNotesInActive())
+                gameFinished = true;
+            
             GetTimeInMs();
             
             health = handleHealth();
@@ -131,9 +134,6 @@ namespace TempoArtist.Managers
             accuracyText.text = CalculateAccuracy().ToString("0.00") + "%";
 
             allNotesInActive = AllNotesInActive();
-            
-            if (AllNotesInActive())
-                gameFinished = true;
         }
 
         private void callResultsWindow()
@@ -178,10 +178,9 @@ namespace TempoArtist.Managers
         {
             rank = accuracy switch
             {
-                var n when n >= 40 => "D",
-                var n when n >= 55 => "C",
-                var n when n >= 70 => "B",
-                var n when n >= 85 => "B",
+                var n when n >= 60 => "D",
+                var n when n >= 70 => "C",
+                var n when n >= 80 => "B",
                 var n when n >= 90 => "A",
                 var n when n >= 95 => "S",
                 _ => "F"

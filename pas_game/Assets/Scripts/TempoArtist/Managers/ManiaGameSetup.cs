@@ -2,41 +2,36 @@
 using System.Collections.Generic;
 using TempoArtist.Beatmaps;
 using TempoArtist.Objects;
+using TempoArtist.Objects.HitObjects;
 using TempoArtist.Utils;
 using UnityEngine;
 using UnityEngineInternal;
 
 namespace TempoArtist.Managers
 {
-    public class GameSetup : MonoBehaviour
+    public class ManiaGameSetup : MonoBehaviour
     {
         // Reference to the HitObject prefab
-        [SerializeField] private HitObject HitObject; 
+        [SerializeField] private ManiaHitObject HitObject; 
         
         // Instance of this GameSetup object
-        public static GameSetup instance;
+        public static ManiaGameSetup instance;
         
         // Reference to the GameManager instance
-        private GameManager GameManager;
+        private ManiaGameManager GameManager;
         private SongSelectManager SongSelectManager;
 
         public Beatmap Beatmap { get; set; }
         
-        public List<HitObject> notes;
+        public List<ManiaHitObject> notes;
 
         public AudioSource MusicSource;
 
-        public List<HitObject> objectInteractQueue = new List<HitObject>();
-        public List<HitObject> objectActivationQueue = new List<HitObject>();
+        public List<ManiaHitObject> objectInteractQueue = new List<ManiaHitObject>();
+        public List<ManiaHitObject> objectActivationQueue = new List<ManiaHitObject>();
 
-        public static int AccuracyLaybackMs = 100;
-        
         public bool AddOffset { get; set; }
-        
-        private bool ready { get; set; }
-        
-        private int InteractionID { get; set; } = -1;
-        
+
         private const string defaultBeatmapPath = "Assets/Resources/Beatmaps/BeastBassBomb/BEAST BASS BOMB.json";
         
         public bool SongReady { get; set; }
@@ -48,7 +43,7 @@ namespace TempoArtist.Managers
         
         private void Start()
         {
-            GameManager = GameManager.instance;
+            GameManager = ManiaGameManager.instance;
             SongSelectManager = SongSelectManager.Instance;
 
             GameManager.useMusicTimeline = true;
@@ -77,6 +72,7 @@ namespace TempoArtist.Managers
             
                 float newX = 0;
             
+                // Assign new x values based on the old values from the original beatmap
                 newX = x switch
                 {
                     64 => -1.5f,

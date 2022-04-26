@@ -5,7 +5,7 @@ using UnityEditor.Experimental;
 using UnityEngine;
 using TempoArtist.Managers;
 
-namespace TempoArtist.Objects
+namespace TempoArtist.Objects.HitObjects
 {
     public class TaikoHitObject : MonoBehaviour
     {
@@ -75,7 +75,7 @@ namespace TempoArtist.Objects
             SetSpriteAndHitsound();
 
             speed = GameManager.scrollSpeed;
-            startTime = time - speed;
+            startTime = time - GameManager.noteTimeOffset;
         }
 
         private void Update()
@@ -169,7 +169,8 @@ namespace TempoArtist.Objects
 
         IEnumerator HitObjectMove()
         {
-            speed = x / (speed / 1000);
+            var xtemp = x + 5.5f;
+            speed = xtemp / (speed / 1000);
             transform.Translate(Vector3.left * (speed * UnityEngine.Time.deltaTime));
             yield return null;
         }
