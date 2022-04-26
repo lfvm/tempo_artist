@@ -1,4 +1,4 @@
-const loadData = async() => {
+const loadData = async () => {
 
     //Hacer peticion a la api y mandar el id del usuario
     const id = localStorage.getItem('id');
@@ -7,9 +7,10 @@ const loadData = async() => {
         .then(res => {
             console.log(res);
             //Verificar que la respuesta sea correcta, y si es asi llenar la tabla con los datos
-            if(res['status'] == "success"){
-                
+            if (res['status'] == "success") {
+
                 plotGraph(res['scores']);
+                pieChartGlobalHits(res['scores']);
             }
 
         });
@@ -18,13 +19,7 @@ const loadData = async() => {
 }
 
 
-
-
-
-
-
-
-const plotGraph = (scores ) => {
+const plotGraph = (scores) => {
 
     //obtener los total points del usuario
 
@@ -84,4 +79,47 @@ const plotGraph = (scores ) => {
             }
         }
     });
+}
+
+const pieChartGlobalHits = (scores) => {
+    // TODO: Hace que funcione con todos los cualquier nivel
+    const level_name = `Level: ${scores[0]["name"]}`
+    
+    // Almacenar los tipos de hits
+    perfect = [];
+    good = [];
+    missed = []; 
+    
+    scores.forEach(score => {
+        perfect.push(score.perfect_hits);
+        good.push([score.good_hits]);
+        missed.push([score.total_notes - (score.good_hits - score.perfect_hits)]);
+    });
+
+    // Obtener el promedio
+    perfect_m = perfect.reduce((a, b) => parseInt(a) + parseInt(b)) / perfect.length;
+    good_m = good.reduce((a, b) => parseInt(a) + parseInt(b)) / good.length;
+    missed_m = missed.reduce((a, b) => parseInt(a) + parseInt(b)) / missed.length;
+
+    
+    // Generar el grafico
+    const ctx = document.getElementById('pieChartHits').getContext('2d');
+
+    const pieChart1 = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ["Perfect", "Good", "Missed"],
+            datasets: [{
+                label: "Average hits by level",
+                backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f"],
+                data: [perfect_m, good_m, missed_m]
+            }]
+        },
+        options: {
+            title: {
+                display: true,
+                text: level_name,
+            }
+        }
+    })
 }
