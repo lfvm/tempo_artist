@@ -25,30 +25,40 @@ namespace TempoArtist.Managers
         public bool useMusicTimeline;
         public bool isGameReady;
 
-        public int noteTimeOffset = 0;
+        private float noteTimeOffset = 0;
         
         // Reference to the GameSetup object instance
         private ManiaGameSetup GameSetup;
         
         // private ResultsManager resultsManager;
         private MapResult MapResults;
-        
+
         private const float scorePerOkNote = 50f;
         private const float scorePerGoodNote = 100f;
         private const float scorePerPerfectNote = 300f;
         private const float scorePerMiss = 0f;
+        
+        public float ScrollSpeed
+        {
+            get => scrollSpeed;
+            set => scrollSpeed = value;
+        }
 
-        [SerializeField] public int score;
-        [SerializeField] public int combo;
-        [SerializeField] public float health;
-        [SerializeField] public int scrollSpeed;
+        public float NoteTimeOffset
+        {
+            get => noteTimeOffset;
+            set => noteTimeOffset = value;
+        }
+        
+        [SerializeField] private int score;
+        [SerializeField] private int combo;
+        [SerializeField] private float health;
+        [SerializeField] private float scrollSpeed;
         [SerializeField] public float OD;
-        [SerializeField] public float HPDrain;
-        [SerializeField] public int maxCombo;
+        [SerializeField] private float HPDrain;
+        [SerializeField] private int maxCombo;
         [SerializeField] private double accuracy;
         
-        [SerializeField] private int NextObjToHit = 0; 
-        [SerializeField] private int nextObjectID;
         [SerializeField] private int NextObjToActivateID = 0;
 
         [SerializeField] private int okHits;
@@ -115,7 +125,7 @@ namespace TempoArtist.Managers
                 GameSetup.MusicSource.Stop();
             }
 
-            if (GameSetup.notes.Count != 0)
+            if (GameSetup.notes.Count != 0 && NextObjToActivateID < GameSetup.objectActivationQueue.Count)
             {
                 IterateObjectQueue();
             }
@@ -191,7 +201,7 @@ namespace TempoArtist.Managers
 
         private void IterateObjectQueue()
         {
-            if (GetTimeInMs() >= GameSetup.objectActivationQueue[NextObjToActivateID].Time - Timing.ODTiming.GetODTimingForOkHit(OD))
+            if (GetTimeInMs() >= GameSetup.objectActivationQueue[NextObjToActivateID].StartTime - Timing.ODTiming.GetODTimingForOkHit(OD))
             {
                 (GameSetup.objectActivationQueue[NextObjToActivateID]).gameObject.SetActive(true);
                 NextObjToActivateID++;

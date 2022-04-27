@@ -23,7 +23,7 @@ namespace TempoArtist.Managers
         
         // Reference to the GameSetup object instance
         private TaikoGameSetup TaikoGameSetup;
-        
+
         private const float scorePerOkNote = 50f;
         private const float scorePerGoodNote = 100f;
         private const float scorePerPerfectNote = 300f;
@@ -32,7 +32,7 @@ namespace TempoArtist.Managers
         public int score;
         public int combo;
         public float health;
-        public int scrollSpeed;
+        public float scrollSpeed;
         public float OD;
         public float HPDrain;
         public int maxCombo;
@@ -74,6 +74,7 @@ namespace TempoArtist.Managers
         private void Start()
         {
             TaikoGameSetup = TaikoGameSetup.instance;
+            scrollSpeed = Settings.TaikoScrollSpeed;
         }
         
         public void SetGameReady()

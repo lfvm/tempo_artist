@@ -20,7 +20,7 @@ namespace TempoArtist.Managers
         // Reference to the GameManager instance
         private ManiaGameManager GameManager;
         private SongSelectManager SongSelectManager;
-
+        
         public Beatmap Beatmap { get; set; }
         
         public List<ManiaHitObject> notes;
@@ -47,6 +47,8 @@ namespace TempoArtist.Managers
             SongSelectManager = SongSelectManager.Instance;
 
             GameManager.useMusicTimeline = true;
+            GameManager.ScrollSpeed = Settings.ManiaScrollSpeed;
+            GameManager.NoteTimeOffset = Settings.Offset;
 
             Beatmap = SongSelectManager.selectedBeatmap;
             SetBeatmapSong();
@@ -86,7 +88,7 @@ namespace TempoArtist.Managers
                 
                 hitObject.X = newX;
                 hitObject.Y = y;
-                hitObject.Time = time;
+                hitObject.Time = time + (int)GameManager.NoteTimeOffset;
 
                 hitObject.name = objectActivationQueue.Count + "-Hitcircle";
                 hitObject.QueueID = objectActivationQueue.Count;

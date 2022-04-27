@@ -26,10 +26,27 @@ namespace TempoArtist.Managers
         [SerializeField] private BeatmapCard beatmapCard;
         
         [SerializeField] private MapInfoCard mapInfoCard;
-        
+
         // Reference to the GameSetup instance
-        private ManiaGameSetup ManiaGameSetup;
-        private TaikoGameSetup TaikoGameSetup;
+
+        private ManiaGameManager ManiaGameManager;
+        private TaikoGameManager TaikoGameManager;
+
+        [SerializeField] private Slider maniaScrollSpeedSlider;
+        [SerializeField] private Slider taikoScrollSpeedSlider;
+        [SerializeField] private Slider offsetSlider;
+        
+        private TMP_Text maniaScrollSpeedText;
+        private TMP_Text taikoScrollSpeedText;
+        private TMP_Text offsetText;
+
+        private float maniaScrollSpeed;
+        private float taikoScrollSpeed;
+        private float offset;
+
+        public float SettingsManiaSpeed;
+        public float SettingsTaikoSpeed;
+        public float SettingsOffset;
         
         private UIManager UIManager;
         
@@ -57,17 +74,24 @@ namespace TempoArtist.Managers
             
             beatmapsPanel = GameObject.Find("BeatmapsPanel");
             canvas = GameObject.Find("Canvas");
+
+            maniaScrollSpeedSlider = GameObject.Find("Mania Scroll Speed Slider").GetComponent<Slider>();
+            taikoScrollSpeedSlider = GameObject.Find("Taiko Scroll Speed Slider").GetComponent<Slider>();
+            offsetSlider = GameObject.Find("Offset Slider").GetComponent<Slider>();
+
+            maniaScrollSpeedText = GameObject.Find("Mania Scroll Speed Value").GetComponent<TMP_Text>();
+            taikoScrollSpeedText = GameObject.Find("Taiko Scroll Speed Value").GetComponent<TMP_Text>();
+            offsetText =  GameObject.Find("Offset Value").GetComponent<TMP_Text>();
         }
 
         void Start()
         {
             mapInfoCard = MapInfoCard.Instance;
             UIManager = UIManager.Instance;
-            ManiaGameSetup = ManiaGameSetup.instance;
-            TaikoGameSetup = TaikoGameSetup.instance;
+            ManiaGameManager = ManiaGameManager.instance;
+            TaikoGameManager = TaikoGameManager.instance;
             
             var beatmapFoldersPath = ".\\Assets\\Resources\\Beatmaps";
-            
             
             CreateBeatmaps(beatmapFoldersPath);
             CreateBeatmapMapCards();
@@ -80,6 +104,22 @@ namespace TempoArtist.Managers
             {
                 UpdateMapInfoCard(selectedBeatmapCard);
             }
+
+            maniaScrollSpeed = maniaScrollSpeedSlider.value;
+            taikoScrollSpeed = taikoScrollSpeedSlider.value;
+            offset = offsetSlider.value;
+
+            maniaScrollSpeedText.text = $"{maniaScrollSpeed.ToString()} ms";
+            taikoScrollSpeedText.text = $"{taikoScrollSpeed.ToString()} ms";
+            offsetText.text = $"{offset.ToString()} ms";
+
+            Settings.ManiaScrollSpeed = maniaScrollSpeed;
+            Settings.TaikoScrollSpeed = taikoScrollSpeed;
+            Settings.Offset = offset;
+
+            SettingsManiaSpeed = Settings.ManiaScrollSpeed;
+            SettingsTaikoSpeed = Settings.TaikoScrollSpeed;
+            SettingsOffset = Settings.Offset;
         }
 
         private void PrintBeatmapList()

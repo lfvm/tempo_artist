@@ -12,6 +12,12 @@ namespace TempoArtist.Objects.HitObjects
             get => time;
             set { time = value; }
         }
+
+        public float StartTime
+        {
+            get => startTime;
+            private set => startTime = value;
+        }
         
         public float X
         {
@@ -46,13 +52,13 @@ namespace TempoArtist.Objects.HitObjects
         private float x;
         private float y;
         // when the note has to be hit
-        private int time;
+        [SerializeField] private int time;
         // When the note should become active
         [SerializeField] private float startTime;
-        private float speed;
-        private int queueId;
+        [SerializeField] private float speed;
+        [SerializeField] private int queueId;
 
-        private float scrollSpeed;
+        [SerializeField] private float scrollSpeed;
         private float ODTimingOkHit;
         private float ODTimingGoodHit;
         private float ODTimingPerfectHit;
@@ -85,17 +91,18 @@ namespace TempoArtist.Objects.HitObjects
             ODTimingGoodHit = Timing.ODTiming.GetODTimingForGoodHit(GameManager.OD);
             ODTimingPerfectHit = Timing.ODTiming.GetODTimingForPerfectHit(GameManager.OD);
             
-            PerfectInteractionTimeInMs = time + GameManager.noteTimeOffset;
+            PerfectInteractionTimeInMs = time + GameManager.NoteTimeOffset;
             InteractionBoundsStartTimeInMs = PerfectInteractionTimeInMs - ODTimingOkHit;
             InteractionBoundsEndTimeInMs = PerfectInteractionTimeInMs + ODTimingOkHit;
-
-            scrollSpeed = GameManager.scrollSpeed;
-            startTime = time - GameManager.noteTimeOffset;
+            
+            scrollSpeed = GameManager.ScrollSpeed;
+            speed = 10.85f / (scrollSpeed / 1000);
+            
+            startTime = time - scrollSpeed;
 
             hitsound.clip = hitNormal;
             
-            Debug.Log($"Current time: {GameManager.GetTimeInMs()}");
-            Debug.Log($"Interraction bound start: {InteractionBoundsStartTimeInMs} Interraction bound end: {InteractionBoundsEndTimeInMs}");
+            Debug.Log($"object id: {queueId} start time: {GameManager.GetTimeInMs()} Interraction bound start: {InteractionBoundsStartTimeInMs} Interraction bound end: {InteractionBoundsEndTimeInMs} Perfect hit time: {PerfectInteractionTimeInMs}");
         }
 
         private void Update()
@@ -178,8 +185,6 @@ namespace TempoArtist.Objects.HitObjects
 
         IEnumerator HitObjectMove()
         {
-            var newY = y + 3.85f;
-            speed = newY / (scrollSpeed / 1000);
             transform.Translate(Vector3.down * (speed * UnityEngine.Time.deltaTime));
             yield return null;
         }
@@ -213,7 +218,7 @@ namespace TempoArtist.Objects.HitObjects
                 
                 canBeHit = false;
                 GameSetup.notes.Remove(this);
-                Destroy(gameObject);
+                gameObject.SetActive(false);
             }
         }
 
