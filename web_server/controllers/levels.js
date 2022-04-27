@@ -32,12 +32,16 @@ const createLevel = (req, res) => {
     lenght, 
     name,
     difficulty,
-    total_notes
+    total_notes,
+    author,
+    level_type
     )VALUES(
         '${level.lenght}',
         '${level.name}',
         '${level.difficulty}',
-        '${level.total_notes}'
+        '${level.total_notes}',
+        '${level.author}',
+        '${level.level_type}'
     );
     `
 

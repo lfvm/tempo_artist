@@ -17,6 +17,9 @@ router.post('/nuevo',[
     check('lenght' ,'la duracion del nivel es obligatoria').not().isEmpty(),
     check('difficulty' ,'la dificultad del nivel es obligatoria').not().isEmpty(),
     check('total_notes' ,'las notas totales del son obligatorias').not().isEmpty(),
+    check('author' ,'las notas totales del son obligatorias').not().isEmpty(),
+    check('level_type' ,'las notas totales del son obligatorias').not().isEmpty(),
+
 
     validateRequestFields
 ],createLevel);
