@@ -60,10 +60,14 @@ namespace TempoArtist.Managers
         
         private BeatmapCard selectedBeatmapCard;
 
+        private Button closeOptionsMenuButton;
+
         private bool beatmapCardSelected;
 
         public string selectedBeatmapName;
         public int selectedBeatmapMode;
+
+        private GameObject settingsPanel;
 
         private void Awake()
         {
@@ -71,6 +75,8 @@ namespace TempoArtist.Managers
 
             jsonBeatmapPaths = new List<string>();
             beatmapList = new List<Beatmap>();
+
+            closeOptionsMenuButton = GameObject.Find("CloseMenuButton").GetComponent<Button>();
             
             beatmapsPanel = GameObject.Find("BeatmapsPanel");
             canvas = GameObject.Find("Canvas");
@@ -82,10 +88,14 @@ namespace TempoArtist.Managers
             maniaScrollSpeedText = GameObject.Find("Mania Scroll Speed Value").GetComponent<TMP_Text>();
             taikoScrollSpeedText = GameObject.Find("Taiko Scroll Speed Value").GetComponent<TMP_Text>();
             offsetText =  GameObject.Find("Offset Value").GetComponent<TMP_Text>();
+
+            settingsPanel = GameObject.Find("OptionsPanel");
         }
 
         void Start()
         {
+            closeOptionsMenuButton.onClick.AddListener(CloseOptionsMenu);
+            settingsPanel.SetActive(false);
             mapInfoCard = MapInfoCard.Instance;
             UIManager = UIManager.Instance;
             ManiaGameManager = ManiaGameManager.instance;
@@ -120,6 +130,8 @@ namespace TempoArtist.Managers
             SettingsManiaSpeed = Settings.ManiaScrollSpeed;
             SettingsTaikoSpeed = Settings.TaikoScrollSpeed;
             SettingsOffset = Settings.Offset;
+            
+            CheckForOptionsKey();
         }
 
         private void PrintBeatmapList()
@@ -206,6 +218,19 @@ namespace TempoArtist.Managers
         private String GetFullPathWithoutExtension(String path)
         {
             return Path.Combine(Path.GetDirectoryName(path), Path.GetFileNameWithoutExtension(path));
+        }
+
+        private void CheckForOptionsKey()
+        {
+            if (Input.GetKeyDown(KeyCode.O))
+            {
+                settingsPanel.SetActive(true);
+            }
+        }
+
+        private void CloseOptionsMenu()
+        {
+            settingsPanel.SetActive(false);
         }
     }
 }
