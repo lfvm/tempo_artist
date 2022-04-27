@@ -10,7 +10,7 @@ const loadData = async () => {
             if (res['status'] == "success") {
 
                 plotGraph(res['scores']);
-                pieChartGlobalHits(res['scores']);
+                pieChartGlobalHits(res['scores'], "getting starte");
             }
 
         });
@@ -81,9 +81,9 @@ const plotGraph = (scores) => {
     });
 }
 
-const pieChartGlobalHits = (scores) => {
+const pieChartGlobalHits = (scores, level) => {
     // TODO: Hace que funcione con todos los cualquier nivel
-    const level_name = `Level: ${scores[0]["name"]}`
+    const level_name = `Level: ${level}`
     
     // Almacenar los tipos de hits
     perfect = [];
@@ -91,9 +91,11 @@ const pieChartGlobalHits = (scores) => {
     missed = []; 
     
     scores.forEach(score => {
-        perfect.push(score.perfect_hits);
-        good.push([score.good_hits]);
-        missed.push([score.total_notes - (score.good_hits - score.perfect_hits)]);
+        if (score.name == level) {
+            perfect.push(score.perfect_hits);
+            good.push([score.good_hits]);
+            missed.push([score.total_notes - (score.good_hits - score.perfect_hits)]);   
+        }
     });
 
     // Obtener el promedio

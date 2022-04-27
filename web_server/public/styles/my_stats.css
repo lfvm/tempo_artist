@@ -26,3 +26,8 @@
     text-align:center;
     padding-top:5%;
 }
+
+#pieSection{
+    display: flex;
+    justify-content: space-around;
+}
