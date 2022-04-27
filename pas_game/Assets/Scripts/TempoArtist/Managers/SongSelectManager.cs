@@ -66,11 +66,12 @@ namespace TempoArtist.Managers
             ManiaGameSetup = ManiaGameSetup.instance;
             TaikoGameSetup = TaikoGameSetup.instance;
             
-            var beatmapFoldersPath = "./Assets/Resources/Beatmaps";
+            var beatmapFoldersPath = ".\\Assets\\Resources\\Beatmaps";
             
             
             CreateBeatmaps(beatmapFoldersPath);
             CreateBeatmapMapCards();
+            PrintBeatmapList();
         }
 
         void Update()
@@ -83,9 +84,9 @@ namespace TempoArtist.Managers
 
         private void PrintBeatmapList()
         {
-            foreach (var beatmap in beatmapList)
+            foreach (var str in HCBeatmaps.beatmapStrings)
             {
-                Debug.Log(beatmap.MusicSource);
+                Debug.Log(str);
             }
         }
 
@@ -108,11 +109,12 @@ namespace TempoArtist.Managers
                 
                 Beatmap beatmap = JsonParser.JsonToBeatmap(beatmapJsonPaths[0]);
 
-                var dividedPath = beatmapSongPaths[0].Split('/').Reverse().Take(3).Reverse().ToArray();
-                var finalPath = GetFullPathWithoutExtension(string.Join("/", dividedPath));
-                
+                var dividedPath = beatmapSongPaths[0].Split('\\').Reverse().Take(3).Reverse().ToArray();
+                var finalPath = GetFullPathWithoutExtension(string.Join("\\", dividedPath));
+
                 beatmap.MusicSource = Resources.Load<AudioClip>(finalPath);
                 beatmapList.Add(beatmap);
+                HCBeatmaps.beatmapStrings.Add( JsonParser.BeatmapToJson(beatmap));
             }
         }
 
@@ -155,8 +157,8 @@ namespace TempoArtist.Managers
 
         public void PlayAudioSample()
         {
-            Debug.Log("Playing audio sample");
-            Debug.Log(selectedBeatmap.MusicSource);
+            //Debug.Log("Playing audio sample");
+            //Debug.Log(selectedBeatmap.MusicSource);
             beatmapSong.clip = selectedBeatmap.MusicSource;
             beatmapSong.Play();
         }

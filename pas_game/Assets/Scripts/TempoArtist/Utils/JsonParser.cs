@@ -11,5 +11,11 @@ namespace TempoArtist.Utils
         {
             return JsonConvert.DeserializeObject<Beatmap>(File.ReadAllText(jsonPath));
         }
+
+        public static string BeatmapToJson(Beatmap beatmap)
+        {
+            var beatmapStr = JsonConvert.SerializeObject(beatmap);
+            return beatmapStr;
+        }
     }
 }
