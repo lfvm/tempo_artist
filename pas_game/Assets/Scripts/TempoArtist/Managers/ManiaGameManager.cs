@@ -150,14 +150,19 @@ namespace TempoArtist.Managers
         {
             if (!resultsCreated)
             {
-                MapResult.score = score;
-                MapResult.maxCombo = maxCombo;
-                MapResult.okHits = okHits;
-                MapResult.goodHits = goodHits;
-                MapResult.perfectHits = perfectHits;
-                MapResult.missedHits = missedHits;
-                MapResult.rank = rank;
-                MapResult.accuracy = accuracy;
+                MapResult mapResult = new MapResult();
+                
+                mapResult.score = score;
+                mapResult.maxCombo = maxCombo;
+                mapResult.okHits = okHits;
+                mapResult.goodHits = goodHits;
+                mapResult.perfectHits = perfectHits;
+                mapResult.missedHits = missedHits;
+                mapResult.rank = rank;
+                mapResult.accuracy = accuracy;
+                mapResult.mapId = Int32.Parse(GameSetup.Beatmap.metadata.BeatmapID);
+                
+                ResultsManager.instance.mapResult = mapResult;
                 resultsCreated = true;
                 SceneManager.LoadScene("Results");
             }

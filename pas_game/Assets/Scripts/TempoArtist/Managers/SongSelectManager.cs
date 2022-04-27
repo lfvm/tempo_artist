@@ -101,7 +101,7 @@ namespace TempoArtist.Managers
             ManiaGameManager = ManiaGameManager.instance;
             TaikoGameManager = TaikoGameManager.instance;
             
-            var beatmapFoldersPath = ".\\Assets\\Resources\\Beatmaps";
+            var beatmapFoldersPath = "./Assets/Resources/Beatmaps";
             
             CreateBeatmaps(beatmapFoldersPath);
             CreateBeatmapMapCards();
@@ -161,8 +161,8 @@ namespace TempoArtist.Managers
                 
                 Beatmap beatmap = JsonParser.JsonToBeatmap(beatmapJsonPaths[0]);
 
-                var dividedPath = beatmapSongPaths[0].Split('\\').Reverse().Take(3).Reverse().ToArray();
-                var finalPath = GetFullPathWithoutExtension(string.Join("\\", dividedPath));
+                var dividedPath = beatmapSongPaths[0].Split('/').Reverse().Take(3).Reverse().ToArray();
+                var finalPath = GetFullPathWithoutExtension(string.Join("/", dividedPath));
 
                 beatmap.MusicSource = Resources.Load<AudioClip>(finalPath);
                 beatmapList.Add(beatmap);

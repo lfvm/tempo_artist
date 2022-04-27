@@ -24,7 +24,7 @@ namespace TempoArtist.Managers
 
         public AudioSource MusicSource;
         
-        [SerializeField] private List<TaikoHitObject> notes;
+        [SerializeField] public List<TaikoHitObject> notes;
         
         // Reference to the GameManager instance
         private TaikoGameManager TaikoGameManager;
@@ -77,7 +77,7 @@ namespace TempoArtist.Managers
                 
                 hitObject.x = x;
                 hitObject.y = y;
-                hitObject.time = time;
+                hitObject.time = time + TaikoGameManager.noteTimeOffset;
                 HitObject.hitsound = hitsound;
 
                 hitObject.name = objectActivationQueue.Count + "-Hitcircle";
