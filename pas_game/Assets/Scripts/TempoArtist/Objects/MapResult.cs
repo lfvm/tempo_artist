@@ -2,18 +2,20 @@ using UnityEngine;
 
 namespace TempoArtist.Objects
 {
-    public class MapResult : MonoBehaviour
+    public class MapResult
     {
-        public static int score;
-        public static int okHits;
-        public static int goodHits;
-        public static int perfectHits;
-        public static int missedHits;
-        public static int maxCombo;
-        
-        public static double accuracy;
+        public int score;
+        public int okHits;
+        public int goodHits;
+        public int perfectHits;
+        public int missedHits;
+        public int maxCombo;
 
-        public static string rank;
+        public int mapId;
+        
+        public double accuracy;
+
+        public string rank;
         
         // public static void Init(int score, int okHits, int goodHits, int perfectHits, int missedHits, int maxCombo, string rank, float accuracy, int totalNotes)
         // {

@@ -75,7 +75,11 @@ namespace TempoArtist.Objects.HitObjects
             SetSpriteAndHitsound();
 
             speed = GameManager.scrollSpeed;
-            startTime = time - GameManager.noteTimeOffset;
+            speed = 10.85f / (speed / 1000);
+            
+            startTime = time - speed;
+
+            hitSound.clip = hitNormal;
         }
 
         private void Update()

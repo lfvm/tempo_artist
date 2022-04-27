@@ -1,3 +1,4 @@
+using System;
 using TempoArtist.Objects;
 using TMPro;
 using UnityEngine;
@@ -11,28 +12,19 @@ using System.Collections.Generic;
 
 //Se deben crear clases para serializar los objetos a json, en este caso 
 //Se creara una clase para los Scores
-[System.Serializable]
-public class Score
-{
-    public int user_id;
-    public int level_id;
-    public int total_points;
-    public int perfect_hits;
-    public int good_hits;
-    public int max_combo;
-    public int accuracy;
-
-}
-
 
 namespace TempoArtist.Managers
 {
     public class ResultsManager : MonoBehaviour
     {
-
-   
         //private string rankStr = "S";
 
+        public static ResultsManager instance;
+
+        public MapResult mapResult { get; set; }
+        
+        private string url = "https://tempo-artist.herokuapp.com/api/puntuaciones/nueva";
+        
         [SerializeField] private GameObject rank;
         [SerializeField] public TextMeshProUGUI scoreText,
             okHitsText,
@@ -42,39 +34,55 @@ namespace TempoArtist.Managers
             maxComboText,
             accuracyText;
 
-        private void Start()
+        private void Awake()
         {
-            scoreText.text = MapResult.score.ToString();
-            okHitsText.text = MapResult.okHits.ToString();
-            goodHitsText.text = MapResult.goodHits.ToString();
-            perfectHitsText.text = MapResult.perfectHits.ToString();
-            missedHitsText.text = MapResult.missedHits.ToString();
-            maxComboText.text = MapResult.maxCombo.ToString();
-            accuracyText.text = MapResult.accuracy.ToString("0.00") + "%";
+            instance = this;
+        }
+
+        private void Start()
+        { 
+            SetMapResultsText(); 
 
             //Crear objeto del score, y obtener el json string del mismo
-            Score newScore = new Score();
-            newScore.user_id = 184;
-            newScore.level_id = 4;
-            newScore.total_points = 523;
-            newScore.perfect_hits = 100;
-            newScore.good_hits = 50;
-            newScore.max_combo = 2730;
-            newScore.accuracy = 80;
-            string json = JsonUtility.ToJson(newScore);
+            var score = CreateScore(mapResult); 
+            string json = JsonUtility.ToJson(score);
 
-            string url = "https://tempo-artist.herokuapp.com/api/puntuaciones/nueva";
             //Crear el request
             StartCoroutine(Post(url, json));
+        }
 
+        private void SetMapResultsText()
+        {
+            scoreText.text = mapResult.score.ToString();
+            okHitsText.text = mapResult.okHits.ToString();
+            goodHitsText.text = mapResult.goodHits.ToString();
+            perfectHitsText.text = mapResult.perfectHits.ToString();
+            missedHitsText.text = mapResult.missedHits.ToString();
+            maxComboText.text = mapResult.maxCombo.ToString();
+            accuracyText.text = mapResult.accuracy.ToString("0.00") + "%"; 
+        }
 
+        private int GetUserID()
+        {
+            return 0;
         }
 
         // private GameObject getRankIcon(string rankStr)
         // {
         //     
         // }
-
+        private Score CreateScore(MapResult mapResult)
+        {
+            var score = new Score();
+            score.user_id = 12;
+            score.level_id = mapResult.mapId;
+            score.accuracy = mapResult.accuracy;
+            score.perfect_hits = mapResult.perfectHits;
+            score.good_hits = mapResult.goodHits;
+            score.max_combo = mapResult.maxCombo;
+            score.total_points = mapResult.score;
+            return score;
+        }
 
         //Funcion para hacer peticion http post al server
         IEnumerator Post(string url, string bodyJsonString)
@@ -87,14 +95,5 @@ namespace TempoArtist.Managers
             yield return request.SendWebRequest();
             Debug.Log("Status Code: " + request.responseCode);
         }
-
-
-
-   
-
-
     }
-
-
-
 }
