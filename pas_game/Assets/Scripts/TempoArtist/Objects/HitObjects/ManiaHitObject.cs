@@ -224,10 +224,5 @@ namespace TempoArtist.Objects.HitObjects
                 gameObject.SetActive(false);
             }
         }
-
-        public bool IsActive()
-        {
-            return gameObject.activeSelf;
-        }
     }
 }
