@@ -90,14 +90,14 @@ const loadGame = () => {
 
         //Obtener el id del local storage
         let id = localStorage.getItem('id');
-        gameInstance.SendMessage('ResultsManager', 'SetUserID', id);
+        gameInstance.SendMessage('ResultsManager', 'sendSaveRequest', parseInt(id));
         console.log("SENDED ID: " + id);
 
     }
 
     setInterval(() => {
-        sendIdData()
-    }, 500);
+        sendIdData();
+    }, 2000);
 
 
 

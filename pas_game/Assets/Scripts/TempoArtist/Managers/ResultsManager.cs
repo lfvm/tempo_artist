@@ -18,13 +18,13 @@ namespace TempoArtist.Managers
     public class ResultsManager : MonoBehaviour
     {
         //private string rankStr = "S";
-
         public static ResultsManager instance;
+
+        private bool savedData = false;
 
         public MapResult mapResult { get; set; }
         private Score score;
         
-        private string url = "https://tempo-artist.herokuapp.com/api/puntuaciones/nueva";
         
         [SerializeField] private GameObject rank;
         [SerializeField] public TextMeshProUGUI scoreText,
@@ -43,13 +43,8 @@ namespace TempoArtist.Managers
         private void Start()
         { 
             SetMapResultsText(); 
+            Debug.Log("Song id: " + mapResult.mapId);
 
-            //Crear objeto del score, y obtener el json string del mismo
-            score = CreateScore(mapResult); 
-            string json = JsonUtility.ToJson(score);
-
-            //Crear el request
-            StartCoroutine(Post(url, json));
         }
 
         private void SetMapResultsText()
@@ -63,19 +58,15 @@ namespace TempoArtist.Managers
             accuracyText.text = mapResult.accuracy.ToString("0.00") + "%"; 
         }
 
-        public void SetUserID(int id)
-        {
-            score.user_id = id;
-        }
-
+    
         // private GameObject getRankIcon(string rankStr)
         // {
         //     
         // }
-        private Score CreateScore(MapResult mapResult)
+        private Score CreateScore(int user_id)
         {
             var score = new Score();
-            score.user_id = 0;
+            score.user_id = user_id;
             score.level_id = mapResult.mapId;
             score.accuracy = mapResult.accuracy;
             score.perfect_hits = mapResult.perfectHits;
@@ -84,6 +75,21 @@ namespace TempoArtist.Managers
             score.total_points = mapResult.score;
             return score;
         }
+
+        
+        //Funcion que sera llamada por el server
+        public void sendSaveRequest(int id){
+
+            if (savedData == false) {
+                Score score = CreateScore(id);
+                string json = JsonUtility.ToJson(score);
+                string url = "https://tempo-artist.herokuapp.com/api/puntuaciones/nueva";
+                StartCoroutine(Post(url, json));
+            } else {
+                savedData = true;
+            }
+        }
+
 
         //Funcion para hacer peticion http post al server
         IEnumerator Post(string url, string bodyJsonString)
