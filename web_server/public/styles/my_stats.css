@@ -20,6 +20,9 @@
     width:100%;
 }
 
+#pieChartHits{
+    margin-top: 2em;
+}
 
 #title{
     font-size:2em;

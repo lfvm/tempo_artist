@@ -1,5 +1,8 @@
 
 const loadGame = () => {
+
+    let GameInstance = null
+
     var container = document.querySelector("#unity-container");
     var canvas = document.querySelector("#unity-canvas");
     var loadingBar = document.querySelector("#unity-loading-bar");
@@ -69,6 +72,8 @@ const loadGame = () => {
     createUnityInstance(canvas, config, (progress) => {
         progressBarFull.style.width = 100 * progress + "%";
     }).then((unityInstance) => {
+
+        GameInstance = unityInstance;
         loadingBar.style.display = "none";
         fullscreenButton.onclick = () => {
         unityInstance.SetFullscreen(1);
@@ -77,6 +82,25 @@ const loadGame = () => {
         alert(message);
     });
     };
+
+
+
+
+    function sendIdData(){
+
+        //Obtener el id del local storage
+        let id = localStorage.getItem('id');
+        GameInstance.SendMessage('ResultsManager', 'setId', id);
+        console.log("SENDED ID: " + id);
+
+    }
+
+    setInterval(() => {
+        sendIdData()
+    }, 2000);
+
+
     document.body.appendChild(script);
+
 }
 
