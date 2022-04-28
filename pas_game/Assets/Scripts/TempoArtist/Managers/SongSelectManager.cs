@@ -149,24 +149,38 @@ namespace TempoArtist.Managers
 
         private void CreateBeatmaps(string path)
         {
-            var beatmapFolders = Directory.GetDirectories(path);
+            // var beatmapFolders = Directory.GetDirectories(path);
+            string[] beatmapFolders = new string[]
+            {
+                "Beatmaps/Akasha",
+                "Beatmaps/BeastBassBomb",
+                "Beatmaps/blue zenith",
+                "Beatmaps/FInalBoss",
+                "Beatmaps/Furioso Melodia",
+                "Beatmaps/HoldinOn",
+            };
 
             string[] beatmapJsonPaths;
             string[] beatmapSongPaths;
             
             foreach (var beatmapFolderPath in beatmapFolders)
             {
-                beatmapJsonPaths = Directory.GetFiles(beatmapFolderPath, "*.json");
-                beatmapSongPaths = Directory.GetFiles(beatmapFolderPath, "*.mp3");
-                
-                Beatmap beatmap = JsonParser.JsonToBeatmap(beatmapJsonPaths[0]);
+                // beatmapJsonPaths = Directory.GetFiles(beatmapFolderPath, "*.json");
+                // beatmapSongPaths = Directory.GetFiles(beatmapFolderPath, "*.mp3");
+                //
+                // Beatmap beatmap = JsonParser.JsonToBeatmap(beatmapFolderPath + "/" + "beatmap.json");
 
-                var dividedPath = beatmapSongPaths[0].Split('/').Reverse().Take(3).Reverse().ToArray();
-                var finalPath = GetFullPathWithoutExtension(string.Join("/", dividedPath));
+                var beatmapJson = Resources.Load<TextAsset>(beatmapFolderPath + "/" + "beatmap");
+                Debug.Log(beatmapJson);
+                Beatmap beatmap = JsonUtility.FromJson<Beatmap>(beatmapJson.ToString());
+                    
+                //
+                // var dividedPath = beatmapSongPaths[0].Split('/').Reverse().Take(3).Reverse().ToArray();
+                // var finalPath = GetFullPathWithoutExtension(string.Join("/", dividedPath));
 
-                beatmap.MusicSource = Resources.Load<AudioClip>(finalPath);
+                beatmap.MusicSource = Resources.Load<AudioClip>(beatmapFolderPath + "/" + "audio");
                 beatmapList.Add(beatmap);
-                HCBeatmaps.beatmapStrings.Add( JsonParser.BeatmapToJson(beatmap));
+                //HCBeatmaps.beatmapStrings.Add( JsonParser.BeatmapToJson(beatmap));
             }
         }
 

@@ -22,6 +22,7 @@ namespace TempoArtist.Managers
         public static ResultsManager instance;
 
         public MapResult mapResult { get; set; }
+        private Score score;
         
         private string url = "https://tempo-artist.herokuapp.com/api/puntuaciones/nueva";
         
@@ -44,7 +45,7 @@ namespace TempoArtist.Managers
             SetMapResultsText(); 
 
             //Crear objeto del score, y obtener el json string del mismo
-            var score = CreateScore(mapResult); 
+            score = CreateScore(mapResult); 
             string json = JsonUtility.ToJson(score);
 
             //Crear el request
@@ -62,9 +63,9 @@ namespace TempoArtist.Managers
             accuracyText.text = mapResult.accuracy.ToString("0.00") + "%"; 
         }
 
-        private int GetUserID()
+        private void SetUserID(int id)
         {
-            return 0;
+            score.user_id = id;
         }
 
         // private GameObject getRankIcon(string rankStr)
@@ -74,7 +75,7 @@ namespace TempoArtist.Managers
         private Score CreateScore(MapResult mapResult)
         {
             var score = new Score();
-            score.user_id = 12;
+            score.user_id = 0;
             score.level_id = mapResult.mapId;
             score.accuracy = mapResult.accuracy;
             score.perfect_hits = mapResult.perfectHits;
