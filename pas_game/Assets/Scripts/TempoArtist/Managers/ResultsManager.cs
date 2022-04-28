@@ -63,7 +63,7 @@ namespace TempoArtist.Managers
             accuracyText.text = mapResult.accuracy.ToString("0.00") + "%"; 
         }
 
-        private void SetUserID(int id)
+        public void SetUserID(int id)
         {
             score.user_id = id;
         }
