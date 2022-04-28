@@ -29,14 +29,12 @@ const createLevel = (req, res) => {
 
     const query = `
     INSERT INTO Levels (
-    lenght, 
     name,
     difficulty,
     total_notes,
     author,
     level_type
     )VALUES(
-        '${level.lenght}',
         '${level.name}',
         '${level.difficulty}',
         '${level.total_notes}',
@@ -68,11 +66,49 @@ const createLevel = (req, res) => {
     
 }
 
+const updateLevelById = (req, res) => {
+
+    const level = req.body;
+    const id = req.params.id;
+    const query = `
+    UPDATE Levels SET
+    name = '${level.name}',
+    difficulty = '${level.difficulty}',
+    total_notes = '${level.total_notes}',
+    author = '${level.author}',
+    level_type = '${level.level_type}'
+    WHERE level_id = ${id}
+    `
+
+
+    connection.query(query, (err, rows, fields) => {
+
+        if (!err) {
+            
+            res.json({
+                status: "success",
+                nivel: level,
+                id: rows.insertId
+            });
+
+        } else {
+
+            res.json({
+                status: "fail",
+                msg: err
+            });
+        }
+
+    });
+    
+}
+
 
 
 module.exports ={
 
     getAllLevels,
-    createLevel
+    createLevel,
+    updateLevelById
 
 }
