@@ -54,8 +54,8 @@ namespace TempoArtist.Managers
 
         public GameObject HitZone;
         
-       // private ResultsManager resultsManager;
-       private MapResult mapResults;
+        // private ResultsManager resultsManager;
+        private MapResult mapResults;
         
         public Text scoreText;
         public Text comboText;
@@ -183,30 +183,9 @@ namespace TempoArtist.Managers
             if (nextObjectID == GameSetup.objectActivationQueue.Count && nextObjectID == GameSetup.objectInteractQueue.Count)
                 gameFinished = true;
         }
-        
-        // public void IterateInteractionQueue(int? thisId = null)
-        // {
-        //     if (thisId != null)
-        //     {
-        //         NextObjToHit = (int)thisId + 1;
-        //         Debug.Log($"set nextHitObj to:{NextObjToHit}");
-        //         return;
-        //     }
-        // }
 
         public double GetTimeInMs()
         {
-            // if (useMusicTimeline)
-            // {
-            //     return GameSetup.MusicSource.time * 1000;
-            // }
-            //
-            // if (Stopwatch.Elapsed.TotalMilliseconds - startOffsetMs >= 0)
-            // {
-            //     useMusicTimeline = true;
-            //     Stopwatch.Stop();
-            //     return GameSetup.MusicSource.time * 1000;
-            // }
             return Stopwatch.Elapsed.TotalMilliseconds;
         }
         
