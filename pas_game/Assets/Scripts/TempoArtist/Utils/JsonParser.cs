@@ -7,9 +7,9 @@ namespace TempoArtist.Utils
 {
     public static class JsonParser
     {
-        public static Beatmap JsonToBeatmap(string jsonPath)
+        public static Beatmap JsonToBeatmap(string json)
         {
-            return JsonConvert.DeserializeObject<Beatmap>(File.ReadAllText(jsonPath));
+            return JsonConvert.DeserializeObject<Beatmap>(json);
         }
 
         public static string BeatmapToJson(Beatmap beatmap)

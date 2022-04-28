@@ -76,6 +76,11 @@ namespace TempoArtist.Objects.HitObjects
             GameSetup = ManiaGameSetup.instance;
             
             hitsound = GetComponent<AudioSource>();
+            
+            hitsound.clip = hitNormal;
+            
+            hitsound.loop = false;
+            hitsound.playOnAwake = false;
 
             // GetComponent<Rigidbody2D>().simulated = false;
             // GetComponent<CircleCollider2D>().enabled = true;
@@ -100,9 +105,7 @@ namespace TempoArtist.Objects.HitObjects
             
             startTime = time - scrollSpeed;
 
-            hitsound.clip = hitNormal;
-            
-            Debug.Log($"object id: {queueId} start time: {GameManager.GetTimeInMs()} Interraction bound start: {InteractionBoundsStartTimeInMs} Interraction bound end: {InteractionBoundsEndTimeInMs} Perfect hit time: {PerfectInteractionTimeInMs}");
+            //Debug.Log($"object id: {queueId} start time: {GameManager.GetTimeInMs()} Interraction bound start: {InteractionBoundsStartTimeInMs} Interraction bound end: {InteractionBoundsEndTimeInMs} Perfect hit time: {PerfectInteractionTimeInMs}");
         }
 
         private void Update()
@@ -124,7 +127,7 @@ namespace TempoArtist.Objects.HitObjects
                     hitsound.Play();
                     CalculateHitNoteAccuracy(GameManager.GetTimeInMs());
                     gameObject.SetActive(false);
-                    Debug.Log($"Object hit time: {time} time hit: {GameManager.GetTimeInMs()} time to get 300: {PerfectInteractionTimeInMs}");
+                    //Debug.Log($"Object hit time: {time} time hit: {GameManager.GetTimeInMs()} time to get 300: {PerfectInteractionTimeInMs}");
                 }
             }
 
