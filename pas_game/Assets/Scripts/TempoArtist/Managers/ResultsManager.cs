@@ -84,11 +84,10 @@ namespace TempoArtist.Managers
                 string json = JsonUtility.ToJson(score);
                 string url = "https://tempo-artist.herokuapp.com/api/puntuaciones/nueva";
                 StartCoroutine(Post(url, json));
-                Debug.Log("Posted request");
-
-            } else {
+                Debug.Log("Posted request");               
                 savedData = true;
-            }
+
+            } 
         }
 
 
