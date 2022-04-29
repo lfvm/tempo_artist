@@ -22,7 +22,6 @@ namespace TempoArtist.Managers
 
         private bool savedData = false;
 
-        public MapResult mapResult { get; set; }
         private Score score;
         
         
@@ -43,19 +42,19 @@ namespace TempoArtist.Managers
         private void Start()
         { 
             SetMapResultsText(); 
-            Debug.Log("Song id: " + mapResult.mapId);
+            Debug.Log("Song id: " + MapResult.mapId);
 
         }
 
         private void SetMapResultsText()
         {
-            scoreText.text = mapResult.score.ToString();
-            okHitsText.text = mapResult.okHits.ToString();
-            goodHitsText.text = mapResult.goodHits.ToString();
-            perfectHitsText.text = mapResult.perfectHits.ToString();
-            missedHitsText.text = mapResult.missedHits.ToString();
-            maxComboText.text = mapResult.maxCombo.ToString();
-            accuracyText.text = mapResult.accuracy.ToString("0.00") + "%"; 
+            scoreText.text = MapResult.score.ToString();
+            okHitsText.text = MapResult.okHits.ToString();
+            goodHitsText.text = MapResult.goodHits.ToString();
+            perfectHitsText.text = MapResult.perfectHits.ToString();
+            missedHitsText.text = MapResult.missedHits.ToString();
+            maxComboText.text = MapResult.maxCombo.ToString();
+            accuracyText.text = MapResult.accuracy.ToString("0.00") + "%"; 
         }
 
     
@@ -67,12 +66,12 @@ namespace TempoArtist.Managers
         {
             var score = new Score();
             score.user_id = user_id;
-            score.level_id = mapResult.mapId;
-            score.accuracy = mapResult.accuracy;
-            score.perfect_hits = mapResult.perfectHits;
-            score.good_hits = mapResult.goodHits;
-            score.max_combo = mapResult.maxCombo;
-            score.total_points = mapResult.score;
+            score.level_id = MapResult.mapId;
+            score.accuracy = MapResult.accuracy;
+            score.perfect_hits = MapResult.perfectHits;
+            score.good_hits = MapResult.goodHits;
+            score.max_combo = MapResult.maxCombo;
+            score.total_points = MapResult.score;
             return score;
         }
 

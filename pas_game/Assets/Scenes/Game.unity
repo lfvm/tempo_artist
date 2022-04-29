@@ -595,7 +595,6 @@ MonoBehaviour:
   gameFinished: 0
   useMusicTimeline: 0
   isGameReady: 0
-  noteTimeOffset: 490
   score: 0
   combo: 0
   health: 0
@@ -603,13 +602,13 @@ MonoBehaviour:
   OD: 0
   HPDrain: 0
   maxCombo: 0
-  NextObjToHit: 0
-  nextObjectID: 0
+  accuracy: 0
+  NextObjToActivateID: 0
   okHits: 0
   goodHits: 0
   perfectHits: 0
   missedHits: 0
-  accuracy: 0
+  rank: 
   HitZone1: {fileID: 0}
   HitZone2: {fileID: 0}
   HitZone3: {fileID: 0}
@@ -2048,7 +2047,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1768966925
 RectTransform:
   m_ObjectHideFlags: 0

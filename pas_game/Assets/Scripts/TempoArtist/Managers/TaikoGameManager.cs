@@ -55,7 +55,7 @@ namespace TempoArtist.Managers
         public GameObject HitZone;
         
         // private ResultsManager resultsManager;
-        private MapResult mapResults;
+
         
         public Text scoreText;
         public Text comboText;
@@ -121,15 +121,14 @@ namespace TempoArtist.Managers
         {
             if (!resultsCreated)
             {
-                MapResult mapResult = new MapResult();
-                mapResult.score = score;
-                mapResult.maxCombo = maxCombo;
-                mapResult.okHits = okHits;
-                mapResult.goodHits = goodHits;
-                mapResult.perfectHits = perfectHits;
-                mapResult.missedHits = missedHits;
-                mapResult.rank = rank;
-                mapResult.accuracy = accuracy;
+                MapResult.score = score;
+                MapResult.maxCombo = maxCombo;
+                MapResult.okHits = okHits;
+                MapResult.goodHits = goodHits;
+                MapResult.perfectHits = perfectHits;
+                MapResult.missedHits = missedHits;
+                MapResult.rank = rank;
+                MapResult.accuracy = accuracy;
                 resultsCreated = true;
                 SceneManager.LoadScene("Results");
             }

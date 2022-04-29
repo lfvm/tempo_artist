@@ -15,6 +15,30 @@ namespace TempoArtist.Objects.HitObjects
         
         private SpriteRenderer spriteRenderer;
 
+        public float X
+        {
+            get => x;
+            set => x = value;
+        }
+        
+        public float Y
+        {
+            get => y;
+            set => y = value;
+        }
+        
+        public int Time
+        {
+            get => time;
+            set => time = value;
+        }
+        
+        public float StartTIme
+        {
+            get => startTime;
+            set => startTime = value;
+        }
+        
         // x and Y position of the note
         public float x;
         public float y;
@@ -25,12 +49,12 @@ namespace TempoArtist.Objects.HitObjects
         private float startTime;
         public int queueId;
 
-        private float speed;
+        [SerializeField] private float speed;
         private float ODTimingOkHit;
         private float ODTimingGoodHit;
         private float ODTimingPerfectHit;
 
-        private bool canBeHit;
+        [SerializeField] private bool canBeHit;
         private bool hit;
 
         private List<KeyCode> keysToPress;
@@ -55,8 +79,6 @@ namespace TempoArtist.Objects.HitObjects
             hitSound = GetComponent<AudioSource>();
             spriteRenderer = GetComponent<SpriteRenderer>();
             
-            transform.GetComponent<Rigidbody2D>().simulated = false;
-            transform.GetComponent<CircleCollider2D>().enabled = true;
             gameObject.SetActive(false);
         }
         
@@ -75,7 +97,7 @@ namespace TempoArtist.Objects.HitObjects
             SetSpriteAndHitsound();
 
             speed = GameManager.scrollSpeed;
-            speed = 10.85f / (speed / 1000);
+            speed = 15.5f / (speed / 1000);
             
             startTime = time - speed;
 
@@ -84,16 +106,15 @@ namespace TempoArtist.Objects.HitObjects
 
         private void Update()
         {
-            canBeHit = IsInInteractionBound(GameManager.GetTimeInMs());
             if (GameManager.GetTimeInMs() >= startTime)
             {
                 StartCoroutine(HitObjectMove());
             }
 
-            if (IsInInteractionBound(GameManager.GetTimeInMs()))
+            if (canBeHit)
             {
-                transform.GetComponent<Rigidbody2D>().simulated = true;
-                transform.GetComponent<CircleCollider2D>().enabled = true;
+                // transform.GetComponent<Rigidbody2D>().simulated = true;
+                // transform.GetComponent<CircleCollider2D>().enabled = true;
                 
                 if (Input.GetKeyDown(keysToPress[0]) || Input.GetKeyDown(keysToPress[1]))
                 {
@@ -104,29 +125,28 @@ namespace TempoArtist.Objects.HitObjects
                 }
             }
 
-            if (!IsInInteractionBound(GameManager.GetTimeInMs()) &&
-                GameManager.GetTimeInMs() > InteractionBoundsEndTimeInMs)
-            {
-                GameManager.NoteMiss();
-                gameObject.SetActive(false);
-            }
+            // if (!IsInInteractionBound(GameManager.GetTimeInMs()) &&
+            //     GameManager.GetTimeInMs() > InteractionBoundsEndTimeInMs)
+            // {
+            //     GameManager.NoteMiss();
+            //     gameObject.SetActive(false);
+            // }
         }
 
         private void CalculateHitNoteAccuracy(double gameTime)
         {
-            if (gameTime < PerfectInteractionTimeInMs + ODTimingPerfectHit 
-                && gameTime > PerfectInteractionTimeInMs - ODTimingPerfectHit)
-            {
-                GameManager.PerfectHit();
-            }
-            else if (gameTime > PerfectInteractionTimeInMs + ODTimingPerfectHit &&
-                     gameTime < PerfectInteractionTimeInMs + ODTimingOkHit ||
-                     gameTime < PerfectInteractionTimeInMs - ODTimingPerfectHit &&
-                     gameTime > PerfectInteractionTimeInMs - ODTimingOkHit)
+            if (transform.position.y < -6.5 && transform.position.y > -4.5)
             {
                 GameManager.OkHit();
             }
-            GameManager.GoodHit();
+            else if (transform.position.y < -6.2 && transform.position.y > -4.8)
+            {
+                GameManager.GoodHit();
+            }
+            else
+            {
+                GameManager.PerfectHit();
+            }
         }
 
         private void SetKeyToPress()
@@ -173,8 +193,6 @@ namespace TempoArtist.Objects.HitObjects
 
         IEnumerator HitObjectMove()
         {
-            var xtemp = x + 5.5f;
-            speed = xtemp / (speed / 1000);
             transform.Translate(Vector3.left * (speed * UnityEngine.Time.deltaTime));
             yield return null;
         }
@@ -188,14 +206,28 @@ namespace TempoArtist.Objects.HitObjects
             }
             return false;
         }
+        
+        private void OnTriggerEnter2D(Collider2D col)
+        {
+            if (col.CompareTag("Activator"))
+            {
+                canBeHit = true;
+            }
+        }
 
         private void OnTriggerExit2D(Collider2D other)
         {
-            if (!other.CompareTag("Activator")) return;
-            if (hit) return;
-            canBeHit = false;
-            GameManager.NoteMiss();
-            gameObject.SetActive(false);
+            if (other.CompareTag("Activator"))
+            {
+                if (!hit)
+                {
+                    GameManager.NoteMiss();
+                }
+                
+                canBeHit = false;
+                GameSetup.notes.Remove(this);
+                gameObject.SetActive(false);
+            }
         }
     }
 }

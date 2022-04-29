@@ -136,7 +136,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 27483463}
-  m_BodyType: 2
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -1044,7 +1044,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1613531054
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1675,9 +1675,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: TaikoHitZone
       objectReference: {fileID: 0}
+    - target: {fileID: 8209645112195398029, guid: ce36a1879da09bd4390a66bc84c68bd4, type: 3}
+      propertyPath: m_TagString
+      value: Activator
+      objectReference: {fileID: 0}
     - target: {fileID: 8209645113512142150, guid: ce36a1879da09bd4390a66bc84c68bd4, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8865418620225304845, guid: ce36a1879da09bd4390a66bc84c68bd4, type: 3}
+      propertyPath: m_Radius
+      value: 0.54
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8209645112195398018, guid: ce36a1879da09bd4390a66bc84c68bd4, type: 3}

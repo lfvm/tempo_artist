@@ -58,7 +58,6 @@ namespace TempoArtist.Objects.HitObjects
         [SerializeField] private float speed;
         [SerializeField] private int queueId;
 
-        [SerializeField] private float scrollSpeed;
         private float ODTimingOkHit;
         private float ODTimingGoodHit;
         private float ODTimingPerfectHit;
@@ -76,8 +75,6 @@ namespace TempoArtist.Objects.HitObjects
             GameSetup = ManiaGameSetup.instance;
             
             hitsound = GetComponent<AudioSource>();
-            
-            hitsound.clip = hitNormal;
             
             hitsound.loop = false;
             hitsound.playOnAwake = false;
@@ -100,10 +97,12 @@ namespace TempoArtist.Objects.HitObjects
             InteractionBoundsStartTimeInMs = PerfectInteractionTimeInMs - ODTimingOkHit;
             InteractionBoundsEndTimeInMs = PerfectInteractionTimeInMs + ODTimingOkHit;
             
-            scrollSpeed = GameManager.ScrollSpeed;
-            speed = 10.85f / (scrollSpeed / 1000);
+            speed = GameManager.ScrollSpeed;
+            speed = 10.85f / (speed / 1000);
             
-            startTime = time - scrollSpeed;
+            startTime = time - speed;
+            
+            hitsound.clip = hitNormal;
 
             //Debug.Log($"object id: {queueId} start time: {GameManager.GetTimeInMs()} Interraction bound start: {InteractionBoundsStartTimeInMs} Interraction bound end: {InteractionBoundsEndTimeInMs} Perfect hit time: {PerfectInteractionTimeInMs}");
         }

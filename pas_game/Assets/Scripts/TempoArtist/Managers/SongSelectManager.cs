@@ -100,6 +100,9 @@ namespace TempoArtist.Managers
             ManiaGameManager = ManiaGameManager.instance;
             TaikoGameManager = TaikoGameManager.instance;
 
+            maniaScrollSpeedSlider.value = 1000;
+            taikoScrollSpeedSlider.value = 1000;
+
             CreateBeatmaps();
             CreateBeatmapMapCards();
         }
@@ -142,14 +145,12 @@ namespace TempoArtist.Managers
                 "Beatmaps/Alt Futur",
                 "Beatmaps/Chinese Restaurant",
                 "Beatmaps/Farewell",
-                "Beatmaps/Glacier Theme",
                 "Beatmaps/Out of Sense"
             };
 
             foreach (var beatmapFolderPath in beatmapFolders)
             {
                 var beatmapJson = Resources.Load<TextAsset>(beatmapFolderPath + "/" + "beatmap");
-                
                 Beatmap beatmap = JsonParser.JsonToBeatmap(beatmapJson.text);
                 beatmap.MusicSource = Resources.Load<AudioClip>(beatmapFolderPath + "/" + "audio");
                 beatmapList.Add(beatmap);

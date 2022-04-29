@@ -30,9 +30,6 @@ namespace TempoArtist.Managers
         // Reference to the GameSetup object instance
         private ManiaGameSetup GameSetup;
         
-        // private ResultsManager resultsManager;
-        private MapResult MapResults;
-
         private const float scorePerOkNote = 50f;
         private const float scorePerGoodNote = 100f;
         private const float scorePerPerfectNote = 300f;
@@ -150,19 +147,16 @@ namespace TempoArtist.Managers
         {
             if (!resultsCreated)
             {
-                MapResult mapResult = new MapResult();
+                MapResult.score = score;
+                MapResult.maxCombo = maxCombo;
+                MapResult.okHits = okHits;
+                MapResult.goodHits = goodHits;
+                MapResult.perfectHits = perfectHits;
+                MapResult.missedHits = missedHits;
+                MapResult.rank = rank;
+                MapResult.accuracy = accuracy;
+                MapResult.mapId = Int32.Parse(GameSetup.Beatmap.metadata.BeatmapID);
                 
-                mapResult.score = score;
-                mapResult.maxCombo = maxCombo;
-                mapResult.okHits = okHits;
-                mapResult.goodHits = goodHits;
-                mapResult.perfectHits = perfectHits;
-                mapResult.missedHits = missedHits;
-                mapResult.rank = rank;
-                mapResult.accuracy = accuracy;
-                mapResult.mapId = Int32.Parse(GameSetup.Beatmap.metadata.BeatmapID);
-                
-                ResultsManager.instance.mapResult = mapResult;
                 resultsCreated = true;
                 SceneManager.LoadScene("Results");
             }
