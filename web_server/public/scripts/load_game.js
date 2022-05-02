@@ -1,6 +1,7 @@
 
 const loadGame = () => {
 
+   
     let gameInstance = null;
 
     var container = document.querySelector("#unity-container");
@@ -62,7 +63,7 @@ const loadGame = () => {
     unityShowBanner('WebGL builds are not supported on mobile devices.');
     } else {
     canvas.style.width = "1100px";
-    canvas.style.height = "600px";
+    canvas.style.height = "560px";
     }
     loadingBar.style.display = "block";
 
@@ -102,6 +103,7 @@ const loadGame = () => {
 
 
     document.body.appendChild(script);
+
 
 }
 
