@@ -61,6 +61,7 @@ namespace TempoArtist.Managers
         private BeatmapCard selectedBeatmapCard;
 
         private Button closeOptionsMenuButton;
+        private Button openOptionsMenuButton;
 
         private bool beatmapCardSelected;
 
@@ -76,6 +77,7 @@ namespace TempoArtist.Managers
             beatmapList = new List<Beatmap>();
 
             closeOptionsMenuButton = GameObject.Find("CloseMenuButton").GetComponent<Button>();
+            openOptionsMenuButton = GameObject.Find("OpenSettingsButton").GetComponent<Button>();
             
             settingsPanel = GameObject.Find("OptionsPanel");
             beatmapsPanel = GameObject.Find("BeatmapsPanel");
@@ -93,6 +95,8 @@ namespace TempoArtist.Managers
         void Start()
         {
             closeOptionsMenuButton.onClick.AddListener(CloseOptionsMenu);
+            openOptionsMenuButton.onClick.AddListener(OpenOptionsMenu);
+            
             settingsPanel.SetActive(false);
             
             mapInfoCard = MapInfoCard.Instance;
@@ -204,8 +208,13 @@ namespace TempoArtist.Managers
         {
             if (Input.GetKeyDown(KeyCode.O))
             {
-                settingsPanel.SetActive(true);
+                OpenOptionsMenu(); 
             }
+        }
+
+        private void OpenOptionsMenu()
+        {
+            settingsPanel.SetActive(true);
         }
 
         private void CloseOptionsMenu()
