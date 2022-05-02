@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using TempoArtist.Objects;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -61,7 +62,9 @@ namespace TempoArtist.Managers
         public Text comboText;
         public Text timeText;
         public Text accuracyText;
-        
+        private bool GamePaused;
+        private object allNotesInActive;
+
         private Stopwatch Stopwatch { get; } = new Stopwatch();
 
         private void Awake()
@@ -85,7 +88,7 @@ namespace TempoArtist.Managers
 
         private void Update()
         {
-            if (!isGameReady)
+            if (!isGameReady || GamePaused) 
             {
                 return;
             }
@@ -106,6 +109,10 @@ namespace TempoArtist.Managers
             {
                 IterateObjectQueue();
             }
+
+            if (AllNotesInActive())
+                gameFinished = true;
+            
             GetTimeInMs();
             
             health = handleHealth();
@@ -115,6 +122,8 @@ namespace TempoArtist.Managers
             
             timeText.text = GetTimeInMs().ToString();
             accuracyText.text = CalculateAccuracy().ToString();
+
+            allNotesInActive = AllNotesInActive();
         }
 
         private void callResultsWindow()
@@ -129,10 +138,23 @@ namespace TempoArtist.Managers
                 MapResult.missedHits = missedHits;
                 MapResult.rank = rank;
                 MapResult.accuracy = accuracy;
+                MapResult.mapId = Int32.Parse(GameSetup.Beatmap.metadata.BeatmapID);
+                
                 resultsCreated = true;
                 SceneManager.LoadScene("Results");
             }
         }
+
+        private bool AllNotesInActive()
+        {
+            if (GameSetup.notes.Count == 0)
+            {
+                return true;
+            }
+            return false; 
+        }
+        
+        
 
         private void HandleCombo(int combo)
         {

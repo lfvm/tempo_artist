@@ -40,7 +40,7 @@ namespace TempoArtist.Managers
             get => scrollSpeed;
             set => scrollSpeed = value;
         }
-
+    
         public float NoteTimeOffset
         {
             get => noteTimeOffset;
@@ -156,7 +156,7 @@ namespace TempoArtist.Managers
                 MapResult.rank = rank;
                 MapResult.accuracy = accuracy;
                 MapResult.mapId = Int32.Parse(GameSetup.Beatmap.metadata.BeatmapID);
-                
+
                 resultsCreated = true;
                 SceneManager.LoadScene("Results");
             }
@@ -187,12 +187,12 @@ namespace TempoArtist.Managers
         {
             rank = accuracy switch
             {
-                var n when n >= 60 => "D",
                 var n when n >= 70 => "C",
                 var n when n >= 80 => "B",
                 var n when n >= 90 => "A",
                 var n when n >= 95 => "S",
-                _ => "F"
+                100 => "X",
+                _ => "D"
             };
             return rank;
         }

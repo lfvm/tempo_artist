@@ -6,9 +6,7 @@ using UnityEngine.Networking;
 using System.Collections;
 using System.Text;
 using System.Collections.Generic;
-
-
-
+using UnityEngine.UI;
 
 //Se deben crear clases para serializar los objetos a json, en este caso 
 //Se creara una clase para los Scores
@@ -21,6 +19,8 @@ namespace TempoArtist.Managers
         public static ResultsManager instance;
 
         private bool savedData = false;
+
+        private Image rankImage; 
 
         private Score score;
         
@@ -37,12 +37,15 @@ namespace TempoArtist.Managers
         private void Awake()
         {
             instance = this;
+            
+            rankImage = GameObject.Find("rank").GetComponent<Image>();
         }
 
         private void Start()
         { 
             SetMapResultsText(); 
             Debug.Log("Song id: " + MapResult.mapId);
+            setRankIcon();
 
         }
 
@@ -57,11 +60,32 @@ namespace TempoArtist.Managers
             accuracyText.text = MapResult.accuracy.ToString("0.00") + "%"; 
         }
 
-    
-        // private GameObject getRankIcon(string rankStr)
-        // {
-        //     
-        // }
+
+        private void setRankIcon()
+        {
+            switch (MapResult.rank)
+            {
+                case "D":
+                    rankImage.sprite = Resources.Load<Sprite>("ranking/ranking-D");
+                    break;
+                case "C":
+                    rankImage.sprite = Resources.Load<Sprite>("ranking/ranking-C");
+                    break;
+                case "B":
+                    rankImage.sprite = Resources.Load<Sprite>("ranking/ranking-B");
+                    break;
+                case "A":
+                    rankImage.sprite = Resources.Load<Sprite>("ranking/ranking-A");
+                    break;
+                case "S":
+                    rankImage.sprite = Resources.Load<Sprite>("ranking/ranking-S");
+                    break;
+                case "X":
+                    rankImage.sprite = Resources.Load<Sprite>("ranking/ranking-X");
+                    break;
+            }    
+        }
+        
         private Score CreateScore(int user_id)
         {
             var score = new Score();
