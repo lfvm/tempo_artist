@@ -10,7 +10,8 @@ const loadData = async () => {
             if (res['status'] == "success") {
 
                 plotGraph(res['scores']);
-                pieChartGlobalHits(res['scores'], "getting starte");
+                pieChartGlobalHits(res['scores'], "Final Boss", "pieChartHits");
+                pieChartGlobalHits(res['scores'], "Blue Zenith", "pieChartHits2");
             }
 
         });
@@ -81,7 +82,7 @@ const plotGraph = (scores) => {
     });
 }
 
-const pieChartGlobalHits = (scores, level) => {
+const pieChartGlobalHits = (scores, level, id) => {
     // TODO: Hace que funcione con todos los cualquier nivel
     const level_name = `Level: ${level}`
     
@@ -105,7 +106,7 @@ const pieChartGlobalHits = (scores, level) => {
 
     
     // Generar el grafico
-    const ctx = document.getElementById('pieChartHits').getContext('2d');
+    const ctx = document.getElementById(id).getContext('2d');
 
     const pieChart1 = new Chart(ctx, {
         type: 'pie',
