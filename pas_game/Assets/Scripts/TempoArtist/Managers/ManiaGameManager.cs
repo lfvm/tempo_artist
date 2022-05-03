@@ -30,9 +30,6 @@ namespace TempoArtist.Managers
         // Reference to the GameSetup object instance
         private ManiaGameSetup GameSetup;
         
-        // private ResultsManager resultsManager;
-        private MapResult MapResults;
-
         private const float scorePerOkNote = 50f;
         private const float scorePerGoodNote = 100f;
         private const float scorePerPerfectNote = 300f;
@@ -43,7 +40,7 @@ namespace TempoArtist.Managers
             get => scrollSpeed;
             set => scrollSpeed = value;
         }
-
+    
         public float NoteTimeOffset
         {
             get => noteTimeOffset;
@@ -158,6 +155,8 @@ namespace TempoArtist.Managers
                 MapResult.missedHits = missedHits;
                 MapResult.rank = rank;
                 MapResult.accuracy = accuracy;
+                MapResult.mapId = Int32.Parse(GameSetup.Beatmap.metadata.BeatmapID);
+
                 resultsCreated = true;
                 SceneManager.LoadScene("Results");
             }
@@ -188,12 +187,12 @@ namespace TempoArtist.Managers
         {
             rank = accuracy switch
             {
-                var n when n >= 60 => "D",
                 var n when n >= 70 => "C",
                 var n when n >= 80 => "B",
                 var n when n >= 90 => "A",
                 var n when n >= 95 => "S",
-                _ => "F"
+                100 => "X",
+                _ => "D"
             };
             return rank;
         }

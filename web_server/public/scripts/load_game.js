@@ -1,5 +1,8 @@
 
 const loadGame = () => {
+
+    let gameInstance = null;
+
     var container = document.querySelector("#unity-container");
     var canvas = document.querySelector("#unity-canvas");
     var loadingBar = document.querySelector("#unity-loading-bar");
@@ -31,15 +34,15 @@ const loadGame = () => {
     updateBannerVisibility();
     }
 
-    var buildUrl = "../2d_platformer/Build";
-    var loaderUrl = buildUrl + "/2d_platformer.loader.js";
+    var buildUrl = "../tempo_artist/Build";
+    var loaderUrl = buildUrl + "/tempo_artist.loader.js";
     var config = {
-    dataUrl: buildUrl + "/2d_platformer.data",
-    frameworkUrl: buildUrl + "/2d_platformer.framework.js",
-    codeUrl: buildUrl + "/2d_platformer.wasm",
+    dataUrl: buildUrl + "/tempo_artist.data",
+    frameworkUrl: buildUrl + "/tempo_artist.framework.js",
+    codeUrl: buildUrl + "/tempo_artist.wasm",
     streamingAssetsUrl: "StreamingAssets",
     companyName: "DefaultCompany",
-    productName: "2D Platformer",
+    productName: "pas_game",
     productVersion: "1.0",
     showBanner: unityShowBanner,
     };
@@ -58,7 +61,7 @@ const loadGame = () => {
     config.devicePixelRatio = 1;
     unityShowBanner('WebGL builds are not supported on mobile devices.');
     } else {
-    canvas.style.width = "960px";
+    canvas.style.width = "1100px";
     canvas.style.height = "600px";
     }
     loadingBar.style.display = "block";
@@ -66,17 +69,39 @@ const loadGame = () => {
     var script = document.createElement("script");
     script.src = loaderUrl;
     script.onload = () => {
-    createUnityInstance(canvas, config, (progress) => {
-        progressBarFull.style.width = 100 * progress + "%";
-    }).then((unityInstance) => {
-        loadingBar.style.display = "none";
-        fullscreenButton.onclick = () => {
-        unityInstance.SetFullscreen(1);
-        };
-    }).catch((message) => {
-        alert(message);
-    });
+        createUnityInstance(canvas, config, (progress) => {
+            progressBarFull.style.width = 100 * progress + "%";
+        }).then((unityInstance) => {
+
+
+            gameInstance = unityInstance;
+            loadingBar.style.display = "none";
+            fullscreenButton.onclick = () => {
+            unityInstance.SetFullscreen(1);
+            };
+        }).catch((message) => {
+            alert(message);
+        });
+
     };
+
+
+    function sendIdData(){
+
+        //Obtener el id del local storage
+        let id = localStorage.getItem('id');
+        gameInstance.SendMessage('ResultsManager', 'sendSaveRequest', parseInt(id));
+        console.log("SENDED ID: " + id);
+
+    }
+
+    setInterval(() => {
+        sendIdData();
+    }, 2000);
+
+
+
     document.body.appendChild(script);
+
 }
 

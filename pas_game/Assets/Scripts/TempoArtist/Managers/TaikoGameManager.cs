@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using TempoArtist.Objects;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -22,7 +23,7 @@ namespace TempoArtist.Managers
         public int noteTimeOffset = 0;
         
         // Reference to the GameSetup object instance
-        private TaikoGameSetup TaikoGameSetup;
+        private TaikoGameSetup GameSetup;
 
         private const float scorePerOkNote = 50f;
         private const float scorePerGoodNote = 100f;
@@ -54,14 +55,16 @@ namespace TempoArtist.Managers
 
         public GameObject HitZone;
         
-       // private ResultsManager resultsManager;
-       private MapResult mapResults;
+        // private ResultsManager resultsManager;
+
         
         public Text scoreText;
         public Text comboText;
         public Text timeText;
         public Text accuracyText;
-        
+        private bool GamePaused;
+        private object allNotesInActive;
+
         private Stopwatch Stopwatch { get; } = new Stopwatch();
 
         private void Awake()
@@ -73,7 +76,7 @@ namespace TempoArtist.Managers
 
         private void Start()
         {
-            TaikoGameSetup = TaikoGameSetup.instance;
+            GameSetup = TaikoGameSetup.instance;
             scrollSpeed = Settings.TaikoScrollSpeed;
         }
         
@@ -85,24 +88,31 @@ namespace TempoArtist.Managers
 
         private void Update()
         {
-            if (!isGameReady)
+            if (!isGameReady || GamePaused) 
             {
                 return;
             }
 
             if (isGameReady)
             {
-                if (!TaikoGameSetup.MusicSource.isPlaying)
-                    TaikoGameSetup.MusicSource.Play();
+                if (!GameSetup.MusicSource.isPlaying)
+                    GameSetup.MusicSource.Play();
             }
             
             if (gameFinished)
             {
                 callResultsWindow();
-                TaikoGameSetup.MusicSource.Stop();
+                GameSetup.MusicSource.Stop();
             }
             
-            IterateObjectQueue();
+            if (GameSetup.notes.Count != 0 && NextObjToActivateID < GameSetup.objectActivationQueue.Count)
+            {
+                IterateObjectQueue();
+            }
+
+            if (AllNotesInActive())
+                gameFinished = true;
+            
             GetTimeInMs();
             
             health = handleHealth();
@@ -112,6 +122,8 @@ namespace TempoArtist.Managers
             
             timeText.text = GetTimeInMs().ToString();
             accuracyText.text = CalculateAccuracy().ToString();
+
+            allNotesInActive = AllNotesInActive();
         }
 
         private void callResultsWindow()
@@ -126,10 +138,23 @@ namespace TempoArtist.Managers
                 MapResult.missedHits = missedHits;
                 MapResult.rank = rank;
                 MapResult.accuracy = accuracy;
+                MapResult.mapId = Int32.Parse(GameSetup.Beatmap.metadata.BeatmapID);
+                
                 resultsCreated = true;
                 SceneManager.LoadScene("Results");
             }
         }
+
+        private bool AllNotesInActive()
+        {
+            if (GameSetup.notes.Count == 0)
+            {
+                return true;
+            }
+            return false; 
+        }
+        
+        
 
         private void HandleCombo(int combo)
         {
@@ -170,39 +195,18 @@ namespace TempoArtist.Managers
 
         private void IterateObjectQueue()
         {
-            if (GetTimeInMs() >= TaikoGameSetup.objectActivationQueue[NextObjToActivateID].time - Timing.ODTiming.GetODTimingForOkHit(OD))
+            if (GetTimeInMs() >= GameSetup.objectActivationQueue[NextObjToActivateID].time - Timing.ODTiming.GetODTimingForOkHit(OD))
             {
-                (TaikoGameSetup.objectActivationQueue[NextObjToActivateID]).gameObject.SetActive(true);
+                (GameSetup.objectActivationQueue[NextObjToActivateID]).gameObject.SetActive(true);
                 NextObjToActivateID++;
             }
             
-            if (nextObjectID == TaikoGameSetup.objectActivationQueue.Count && nextObjectID == TaikoGameSetup.objectInteractQueue.Count)
+            if (nextObjectID == GameSetup.objectActivationQueue.Count && nextObjectID == GameSetup.objectInteractQueue.Count)
                 gameFinished = true;
         }
-        
-        // public void IterateInteractionQueue(int? thisId = null)
-        // {
-        //     if (thisId != null)
-        //     {
-        //         NextObjToHit = (int)thisId + 1;
-        //         Debug.Log($"set nextHitObj to:{NextObjToHit}");
-        //         return;
-        //     }
-        // }
 
         public double GetTimeInMs()
         {
-            // if (useMusicTimeline)
-            // {
-            //     return GameSetup.MusicSource.time * 1000;
-            // }
-            //
-            // if (Stopwatch.Elapsed.TotalMilliseconds - startOffsetMs >= 0)
-            // {
-            //     useMusicTimeline = true;
-            //     Stopwatch.Stop();
-            //     return GameSetup.MusicSource.time * 1000;
-            // }
             return Stopwatch.Elapsed.TotalMilliseconds;
         }
         

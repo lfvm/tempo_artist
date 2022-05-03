@@ -24,6 +24,7 @@ namespace TempoArtist.Beatmaps
     {
         public string Title { get; set; }
         public string Artist { get; set; }
+        public string BeatmapID { get; set; }
     }
 
     public class DifficultyInfo
@@ -31,6 +32,7 @@ namespace TempoArtist.Beatmaps
         public string HPDrainRate { get; set; }
         public string OverallDifficulty { get; set; }
         public string ApproachRate { get; set; }
+        public string Difficulty { get; set; }
     }
 
     public class General

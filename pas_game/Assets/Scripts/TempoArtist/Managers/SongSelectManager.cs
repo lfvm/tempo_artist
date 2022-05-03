@@ -61,6 +61,7 @@ namespace TempoArtist.Managers
         private BeatmapCard selectedBeatmapCard;
 
         private Button closeOptionsMenuButton;
+        private Button openOptionsMenuButton;
 
         private bool beatmapCardSelected;
 
@@ -72,12 +73,13 @@ namespace TempoArtist.Managers
         private void Awake()
         {
             Instance = this;
-
-            jsonBeatmapPaths = new List<string>();
+            
             beatmapList = new List<Beatmap>();
 
             closeOptionsMenuButton = GameObject.Find("CloseMenuButton").GetComponent<Button>();
+            openOptionsMenuButton = GameObject.Find("OpenSettingsButton").GetComponent<Button>();
             
+            settingsPanel = GameObject.Find("OptionsPanel");
             beatmapsPanel = GameObject.Find("BeatmapsPanel");
             canvas = GameObject.Find("Canvas");
 
@@ -88,24 +90,25 @@ namespace TempoArtist.Managers
             maniaScrollSpeedText = GameObject.Find("Mania Scroll Speed Value").GetComponent<TMP_Text>();
             taikoScrollSpeedText = GameObject.Find("Taiko Scroll Speed Value").GetComponent<TMP_Text>();
             offsetText =  GameObject.Find("Offset Value").GetComponent<TMP_Text>();
-
-            settingsPanel = GameObject.Find("OptionsPanel");
         }
 
         void Start()
         {
             closeOptionsMenuButton.onClick.AddListener(CloseOptionsMenu);
+            openOptionsMenuButton.onClick.AddListener(OpenOptionsMenu);
+            
             settingsPanel.SetActive(false);
+            
             mapInfoCard = MapInfoCard.Instance;
             UIManager = UIManager.Instance;
             ManiaGameManager = ManiaGameManager.instance;
             TaikoGameManager = TaikoGameManager.instance;
-            
-            var beatmapFoldersPath = ".\\Assets\\Resources\\Beatmaps";
-            
-            CreateBeatmaps(beatmapFoldersPath);
+
+            maniaScrollSpeedSlider.value = 1000;
+            taikoScrollSpeedSlider.value = 1000;
+
+            CreateBeatmaps();
             CreateBeatmapMapCards();
-            PrintBeatmapList();
         }
 
         void Update()
@@ -134,39 +137,27 @@ namespace TempoArtist.Managers
             CheckForOptionsKey();
         }
 
-        private void PrintBeatmapList()
-        {
-            foreach (var str in HCBeatmaps.beatmapStrings)
-            {
-                Debug.Log(str);
-            }
-        }
-
         private void UpdateMapInfoCard(BeatmapCard card)
         {
             mapInfoCard.UpdateMapInfoText(selectedBeatmapCard);
         }
 
-        private void CreateBeatmaps(string path)
+        private void CreateBeatmaps()
         {
-            var beatmapFolders = Directory.GetDirectories(path);
+            var beatmapFolders = new string[]
+            {
+                "Beatmaps/Alt Futur",
+                "Beatmaps/Chinese Restaurant",
+                "Beatmaps/Farewell",
+                "Beatmaps/Out of Sense"
+            };
 
-            string[] beatmapJsonPaths;
-            string[] beatmapSongPaths;
-            
             foreach (var beatmapFolderPath in beatmapFolders)
             {
-                beatmapJsonPaths = Directory.GetFiles(beatmapFolderPath, "*.json");
-                beatmapSongPaths = Directory.GetFiles(beatmapFolderPath, "*.mp3");
-                
-                Beatmap beatmap = JsonParser.JsonToBeatmap(beatmapJsonPaths[0]);
-
-                var dividedPath = beatmapSongPaths[0].Split('\\').Reverse().Take(3).Reverse().ToArray();
-                var finalPath = GetFullPathWithoutExtension(string.Join("\\", dividedPath));
-
-                beatmap.MusicSource = Resources.Load<AudioClip>(finalPath);
+                var beatmapJson = Resources.Load<TextAsset>(beatmapFolderPath + "/" + "beatmap");
+                Beatmap beatmap = JsonParser.JsonToBeatmap(beatmapJson.text);
+                beatmap.MusicSource = Resources.Load<AudioClip>(beatmapFolderPath + "/" + "audio");
                 beatmapList.Add(beatmap);
-                HCBeatmaps.beatmapStrings.Add( JsonParser.BeatmapToJson(beatmap));
             }
         }
 
@@ -209,23 +200,21 @@ namespace TempoArtist.Managers
 
         public void PlayAudioSample()
         {
-            //Debug.Log("Playing audio sample");
-            //Debug.Log(selectedBeatmap.MusicSource);
             beatmapSong.clip = selectedBeatmap.MusicSource;
             beatmapSong.Play();
-        }
-
-        private String GetFullPathWithoutExtension(String path)
-        {
-            return Path.Combine(Path.GetDirectoryName(path), Path.GetFileNameWithoutExtension(path));
         }
 
         private void CheckForOptionsKey()
         {
             if (Input.GetKeyDown(KeyCode.O))
             {
-                settingsPanel.SetActive(true);
+                OpenOptionsMenu(); 
             }
+        }
+
+        private void OpenOptionsMenu()
+        {
+            settingsPanel.SetActive(true);
         }
 
         private void CloseOptionsMenu()

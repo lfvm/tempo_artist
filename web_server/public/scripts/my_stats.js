@@ -32,7 +32,7 @@ const fillData = (scores) => {
         row.insertCell().innerHTML = score.perfect_hits;
         row.insertCell().innerHTML = score.good_hits;
         row.insertCell().innerHTML = score.total_notes;
-        row.insertCell().innerHTML = score.total_notes - (score.good_hits - score.perfect_hits);
+        row.insertCell().innerHTML = score.total_notes - Math.abs(score.good_hits + score.perfect_hits);
         row.insertCell().innerHTML = score.accuracy + '%';
         row.insertCell().innerHTML = score.created_at.slice(0,10);
 

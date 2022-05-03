@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace TempoArtist.Objects
 {
-    public class MapResult : MonoBehaviour
+    public static class MapResult
     {
         public static int score;
         public static int okHits;
@@ -10,6 +10,8 @@ namespace TempoArtist.Objects
         public static int perfectHits;
         public static int missedHits;
         public static int maxCombo;
+
+        public static int mapId;
         
         public static double accuracy;
 

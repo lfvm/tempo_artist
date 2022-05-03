@@ -7,7 +7,7 @@ const axios = require('axios')
 
 const genders = ["male", "female"]
 const instrument = ["yes", "no"]
-const levelIds = [4,14]
+const levelIds = [4,14,24,34,44,54]
 
 const getRandomElement =( data ) => {
     //Funcion que obtiene un elemento al azar de la lista
@@ -34,7 +34,7 @@ const CreateScore = ( userId ) => {
     const score = {
 
         user_id: userId,
-        level_id: 4,
+        level_id: getRandomElement(levelIds),
         total_points: Math.floor(faker.datatype.number({ min: 300, max: 5000,})),
         perfect_hits: Math.floor(faker.datatype.number({ min: 0, max: 300,})),
         good_hits: Math.floor(faker.datatype.number({ min: 50, max: 300,})),
@@ -63,7 +63,7 @@ const fillDb = async ( ) => {
             for(let j = 0; j < 10; j++){
                 const score = CreateScore(userId);
                 const scoreResponse = await axios.post('http://localhost:8080/api/puntuaciones/nueva', score);
-                console.log(scoreResponse);
+                console.log(scoreResponse['data']);
             }
         }
 

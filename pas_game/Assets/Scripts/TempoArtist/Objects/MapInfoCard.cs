@@ -52,7 +52,7 @@ namespace TempoArtist.Objects
                 _ => card.Beatmap.general.mode.ToString()
             };
 
-            mapInfoCardDifficulty.GetComponent<TMP_Text>().text = "Difficulty: " + card.Beatmap.difficulty.OverallDifficulty;
+            mapInfoCardDifficulty.GetComponent<TMP_Text>().text = "Difficulty: " + card.Beatmap.difficulty.Difficulty;
             mapInfoCardNumNotes.GetComponent<TMP_Text>().text = "Number of notes: " + card.Beatmap.hitObjects.Count;
             MapInfoCardMode.GetComponent<TMP_Text>().text = "Game mode: " + beatmapMode;
         }
