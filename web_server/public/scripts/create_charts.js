@@ -5,13 +5,33 @@ const loadData = async () => {
     const response = await fetch(`/api/puntuaciones/usuario/${id}`)
         .then(res => res.json())
         .then(res => {
-            console.log(res);
+            
             //Verificar que la respuesta sea correcta, y si es asi llenar la tabla con los datos
             if (res['status'] == "success") {
 
+                //Create first graph
                 plotGraph(res['scores']);
-                pieChartGlobalHits(res['scores'], "Farewell", "pieChartHits");
-                pieChartGlobalHits(res['scores'], "Chinese Restaurant", "pieChartHits2");
+                
+                levels = [];
+                index = 0;
+                res['scores'].forEach(score => {
+                    if ( ! levels.includes(score.name)) {
+                        levels.push(score.name);
+
+                        // Get the div 
+                        div = document.getElementById("scrollH");
+                        
+                        // Create element to insert
+                        canva = document.createElement("canvas");
+                        canva.setAttribute("id", `pieChartHits${index}`);
+
+                        //Insert the element and create the chart
+                        div.appendChild(canva);
+                        pieChartGlobalHits(res['scores'], score.name, `pieChartHits${index}`);
+
+                        index++;
+                    }
+                })
             }
         });
 }
@@ -45,7 +65,7 @@ const plotGraph = (scores) => {
         data: {
             labels: labels,
             datasets: [{
-                label: 'High Score per level',
+                label: "Score",
                 data: data,
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
@@ -69,6 +89,10 @@ const plotGraph = (scores) => {
                 y: {
                     beginAtZero: true
                 }
+            },
+            title : {
+                display: true,
+                text: "High Score Per Level",
             }
         }
     });
