@@ -27,8 +27,9 @@
 #title{
     font-size:2em;
     text-align:center;
-    margin-top:5%;
-    margin-bottom: 2%;
+    /* margin-top:5; */
+    margin-bottom: 1%;
+    padding-top: 4%;
 }
 
 .description{
@@ -36,7 +37,8 @@
     text-align:justify;
     margin-top:5%;
     margin: 1em;
-    padding: 1em;
+    padding: 3em;
+    padding-top: 1em;
 
 }
 
@@ -45,12 +47,10 @@
     padding: 2em;
 }
 
-
-
-
-
-#image_arrows{
-   display: flex;
-   justify-content: center;
+#blueH:hover{
+    color: #628eee;
 }
 
+#purpleH:hover{
+    color: #bb64f5;
+}
