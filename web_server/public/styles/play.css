@@ -54,3 +54,46 @@
 #purpleH:hover{
     color: #bb64f5;
 }
+
+#creators{
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.name-link{
+    animation: float 6.5s ease-in-out infinite;
+}
+
+.name-link a{
+    text-decoration: none;
+    color: rgb(189, 186, 186);
+}
+
+.aa:hover{
+    color: rgb(170, 166, 166); 
+}
+
+@keyframes float{
+    0%{
+        transform: translateY(0);
+    }
+    50%{
+        transform: translateY(-17px);
+    }
+    100%{
+        transform: translateY(0);
+    }
+}
+
+#n2{
+    animation-delay: 1.5s;
+}
+
+#n3{
+    animation-delay: 2s;
+}
+
+#n4{
+    animation-delay: 2.5s;
+}
