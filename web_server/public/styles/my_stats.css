@@ -48,6 +48,11 @@ nav {
     padding-bottom: 40px;
 }
 
+#chart2{
+    padding: 60px;
+    padding-bottom: 40px;
+}
+
 
 /*  Nav Bar Always Visible */
 #scrollH::-webkit-scrollbar:horizontal {
