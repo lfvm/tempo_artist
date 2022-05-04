@@ -121,7 +121,7 @@ namespace TempoArtist.Managers
             HandleCombo(combo);
             
             timeText.text = GetTimeInMs().ToString();
-            accuracyText.text = CalculateAccuracy().ToString();
+            accuracyText.text = CalculateAccuracy().ToString("0.00") + "%";
 
             allNotesInActive = AllNotesInActive();
         }
