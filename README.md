@@ -1,12 +1,15 @@
 
 # Tempo Artist
 
+## Important links:
+link to acces the web site where
+the video game is hosted: https://tempo-artist.herokuapp.com/
+
+link to watch a demonstration video of the full project: 
+## About the game
 Tempo Artist is a game designed to help people that want to learn percussion tab reading and practice rhythm sense in a challenging and fun form.
 
 The game aims to make the player feel motivated to learn about musical rhythms, as well as to improve their coordination and cognitive skills. It is a challenging game where the user must strive to improve and reach the next levels.
-
-Please visit the following link to acces the web site where
-the video game is hosted: https://tempo-artist.herokuapp.com/
 
 
 
