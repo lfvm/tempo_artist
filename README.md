@@ -12,7 +12,14 @@ the video game is hosted: https://tempo-artist.herokuapp.com/
 
 ## Screenshots
 
+### Video game preview:
 ![Captura de Pantalla 2022-05-04 a la(s) 12 23 11](https://user-images.githubusercontent.com/57450093/166744171-476e8b66-544c-4510-acac-948d9aeacf90.png)
+
+
+### My Stats:
+![Captura de Pantalla 2022-05-04 a la(s) 12 24 29](https://user-images.githubusercontent.com/57450093/166744366-852f23a2-6a99-4ee5-af8a-ed84c20d7118.png)
+
+![Captura de Pantalla 2022-05-04 a la(s) 12 25 07](https://user-images.githubusercontent.com/57450093/166744465-cbac7990-4299-4953-ab25-21bd7905cdb2.png)
 
 
 ## Features
