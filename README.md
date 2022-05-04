@@ -35,6 +35,15 @@ the video game is hosted: https://tempo-artist.herokuapp.com/
 - Update account data
 
 
+## Tech Stack
+
+**Client:** HTML, CSS, Javascript, Unity
+
+**Server:** Node, Express
+
+**Database** MySQL
+
+
 
 
 ## Authors
