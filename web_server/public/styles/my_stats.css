@@ -1,4 +1,4 @@
-#bg-contatiner{
+#bg-contatiner {
     background: linear-gradient(-45deg, #2d5cc0, #8029d0);
 }
 
@@ -6,26 +6,66 @@
     height: 100vh;
 }
 
-.purple_gradient, nav{
-    height:70%;
-    width:100%;
+.purple_gradient,
+nav {
+    height: 70%;
+    width: 100%;
 }
 
-.purple_gradient{
+.purple_gradient {
     padding: 1em;
 }
 
-.graphics{
-    background:#fff;
-    width:100%;
+.graphics {
+    background: #fff;
+    width: 100%;
 }
 
-#pieChartHits{
-    margin-top: 2em;
+
+#title {
+    font-size: 2em;
+    text-align: center;
+    padding-top: 5%;
 }
 
-#title{
-    font-size:2em;
-    text-align:center;
-    padding-top:5%;
+#pieSection {
+    display: flex;
+    justify-content: center; 
+} 
+
+#scrollH {
+    
+    padding: 20px;
+    display: flex;
+    border: 1px solid rgb(199, 195, 195);
+    width: 60%;
+    overflow-x: scroll;
+    border-radius: 8px;
+}
+
+#chart1{
+    padding: 60px;
+    padding-bottom: 40px;
+}
+
+#chart2{
+    padding: 60px;
+    padding-bottom: 40px;
+}
+
+
+/*  Nav Bar Always Visible */
+#scrollH::-webkit-scrollbar:horizontal {
+    height: 5px;
+}
+  
+  #scrollH::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    
+    /* should match background, can't be transparent */
+    background-color: rgba(0, 0, 0, .5);
+}
+  /* // This one is important. */
+  #scrollH::-webkit-scrollbar {
+    -webkit-appearance: none;
 }
