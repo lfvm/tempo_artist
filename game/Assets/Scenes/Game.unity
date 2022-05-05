@@ -587,7 +587,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1b09068a9ac4cdeae3b9abc30cf3462, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameTimeMs: 0
   OkHitEffect: {fileID: 5519818027030782101, guid: 59f1d66e401e01544860ef0ec46a5753, type: 3}
   goodHitEffect: {fileID: 2853807391465890775, guid: ec6f9fc049e55e048be18e10cee5d7ea, type: 3}
   perfectHitEffect: {fileID: 3280384965051186281, guid: f18afb26de4d47f40bc62f7c88c85512, type: 3}
@@ -595,20 +594,7 @@ MonoBehaviour:
   gameFinished: 0
   useMusicTimeline: 0
   isGameReady: 0
-  score: 0
-  combo: 0
-  health: 0
-  scrollSpeed: 600
   OD: 0
-  HPDrain: 0
-  maxCombo: 0
-  accuracy: 0
-  NextObjToActivateID: 0
-  okHits: 0
-  goodHits: 0
-  perfectHits: 0
-  missedHits: 0
-  rank: 
   HitZone1: {fileID: 0}
   HitZone2: {fileID: 0}
   HitZone3: {fileID: 0}
@@ -1401,7 +1387,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 19c91c2ecccbbc04387ce902c5d6f085, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.60784316}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.49019608}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
