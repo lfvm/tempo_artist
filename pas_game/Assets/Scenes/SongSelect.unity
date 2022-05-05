@@ -304,10 +304,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   beatmapSong: {fileID: 894242573}
   beatmapCard: {fileID: 7074173900867918498, guid: ff4c9b886f1f05149b1f13c17b822916, type: 3}
-  mapInfoCard: {fileID: 0}
-  maniaScrollSpeedSlider: {fileID: 0}
-  taikoScrollSpeedSlider: {fileID: 0}
-  offsetSlider: {fileID: 0}
   SettingsManiaSpeed: 0
   SettingsTaikoSpeed: 0
   SettingsOffset: 0
@@ -2113,7 +2109,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 3
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}

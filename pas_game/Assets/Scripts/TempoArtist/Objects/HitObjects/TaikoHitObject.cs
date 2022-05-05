@@ -111,26 +111,16 @@ namespace TempoArtist.Objects.HitObjects
                 StartCoroutine(HitObjectMove());
             }
 
-            if (canBeHit)
+            if (Input.GetKeyDown(keysToPress[0]) || Input.GetKeyDown(keysToPress[1]))
             {
-                // transform.GetComponent<Rigidbody2D>().simulated = true;
-                // transform.GetComponent<CircleCollider2D>().enabled = true;
-                
-                if (Input.GetKeyDown(keysToPress[0]) || Input.GetKeyDown(keysToPress[1]))
+                if (canBeHit)
                 {
-                    hit = true;
                     hitSound.Play();
+                    hit = true;
                     CalculateHitNoteAccuracy(GameManager.GetTimeInMs());
                     gameObject.SetActive(false);
                 }
             }
-
-            // if (!IsInInteractionBound(GameManager.GetTimeInMs()) &&
-            //     GameManager.GetTimeInMs() > InteractionBoundsEndTimeInMs)
-            // {
-            //     GameManager.NoteMiss();
-            //     gameObject.SetActive(false);
-            // }
         }
 
         private void CalculateHitNoteAccuracy(double gameTime)

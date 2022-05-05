@@ -7,35 +7,14 @@ namespace TempoArtist.Objects.HitObjects
 {
     public class ManiaHitObject : MonoBehaviour
     {
-        public int Time
-        { 
-            get => time;
-            set { time = value; }
-        }
-
-        public float StartTime
-        {
-            get => startTime;
-            private set => startTime = value;
-        }
-        
-        public float X
-        {
-            get => x;
-            set { x = value; }
-        }
-        
-        public float Y
-        {
-            get => y;
-            set { y = value; }
-        }
-        
-        public int QueueID
-        {
-            get => queueId;
-            set {queueId = value; }
-        }
+        // when the note has to be hit
+        public int Time { get; set; }
+        // When the note should become active
+        public float StartTime { get; private set; }
+        // x and Y position of the note
+        public float X { get; set; }
+        public float Y { get; set; }
+        public int QueueID { get; set; }
 
         // Reference to the GameManager and GameSetup instances.
         private ManiaGameManager GameManager;
@@ -47,27 +26,19 @@ namespace TempoArtist.Objects.HitObjects
         [SerializeField] private AudioClip hitNormal;
         
         private KeyCode keyToPress;
-
-        // x and Y position of the note
-        private float x;
-        private float y;
-        // when the note has to be hit
-        [SerializeField] private int time;
-        // When the note should become active
-        [SerializeField] private float startTime;
-        [SerializeField] private float speed;
-        [SerializeField] private int queueId;
+        
+        private float speed;
 
         private float ODTimingOkHit;
         private float ODTimingGoodHit;
         private float ODTimingPerfectHit;
 
-        [SerializeField] private bool canBeHit;
+        private bool canBeHit;
         private bool hit;
 
-        [SerializeField] private float PerfectInteractionTimeInMs;
-        [SerializeField] private float InteractionBoundsStartTimeInMs;
-        [SerializeField] private float InteractionBoundsEndTimeInMs;
+        private float PerfectInteractionTimeInMs;
+        private float InteractionBoundsStartTimeInMs;
+        private float InteractionBoundsEndTimeInMs;
 
         private void Awake()
         {
@@ -93,14 +64,14 @@ namespace TempoArtist.Objects.HitObjects
             ODTimingGoodHit = Timing.ODTiming.GetODTimingForGoodHit(GameManager.OD);
             ODTimingPerfectHit = Timing.ODTiming.GetODTimingForPerfectHit(GameManager.OD);
             
-            PerfectInteractionTimeInMs = time + GameManager.NoteTimeOffset;
+            PerfectInteractionTimeInMs = Time + GameManager.NoteTimeOffset;
             InteractionBoundsStartTimeInMs = PerfectInteractionTimeInMs - ODTimingOkHit;
             InteractionBoundsEndTimeInMs = PerfectInteractionTimeInMs + ODTimingOkHit;
             
             speed = GameManager.ScrollSpeed;
             speed = 10.85f / (speed / 1000);
             
-            startTime = time - speed;
+            StartTime = Time - speed;
             
             hitsound.clip = hitNormal;
 
@@ -110,7 +81,7 @@ namespace TempoArtist.Objects.HitObjects
         private void Update()
         {
             //canBeHit = IsInInteractionBound(GameManager.GetTimeInMs());
-            if (GameManager.GetTimeInMs() >= startTime)
+            if (GameManager.GetTimeInMs() >= StartTime)
             {
                 StartCoroutine(HitObjectMove());
             }
@@ -175,7 +146,7 @@ namespace TempoArtist.Objects.HitObjects
 
         private void SetKeyToPress()
         {
-            keyToPress = x switch
+            keyToPress = X switch
             {
                 -1.5f => KeyCode.A,
                 -0.5f => KeyCode.S,

@@ -14,8 +14,6 @@ namespace TempoArtist.Managers
 {
     public class ManiaGameManager : MonoBehaviour
     {
-        [SerializeField] private double GameTimeMs;
-        
         // Instance of this object
         public static ManiaGameManager instance;
         
@@ -25,8 +23,6 @@ namespace TempoArtist.Managers
         public bool useMusicTimeline;
         public bool isGameReady;
 
-        private float noteTimeOffset = 0;
-        
         // Reference to the GameSetup object instance
         private ManiaGameSetup GameSetup;
         
@@ -35,35 +31,25 @@ namespace TempoArtist.Managers
         private const float scorePerPerfectNote = 300f;
         private const float scorePerMiss = 0f;
         
-        public float ScrollSpeed
-        {
-            get => scrollSpeed;
-            set => scrollSpeed = value;
-        }
-    
-        public float NoteTimeOffset
-        {
-            get => noteTimeOffset;
-            set => noteTimeOffset = value;
-        }
-        
-        [SerializeField] private int score;
-        [SerializeField] private int combo;
-        [SerializeField] private float health;
-        [SerializeField] private float scrollSpeed;
-        [SerializeField] public float OD;
-        [SerializeField] private float HPDrain;
-        [SerializeField] private int maxCombo;
-        [SerializeField] private double accuracy;
-        
-        [SerializeField] private int NextObjToActivateID = 0;
+        public float ScrollSpeed { get; set; }
+        public float NoteTimeOffset { get; set; } = 0;
 
-        [SerializeField] private int okHits;
-        [SerializeField] private int goodHits;
-        [SerializeField] private int perfectHits;
-        [SerializeField] private int missedHits;
+        private int score;
+        private int combo;
+        private float health;
+        public float OD;
+        private float HPDrain;
+        private int maxCombo;
+        private double accuracy;
+        
+        private int NextObjToActivateID = 0;
 
-        [SerializeField] private string rank;
+        private int okHits;
+        private int goodHits;
+        private int perfectHits;
+        private int missedHits;
+
+        private string rank;
         
         private bool resultsCreated = false;
 
@@ -95,6 +81,7 @@ namespace TempoArtist.Managers
         private void Start()
         {
             GameSetup = ManiaGameSetup.instance;
+            HPDrain = 5;
         }
         
         public void SetGameReady()
@@ -187,10 +174,10 @@ namespace TempoArtist.Managers
         {
             rank = accuracy switch
             {
-                var n when n >= 70 => "C",
-                var n when n >= 80 => "B",
-                var n when n >= 90 => "A",
                 var n when n >= 95 => "S",
+                var n when n >= 90 => "A",
+                var n when n >= 80 => "B",
+                var n when n >= 70 => "C",
                 100 => "X",
                 _ => "D"
             };

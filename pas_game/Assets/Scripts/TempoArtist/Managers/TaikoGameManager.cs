@@ -39,24 +39,20 @@ namespace TempoArtist.Managers
         public int maxCombo;
         
         public int NextObjToHit = 0; 
-        private int nextObjectID;
         private int NextObjToActivateID = 0;
 
-        [SerializeField] private int okHits;
-        [SerializeField] private int goodHits;
-        [SerializeField] private int perfectHits;
-        [SerializeField] private int missedHits;
+        private int okHits;
+        private int goodHits;
+        private int perfectHits;
+        private int missedHits;
         
-        [SerializeField] private double accuracy;
+        private double accuracy;
 
         private string rank;
         
         private bool resultsCreated = false;
 
         public GameObject HitZone;
-        
-        // private ResultsManager resultsManager;
-
         
         public Text scoreText;
         public Text comboText;
@@ -166,9 +162,9 @@ namespace TempoArtist.Managers
 
         private double CalculateAccuracy()
         {
-            accuracy = (scorePerPerfectNote * perfectHits + goodHits * scorePerGoodNote + okHits * scorePerOkNote + scorePerMiss * missedHits) /
-                       ((perfectHits + goodHits + okHits + missedHits) * scorePerPerfectNote);
-            return accuracy * 100;
+            var acc = (scorePerPerfectNote * perfectHits + goodHits * scorePerGoodNote + okHits * scorePerOkNote + scorePerMiss * missedHits) /
+                      ((perfectHits + goodHits + okHits + missedHits) * scorePerPerfectNote);
+            return acc * 100;
         }
 
         private float handleHealth()
@@ -181,13 +177,12 @@ namespace TempoArtist.Managers
         {
             rank = accuracy switch
             {
-                var n when n >= 40 => "D",
-                var n when n >= 55 => "C",
-                var n when n >= 70 => "B",
-                var n when n >= 85 => "B",
-                var n when n >= 90 => "A",
                 var n when n >= 95 => "S",
-                _ => "F"
+                var n when n >= 90 => "A",
+                var n when n >= 80 => "B",
+                var n when n >= 70 => "C",
+                100 => "X",
+                _ => "D"
             };
             return rank;
         }
@@ -200,9 +195,6 @@ namespace TempoArtist.Managers
                 (GameSetup.objectActivationQueue[NextObjToActivateID]).gameObject.SetActive(true);
                 NextObjToActivateID++;
             }
-            
-            if (nextObjectID == GameSetup.objectActivationQueue.Count && nextObjectID == GameSetup.objectInteractQueue.Count)
-                gameFinished = true;
         }
 
         public double GetTimeInMs()

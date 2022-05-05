@@ -101,8 +101,10 @@ MonoBehaviour:
   x: 0
   y: 0
   time: 0
-  hitsound: 0
+  hitsound: 8
   queueId: 0
+  speed: 0
+  canBeHit: 0
   katSprite: {fileID: -2413806693520163455, guid: 6ef2d286c3754c246bda783ff73922bc, type: 3}
   donSprite: {fileID: -2413806693520163455, guid: dde7fcb93d993d64aba1e9b03efa0361, type: 3}
   hitSound: {fileID: -2446894496165808314}
@@ -156,7 +158,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

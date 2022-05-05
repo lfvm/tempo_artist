@@ -25,16 +25,16 @@ namespace TempoArtist.Managers
 
         [SerializeField] private BeatmapCard beatmapCard;
         
-        [SerializeField] private MapInfoCard mapInfoCard;
+        private MapInfoCard mapInfoCard;
 
         // Reference to the GameSetup instance
 
         private ManiaGameManager ManiaGameManager;
         private TaikoGameManager TaikoGameManager;
 
-        [SerializeField] private Slider maniaScrollSpeedSlider;
-        [SerializeField] private Slider taikoScrollSpeedSlider;
-        [SerializeField] private Slider offsetSlider;
+        private Slider maniaScrollSpeedSlider;
+        private Slider taikoScrollSpeedSlider;
+        private Slider offsetSlider;
         
         private TMP_Text maniaScrollSpeedText;
         private TMP_Text taikoScrollSpeedText;
